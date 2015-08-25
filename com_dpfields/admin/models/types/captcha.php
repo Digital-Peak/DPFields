@@ -1,0 +1,38 @@
+<?php
+/**
+ * @package    DPFields
+ * @author     Digital Peak http://www.digital-peak.com
+ * @copyright  Copyright (C) 2015 - 2015 Digital Peak. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
+defined('_JEXEC') or die();
+
+JLoader::import('components.com_dpfields.models.types.base', JPATH_ADMINISTRATOR);
+
+class DPFieldsTypeCaptcha extends DPFieldsTypeBase
+{
+
+	public function prepareValueForDisplay ($value, $field)
+	{
+		return '';
+	}
+
+	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	{
+		$input = JFactory::getApplication()->input;
+		if (JFactory::getApplication()->isAdmin())
+		{
+			$fieldNode->setAttribute('plugin', JFactory::getConfig()->get('captcha'));
+		}
+		else if ($input->get('option') == 'com_users' && $input->get('view') == 'profile' && $input->get('layout') != 'edit' &&
+				 $input->get('task') != 'save')
+		{
+			// The user profile page does show the values by creating the form
+			// and getting the values from it so we need to disable the field
+			$fieldNode->setAttribute('plugin', null);
+		}
+		$fieldNode->setAttribute('validate', 'captcha');
+
+		return parent::postProcessDomNode($field, $fieldNode);
+	}
+}

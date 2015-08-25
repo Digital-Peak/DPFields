@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="plugin" version="3.4" group="system" method="upgrade">
+	<name>plg_system_dpfields</name>
+	<author>Digital Peak</author>
+	<creationDate>Aug 2015</creationDate>
+	<copyright>(C) 2012 - 2015 Digital Peak. All rights reserved.
+	</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>info@digital-peak.com</authorEmail>
+	<authorUrl>joomla.digital-peak.com</authorUrl>
+	<version>1.0.0</version>
+	<description>PLG_SYSTEM_DPFIELDS_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="dpfields">dpfields.php</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="contexts" type="textarea"
+					default="com_content=article,form&#13;&#10;com_users=user,profile"
+					label="PLG_SYSTEM_DPFIELDS_CONFIG_EXTENSIONS_LABEL" description="PLG_SYSTEM_DPFIELDS_CONFIG_EXTENSIONS_DESC"
+					class="input-xxlarge" rows="10" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

@@ -1,0 +1,64 @@
+<project name="DPFields build" default="dist" basedir=".">
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/lib/ant-contrib-1.0b3.jar" />
+
+	<description>
+        default build file for DPFields
+    </description>
+	<!-- set global properties for this build -->
+	<property name="src" location="src" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+	<property name="dpfieldsRoot" location="${basedir}/../DPFields" />
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<antcall target="clean" />
+	</target>
+
+	<target name="dist" depends="init">
+		<xmlproperty file="${basedir}/../com_dpfields/admin/dpfields.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<propertyregex property="dpfieldsVersion" input="${xml.version}" regexp="\." replace="_" global="true" />
+		<echo message="Building DPFields Version: ${dpfieldsVersion}" />
+
+		<antcall target="create_install_packages" />
+	</target>
+
+	<target name="create_install_packages" description="create install package">
+		<mkdir dir="${dist}" />
+
+		<!-- create DPFields for joomla -->
+		<antcall target="create_zips">
+			<param name="dpfields" value="DPFields" />
+		</antcall>
+		<zip destfile="${dist}/DPFields-Core_${dpfieldsVersion}.zip">
+			<zipfileset dir="${build}/DPFields" includes="**/*" />
+			<zipfileset dir="${basedir}" includes="ReadFirst.txt" />
+			<zipfileset dir="${basedir}" includes="license.txt" />
+			<zipfileset dir="${basedir}" includes="pkg_dpfields.xml" />
+		</zip>
+	</target>
+
+	<target name="create_zips" description="generate the zips">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${build}" />
+		<mkdir dir="${build}/${dpfields}" />
+
+		<!-- create DPFields component -->
+		<zip destfile="${build}/${dpfields}/com_dpfields.zip">
+			<zipfileset dir="${basedir}/../com_dpfields" prefix="com_dpfields" excludes="admin/dpfields.xml" />
+			<zipfileset dir="${basedir}/../com_dpfields/admin" includes="dpfields.xml" fullpath="com_dpfields/dpfields.xml" />
+		</zip>
+
+		<!-- create content plugin -->
+		<zip destfile="${build}/${dpfields}/plg_system_dpfields.zip">
+			<zipfileset dir="${basedir}/../plg_system_dpfields" prefix="plg_system_dpfields" />
+		</zip>
+	</target>
+
+	<target name="clean" description="clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+</project>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="fieldparams" label="COM_DPFIELDS_FIELD_BASIC_LABEL">
+		<fieldset name="fieldparams">
+			<field name="directory" type="text" default="" class="input-xxlarge"
+				label="COM_DPFIELDS_FIELD_FIELD_IMAGELIST_DIRECTORY_LABEL"
+				description="COM_DPFIELDS_FIELD_FIELD_IMAGELIST_DIRECTORY_DESC" />
+		</fieldset>
+	</fields>
+</form>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<field name="class" type="textarea" label="COM_DPFIELDS_FIELD_FIELD_CLASS_LABEL"
+		class="input-xxlarge" description="COM_DPFIELDS_FIELD_FIELD_CLASS_DESC"
+		default="btn-group btn-group-yesno" size="40" />
+</form>
