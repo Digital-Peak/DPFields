@@ -12,12 +12,26 @@ class DPFieldsControllerFields extends JControllerAdmin
 
 	public function delete ()
 	{
-		parent::delete();
+		$return = parent::delete();
 
 		$this->setRedirect(
 				JRoute::_(
 						'index.php?option=' . $this->option . '&view=' . $this->view_list . '&context=' .
 								 $this->input->getCmd('context', 'com_content.article'), false));
+
+		return $return;
+	}
+
+	public function publish ()
+	{
+		$return = parent::publish();
+
+		$this->setRedirect(
+				JRoute::_(
+						'index.php?option=' . $this->option . '&view=' . $this->view_list . '&context=' .
+								 $this->input->getCmd('context', 'com_content.article'), false));
+
+		return $return;
 	}
 
 	public function getModel ($name = 'Field', $prefix = 'DPFieldsModel', $config = array('ignore_request' => true))
