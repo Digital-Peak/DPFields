@@ -294,7 +294,7 @@ class DPFieldsModelField extends JModelAdmin
 			$cat = JCategories::getInstance(str_replace('com_', '', $component));
 			if ($cat && $cat->get('root')->hasChildren())
 			{
-				$form->setFieldAttribute('catid', 'context', $component);
+				$form->setFieldAttribute('catid', 'extension', $component);
 			}
 			else
 			{
