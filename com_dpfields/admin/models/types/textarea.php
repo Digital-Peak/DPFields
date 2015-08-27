@@ -17,10 +17,10 @@ class DPFieldsTypeTextarea extends DPFieldsTypeBase
 		return JHTML::_('content.prepare', $value);
 	}
 
-	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$fieldNode->setAttribute('filter', 'JComponentHelper::filterText');
 
-		return parent::postProcessDomNode($field, $fieldNode);
+		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
 }

@@ -12,10 +12,10 @@ JLoader::import('components.com_dpfields.models.types.base', JPATH_ADMINISTRATOR
 class DPFieldsTypeEmail extends DPFieldsTypeBase
 {
 
-	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$fieldNode->setAttribute('validate', 'email');
 
-		return parent::postProcessDomNode($field, $fieldNode);
+		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
 }

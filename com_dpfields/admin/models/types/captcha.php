@@ -17,7 +17,7 @@ class DPFieldsTypeCaptcha extends DPFieldsTypeBase
 		return '';
 	}
 
-	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$input = JFactory::getApplication()->input;
 		if (JFactory::getApplication()->isAdmin())
@@ -33,6 +33,6 @@ class DPFieldsTypeCaptcha extends DPFieldsTypeBase
 		}
 		$fieldNode->setAttribute('validate', 'captcha');
 
-		return parent::postProcessDomNode($field, $fieldNode);
+		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
 }

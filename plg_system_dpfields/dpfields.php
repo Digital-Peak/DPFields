@@ -320,7 +320,7 @@ class PlgSystemDPFields extends JPlugin
 			try
 			{
 				// Rendering the type
-				$node = $type->appendXMLFieldTag($field, $fieldset);
+				$node = $type->appendXMLFieldTag($field, $fieldset, $form);
 
 				// If the field belongs to a catid but the catid in the data is
 				// not known, set the required flag to false on any cuscumstance

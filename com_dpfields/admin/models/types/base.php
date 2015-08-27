@@ -11,13 +11,16 @@ class DPFieldsTypeBase
 {
 
 	/**
-	 * Returns a XML field tag for that type which can be placed in a form.
+	 * Returns a XML field tag for that type which can be placed in the given
+	 * form.
+	 * The form can be manipulated during preparation of the dom node.
 	 *
 	 * @param stdClass $field
 	 * @param DOMElement $parent
+	 * @param JForm $form
 	 * @return DOMElement
 	 */
-	public function appendXMLFieldTag ($field, DOMElement $parent)
+	public function appendXMLFieldTag ($field, DOMElement $parent, JForm $form)
 	{
 		$app = JFactory::getApplication();
 		if ($field->params->get('show_on') == 1 && $app->isAdmin())
@@ -51,7 +54,7 @@ class DPFieldsTypeBase
 			}
 			$node->setAttribute($key, $param);
 		}
-		$this->postProcessDomNode($field, $node);
+		$this->postProcessDomNode($field, $node, $form);
 
 		return $node;
 	}
@@ -75,11 +78,13 @@ class DPFieldsTypeBase
 	/**
 	 * Function to manipulate the DOM node before it is returned to the form
 	 * document.
+	 * The form can be manipulated during preparation of the dom node.
 	 *
 	 * @param stdClass $field
 	 * @param DOMElement $fieldNode
+	 * @param JForm $form
 	 */
-	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 	}
 }

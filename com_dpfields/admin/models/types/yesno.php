@@ -12,7 +12,7 @@ JLoader::import('components.com_dpfields.models.types.list', JPATH_ADMINISTRATOR
 class DPFieldsTypeYesno extends DPFieldsTypeList
 {
 
-	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$fieldNode->setAttribute('type', 'radio');
 		if (strpos($field->class, 'btn-group-yesno') === false)
@@ -20,7 +20,7 @@ class DPFieldsTypeYesno extends DPFieldsTypeList
 			$fieldNode->setAttribute('class', $field->class . ' btn-group-yesno');
 		}
 
-		return parent::postProcessDomNode($field, $fieldNode);
+		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
 
 	protected function getOptions ($field)

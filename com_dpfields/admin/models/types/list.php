@@ -56,7 +56,7 @@ class DPFieldsTypeList extends DPFieldsTypeBase
 		return $data;
 	}
 
-	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		foreach ($this->getOptions($field) as $index => $value)
 		{
@@ -64,6 +64,6 @@ class DPFieldsTypeList extends DPFieldsTypeBase
 			$element->setAttribute('value', $index);
 		}
 
-		return parent::postProcessDomNode($field, $fieldNode);
+		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
 }

@@ -27,7 +27,7 @@ class DPFieldsTypeUrl extends DPFieldsTypeBase
 		return '<a href="' . $value . '" ' . $attributes . '>' . $value . '</a>';
 	}
 
-	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$fieldNode->setAttribute('validate', 'url');
 		if (! $fieldNode->getAttribute('relative'))
@@ -35,6 +35,6 @@ class DPFieldsTypeUrl extends DPFieldsTypeBase
 			$fieldNode->removeAttribute('relative');
 		}
 
-		return parent::postProcessDomNode($field, $fieldNode);
+		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
 }

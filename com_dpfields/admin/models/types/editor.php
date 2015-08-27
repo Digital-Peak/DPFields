@@ -17,11 +17,11 @@ class DPFieldsTypeEditor extends DPFieldsTypeBase
 		return JHTML::_('content.prepare', $value);
 	}
 
-	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$fieldNode->setAttribute('buttons', $field->fieldparams->get('buttons', 0) ? 'true' : 'false');
 		$fieldNode->setAttribute('filter', 'JComponentHelper::filterText');
 
-		return parent::postProcessDomNode($field, $fieldNode);
+		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
 }

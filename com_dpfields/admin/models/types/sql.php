@@ -51,11 +51,11 @@ class DPFieldsTypeSql extends DPFieldsTypeBase
 		return parent::prepareValueForDisplay($texts, $field);
 	}
 
-	protected function postProcessDomNode ($field, DOMElement $fieldNode)
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$fieldNode->setAttribute('value_field', 'text');
 		$fieldNode->setAttribute('key_field', 'value');
 
-		return parent::postProcessDomNode($field, $fieldNode);
+		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
 }
