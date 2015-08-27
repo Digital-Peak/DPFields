@@ -15,7 +15,7 @@ class DPFieldsTypeModal_Article extends DPFieldsTypeBase
 	public function prepareValueForDisplay ($value, $field)
 	{
 		JLoader::import('joomla.application.component.model');
-		JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'ContentModel');
+		JModelLegacy::addIncludePath(JPATH_BASE . '/components/com_content/models', 'ContentModel');
 		$model = JModelLegacy::getInstance('Article', 'ContentModel');
 
 		// If the article is not found an error is thrown we need to hold the

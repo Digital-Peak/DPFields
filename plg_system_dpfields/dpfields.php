@@ -30,7 +30,7 @@ class PlgSystemDPFields extends JPlugin
 
 		$this->supportedContexts = array();
 
-		foreach (explode(PHP_EOL, $this->params->get('contexts', 'com_content=article,form' . PHP_EOL . 'com_users=user,profile')) as $entry)
+		foreach (explode(PHP_EOL, $this->params->get('contexts', 'com_content=article,category,form' . PHP_EOL . 'com_users=user,profile')) as $entry)
 		{
 			$parts = explode('=', trim($entry));
 			if (count($parts) < 2)
@@ -390,6 +390,7 @@ class PlgSystemDPFields extends JPlugin
 				return '';
 			}
 		}
+
 		return JLayoutHelper::render('fields.render',
 				array(
 						'item' => $item,
@@ -414,8 +415,15 @@ class PlgSystemDPFields extends JPlugin
 
 		// Adding the fields to the object
 		$item->dpfields = array();
-		foreach ($fields as $field)
+		foreach ($fields as $key => $field)
 		{
+			// Hide the field which is for operational purposes only
+			if ($field->alias == self::DEFAULT_HIDE_ALIAS)
+			{
+				unset($fields[$key]);
+				continue;
+			}
+
 			$item->dpfields[$field->alias] = $field->value;
 		}
 
@@ -475,6 +483,9 @@ class PlgSystemDPFields extends JPlugin
 					}
 				}
 			}
+
+			// Mustache can't handle arrays with unsets properly
+			$fields = array_values($fields);
 
 			try
 			{
