@@ -60,7 +60,7 @@ class DPFieldsController extends JControllerLegacy
 			// Push document object into the view.
 			$view->document = $document;
 
-			DPFieldsHelper::addSubmenu($model->getState('filter.context'));
+			DPFieldsHelperInternal::addSubmenu($model->getState('filter.context'));
 			$view->display();
 		}
 

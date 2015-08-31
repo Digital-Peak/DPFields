@@ -88,6 +88,12 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentBeforeSave ($context, $item, $isNew)
 	{
+		// Load the category context based on the extension
+		if ($context == 'com_categories.category')
+		{
+			$context = JFactory::getApplication()->input->getCmd('extension') . '.category';
+		}
+
 		$parts = $this->getParts($context);
 		if (! $parts)
 		{
@@ -154,6 +160,12 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentAfterSave ($context, $item, $isNew)
 	{
+		// Load the category context based on the extension
+		if ($context == 'com_categories.category')
+		{
+			$context = JFactory::getApplication()->input->getCmd('extension') . '.category';
+		}
+
 		$parts = $this->getParts($context);
 		if (! $parts)
 		{
@@ -264,8 +276,16 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentPrepareForm (JForm $form, $data)
 	{
+		$context = $form->getName();
+
+		// Transform categories form name to a valid context
+		if (strpos($context, 'com_categories.category') !== false)
+		{
+			$context = str_replace('com_categories.category', '', $context) . '.category';
+		}
+
 		// Extracting the component and section
-		$parts = $this->getParts($form->getName());
+		$parts = $this->getParts($context);
 		if (! $parts)
 		{
 			return true;
