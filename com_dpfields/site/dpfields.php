@@ -7,8 +7,6 @@
  */
 defined('_JEXEC') or die();
 
-JLoader::import('components.com_dpfields.models.types.base', JPATH_ADMINISTRATOR);
-
-class DPFieldsTypeText extends DPFieldsTypeBase
-{
-}
+$controller = JControllerLegacy::getInstance('DPFields');
+$controller->execute(JFactory::getApplication()->input->get('task'));
+$controller->redirect();

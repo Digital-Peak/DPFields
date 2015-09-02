@@ -32,6 +32,16 @@ class DPFieldsViewFields extends JViewLegacy
 			return false;
 		}
 
+		$this->context = JFactory::getApplication()->input->getCmd('context');
+		$parts = DPFieldsHelper::extract($this->context);
+		if (! $parts)
+		{
+			JError::raiseError(500, 'Invalid context!!');
+			return;
+		}
+		$this->component = $parts[0];
+		$this->section = $parts[1];
+
 		$this->addToolbar();
 		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
@@ -41,14 +51,8 @@ class DPFieldsViewFields extends JViewLegacy
 	{
 		$fieldId = $this->state->get('filter.field_id');
 		$user = JFactory::getUser();
-		$context = JFactory::getApplication()->input->getCmd('context');
-		$parts = DPFieldsHelper::extract($context);
-		if (! $parts)
-		{
-			return;
-		}
-		$component = $parts[0];
-		$section = $parts[1];
+		$component = $this->component;
+		$section = $this->section;
 
 		$canDo = new JObject();
 		if (JFile::exists(JPATH_ADMINISTRATOR . '/components/' . $component . '/access.xml'))
@@ -115,7 +119,8 @@ class DPFieldsViewFields extends JViewLegacy
 		}
 
 		// Add a batch button
-		if ($user->authorise('core.create', $context) && $user->authorise('core.edit', $context) && $user->authorise('core.edit.state', $context))
+		if ($user->authorise('core.create', $this->context) && $user->authorise('core.edit', $this->context) &&
+				 $user->authorise('core.edit.state', $this->context))
 		{
 			$title = JText::_('JTOOLBAR_BATCH');
 

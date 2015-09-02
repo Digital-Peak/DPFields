@@ -1,0 +1,1 @@
+ALTER TABLE `#__dpfields_fields` CHANGE `catid` `catid` varchar(255) NOT NULL DEFAULT '' AFTER `context`;

@@ -101,6 +101,7 @@ class DPFieldsModelFields extends JModelList
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.context');
+		$id .= ':' . serialize($this->getState('filter.catid'));
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.language');
 
@@ -153,7 +154,7 @@ class DPFieldsModelFields extends JModelList
 		{
 			$categories = (array) $categories;
 			$condition = 'a.catid = 0 ';
-			$parts = explode('.', $context);
+			$parts = DPFieldsHelper::extract($context);
 			if ($parts)
 			{
 				// Get the category

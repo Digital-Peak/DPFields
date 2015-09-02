@@ -11,6 +11,7 @@ class DPFieldsHelper
 {
 
 	private static $fieldsCache = null;
+
 	private static $fieldCache = null;
 
 	/**
@@ -112,9 +113,10 @@ class DPFieldsHelper
 
 		// If item has catid parameter display only fields which belong to the
 		// category
-		if ($item && isset($item->catid))
+		if ($item && (isset($item->catid) || isset($item->dpfieldscatid)))
 		{
-			self::$fieldsCache->setState('filter.catid', is_array($item->catid) ? $item->catid : explode(',', $item->catid));
+			$catids = isset($item->catid) ? $item->catid : $item->dpfieldscatid;
+			self::$fieldsCache->setState('filter.catid', is_array($catids) ? $catids : explode(',', $catids));
 		}
 
 		$fields = self::$fieldsCache->getItems();
@@ -122,9 +124,10 @@ class DPFieldsHelper
 		{
 			if (self::$fieldCache === null)
 			{
-			self::$fieldCache = JModelLegacy::getInstance('Field', 'DPFieldsModel', array(
-					'ignore_request' => true
-			));}
+				self::$fieldCache = JModelLegacy::getInstance('Field', 'DPFieldsModel', array(
+						'ignore_request' => true
+				));
+			}
 			foreach ($fields as $field)
 			{
 				$field->value = self::$fieldCache->getFieldValue($field->id, $field->context, $item->id);

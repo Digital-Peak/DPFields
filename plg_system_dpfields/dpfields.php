@@ -102,7 +102,7 @@ class PlgSystemDPFields extends JPlugin
 		$context = $parts[0] . '.' . $parts[1];
 
 		// Loading the fields
-		$fields = DPFieldsHelper::getFields($context);
+		$fields = DPFieldsHelper::getFields($context, $item);
 		if (! $fields)
 		{
 			return true;
@@ -186,7 +186,7 @@ class PlgSystemDPFields extends JPlugin
 		}
 
 		// Loading the fields
-		$fields = DPFieldsHelper::getFields($context);
+		$fields = DPFieldsHelper::getFields($context, $item);
 		if (! $fields)
 		{
 			return true;
@@ -291,11 +291,69 @@ class PlgSystemDPFields extends JPlugin
 			return true;
 		}
 
+		if (is_array($data))
+		{
+			$data = (object) $data;
+		}
+
 		$component = $parts[0];
 		$section = $parts[1];
 
+		$catid = isset($data->catid) ? $data->catid : (isset($data->dpfieldscatid) ? $data->dpfieldscatid : null);
+		if (! $catid && $form->getField('catid'))
+		{
+			// Choose the first category available
+			$xml = new DOMDocument();
+			$xml->loadHTML($form->getField('catid')
+				->__get('input'));
+			$options = $xml->getElementsByTagName('option');
+			if ($firstChoice = $options->item(0))
+			{
+				$catid = $firstChoice->getAttribute('value');
+				$data->dpfieldscatid = $catid;
+			}
+		}
+
 		// Getting the fields
 		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data);
+
+		// If there is a catid field we need to reload the page when the catid
+		// is changed
+		if ($form->getField('catid') && $parts[0] != 'com_dpfields')
+		{
+			// The uri to submit to
+			$uri = clone JUri::getInstance('index.php');
+
+			// Removing the catid parameter from the actual url and set it as
+			// return
+			$returnUri = clone JUri::getInstance();
+			$returnUri->setVar('catid', null);
+			$uri->setVar('return', base64_encode($returnUri->toString()));
+
+			// Setting the options
+			$uri->setVar('option', 'com_dpfields');
+			$uri->setVar('task', 'field.catchange');
+			$uri->setVar('context', $parts[0] . '.' . $parts[1]);
+			$uri->setVar('formcontrol', $form->getFormControl());
+			$uri->setVar('view', null);
+			$uri->setVar('layout', null);
+
+			// Setting the onchange event to reload the page when the category
+			// has changed
+			$form->setFieldAttribute('catid', 'onchange', "categoryHasChanged(this);");
+			JFactory::getDocument()->addScriptDeclaration(
+					"function categoryHasChanged(element){
+				var cat = jQuery(element);
+				if (cat.val() == '" . $catid . "')return;
+				jQuery('input[name=task]').val('field.catchange');
+				element.form.action='" . $uri . "';
+				element.form.submit();
+			}
+			jQuery( document ).ready(function() {
+				var formControl = '#" . $form->getFormControl() . "_catid';
+				if (!jQuery(formControl).val() != '" . $catid . "'){jQuery(formControl).val(" . $catid . ");}
+			});");
+		}
 		if (! $fields)
 		{
 			return true;
@@ -343,8 +401,8 @@ class PlgSystemDPFields extends JPlugin
 				$node = $type->appendXMLFieldTag($field, $fieldset, $form);
 
 				// If the field belongs to a catid but the catid in the data is
-				// not known, set the required flag to false on any cuscumstance
-				if ((! isset($data->catid) || ! $data->catid) && $field->catid)
+				// not known, set the required flag to false on any circumstance
+				if (! $catid && $field->catid)
 				{
 					$node->setAttribute('required', 'false');
 				}
@@ -595,7 +653,7 @@ class PlgSystemDPFields extends JPlugin
 
 			if (count($tmp) == 1)
 			{
-				$parts = explode('.', $tmp[0]->context);
+				$parts = DPFieldsHelper::extract($tmp[0]->context);
 				if (count($parts) < 2)
 				{
 					return null;
