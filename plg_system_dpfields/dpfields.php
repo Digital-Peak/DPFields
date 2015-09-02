@@ -444,7 +444,7 @@ class PlgSystemDPFields extends JPlugin
 				continue;
 			}
 
-			$item->dpfields[$field->alias] = $field->value;
+			$item->dpfields[] = $field;
 		}
 
 		// If we don't meet all the requirements return
