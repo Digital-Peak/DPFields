@@ -39,7 +39,7 @@ class Com_DPFieldsInstallerScript
 		if ($type == 'install')
 		{
 			// Activate the system plugin
-			$this->run("update `#__contexts` set enabled=1 where type = 'plugin' and element = 'dpfields'");
+			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfields'");
 		}
 
 		// Will be removed on stable release

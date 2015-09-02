@@ -17,7 +17,7 @@ if (! JFactory::getUser()->authorise('core.manage', $component))
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
-JLoader::register('DPFieldsHelperInternal', JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/internal.php');
+JLoader::import('components.com_dpfields.helpers.internal', JPATH_ADMINISTRATOR);
 
 $controller = JControllerLegacy::getInstance('DPFields');
 $controller->execute($input->get('task'));

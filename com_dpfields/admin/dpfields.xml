@@ -2,13 +2,13 @@
 <extension type="component" version="3.4" method="upgrade">
 	<name>com_dpfields</name>
 	<author>Digital Peak</author>
-	<creationDate>Aug 2015</creationDate>
+	<creationDate>Sep 2015</creationDate>
 	<copyright>(C) 2012 - 2015 Digital Peak. All rights reserved.
 	</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@digital-peak.com</authorEmail>
 	<authorUrl>joomla.digital-peak.com</authorUrl>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<description>COM_DPFIELDS_XML_DESCRIPTION</description>
 
 	<install>

@@ -10,6 +10,7 @@ defined('_JEXEC') or die();
 use Joomla\Registry\Registry;
 
 JLoader::register('DPFieldsHelper', JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/dpfields.php');
+
 JLoader::import('joomla.filesystem.folder');
 JLoader::import('joomla.filesystem.file');
 

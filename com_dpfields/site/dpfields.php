@@ -7,6 +7,8 @@
  */
 defined('_JEXEC') or die();
 
+JLoader::register('DPFieldsHelper', JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/dpfields.php');
+
 $controller = JControllerLegacy::getInstance('DPFields');
 $controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();
