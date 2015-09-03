@@ -128,8 +128,12 @@ class DPFieldsHelper
 						'ignore_request' => true
 				));
 			}
-			foreach ($fields as $field)
+			$new = array();
+			foreach ($fields as $key => $original)
 			{
+				// Doing a clone, otherwise fields for different items will
+				// always reference to the same object
+				$field = clone $original;
 				$field->value = self::$fieldCache->getFieldValue($field->id, $field->context, $item->id);
 				if (! $field->value)
 				{
@@ -144,7 +148,9 @@ class DPFieldsHelper
 						$field->value = $type->prepareValueForDisplay($field->value, $field);
 					}
 				}
+				$new[$key] = $field;
 			}
+			$fields = $new;
 		}
 		return $fields;
 	}
