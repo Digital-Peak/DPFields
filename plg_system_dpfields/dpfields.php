@@ -109,24 +109,21 @@ class PlgSystemDPFields extends JPlugin
 			return true;
 		}
 
-		// Load the item params
-		$params = null;
+		$params = new Registry();
+
+		// Load the item params from the request
+		$data = JFactory::getApplication()->input->post->get('jform', array(), 'array');
+		if (key_exists('params', $data))
+		{
+			$params->loadArray($data['params']);
+		}
+
+		// Load the params from the item itself
 		if (isset($item->params))
 		{
-			$params = new Registry();
 			$params->loadString($item->params);
-			$params = $params->toArray();
 		}
-		else
-		{
-			// If the item doesn't have the params attribute loead the values
-			// directly from the input
-			$data = JFactory::getApplication()->input->post->get('jform', array(), 'array');
-			if (key_exists('params', $data))
-			{
-				$params = $data['params'];
-			}
-		}
+		$params = $params->toArray();
 
 		if (! $params)
 		{
