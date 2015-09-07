@@ -31,7 +31,9 @@ class PlgSystemDPFields extends JPlugin
 
 		$this->supportedContexts = array();
 
-		foreach (explode(PHP_EOL, $this->params->get('contexts', 'com_content=article,category,form' . PHP_EOL . 'com_users=user,profile')) as $entry)
+		foreach (explode(PHP_EOL,
+				$this->params->get('contexts',
+						'com_content=article,category,form' . PHP_EOL . 'com_users=user,profile' . PHP_EOL . 'com_modules=module')) as $entry)
 		{
 			$parts = explode('=', trim($entry));
 			if (count($parts) < 2)
@@ -80,6 +82,13 @@ class PlgSystemDPFields extends JPlugin
 		{
 			$section = $this->supportedContexts[$component];
 			$section = explode(',', $section)[0];
+		}
+
+		if ($component == 'com_modules')
+		{
+			// Add link to modules list as they don't have a navigation menu
+			JFactory::getLanguage()->load('com_modules');
+			JHtmlSidebar::addEntry(JText::_('COM_MODULES_MODULES'), 'index.php?option=com_modules', $app->input->getCmd('option') == 'com_modules');
 		}
 
 		// Add the fields entry
@@ -220,6 +229,16 @@ class PlgSystemDPFields extends JPlugin
 		return true;
 	}
 
+	public function onExtensionBeforeSave ($context, $item, $isNew)
+	{
+		return $this->onContentBeforeSave($context, $item, $isNew);
+	}
+
+	public function onExtensionAfterSave ($context, $item, $isNew)
+	{
+		return $this->onContentAfterSave($context, $item, $isNew);
+	}
+
 	public function onUserAfterSave ($userData, $isNew, $success, $msg)
 	{
 		// It is not possible to manipulate the user during save events
@@ -265,6 +284,11 @@ class PlgSystemDPFields extends JPlugin
 		return true;
 	}
 
+	public function onExtensionAfterDelete ($context, $item)
+	{
+		return $this->onContentAfterDelete($context, $item);
+	}
+
 	public function onUserAfterDelete ($user, $succes, $msg)
 	{
 		$item = new stdClass();
@@ -287,6 +311,13 @@ class PlgSystemDPFields extends JPlugin
 		if (! $parts)
 		{
 			return true;
+		}
+
+		// If we are on the save command we need the actual data
+		$jformData = JFactory::getApplication()->input->get('jform', array(), 'array');
+		if ($jformData && ! $data)
+		{
+			$data = $jformData;
 		}
 
 		if (is_array($data))
@@ -349,7 +380,7 @@ class PlgSystemDPFields extends JPlugin
 			}
 			jQuery( document ).ready(function() {
 				var formControl = '#" . $form->getFormControl() . "_catid';
-				if (!jQuery(formControl).val() != '" . $catid . "'){jQuery(formControl).val(" . $catid . ");}
+				if (!jQuery(formControl).val() != '" . $catid . "'){jQuery(formControl).val('" . $catid . "');}
 			});");
 		}
 		if (! $fields)
@@ -500,11 +531,11 @@ class PlgSystemDPFields extends JPlugin
 				continue;
 			}
 
-			$item->dpfields[] = $field;
+			$item->dpfields[$field->id] = $field;
 		}
 
 		// If we don't meet all the requirements return
-		if (! isset($item->id) || ! $item->id || ! $item->text || ! JString::strpos($item->text, 'dpfields') !== false)
+		if (! isset($item->id) || ! $item->id || ! isset($item->text) || ! $item->text || ! JString::strpos($item->text, 'dpfields') !== false)
 		{
 			return true;
 		}
@@ -582,6 +613,18 @@ class PlgSystemDPFields extends JPlugin
 			{
 				JFactory::getApplication()->enqueueMessage($e->getMessage(), 'warning');
 			}
+		}
+		return true;
+	}
+
+	public function onAfterCleanModuleList ($modules)
+	{
+		foreach ($modules as $module)
+		{
+			$module->text = $module->content;
+			$this->onContentPrepare('com_modules.module', $module);
+			$module->content = $module->text;
+			unset($module->text);
 		}
 		return true;
 	}

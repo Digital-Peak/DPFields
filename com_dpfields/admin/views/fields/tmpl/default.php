@@ -147,6 +147,11 @@ if ($saveOrder)
 									$cats = explode(',', $item->catid);
 									foreach ($cats as $cat)
 									{
+										if (empty($cat))
+										{
+											continue;
+										}
+
 										$c = $category->get($cat);
 										if (!$c || $c->id == 'root')
 										{

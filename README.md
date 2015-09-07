@@ -1,6 +1,6 @@
 DPFields
 =============
-This is the official DPFields Github repository. DPFields is a Joomla extension suite which adds custom fields for Articles, Users, DPCalendar events or DPCases cases. But it's purpose is to server Joomla extension developers a custom fields feature with minimal code changes.
+This is the official DPFields Github repository. DPFields is a Joomla extension suite which adds custom fields for Articles, Users, Categories, Modules, DPCalendar events or DPCases cases. But it's main purpose is to serve Joomla extension developers a custom fields feature with minimal code changes.
 
 PREREQUISITS
 ------------
