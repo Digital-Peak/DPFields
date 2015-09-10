@@ -143,23 +143,26 @@ if ($saveOrder)
 									<?php endif; ?>
 									<?php
 									$category = JCategories::getInstance(str_replace('com_', '', $this->component));
-									$buffer = JText::_('JCATEGORY') . ': ';
-									$cats = explode(',', $item->catid);
-									foreach ($cats as $cat)
+									if ($category)
 									{
-										if (empty($cat))
+										$buffer = JText::_('JCATEGORY') . ': ';
+										$cats = explode(',', $item->catid);
+										foreach ($cats as $cat)
 										{
-											continue;
-										}
+											if (empty($cat))
+											{
+												continue;
+											}
 
-										$c = $category->get($cat);
-										if (!$c || $c->id == 'root')
-										{
-											continue;
+											$c = $category->get($cat);
+											if (!$c || $c->id == 'root')
+											{
+												continue;
+											}
+											$buffer .= ' ' . $c->title .',';
 										}
-										$buffer .= ' ' . $c->title .',';
+										echo trim($buffer, ',');
 									}
-									echo trim($buffer, ',');
 									?>
 								</span>
 							</td>
