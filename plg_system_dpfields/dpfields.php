@@ -589,6 +589,16 @@ class PlgSystemDPFields extends JPlugin
 						}
 					}
 				}
+				if ($paramKey == 'alias')
+				{
+					foreach ($fields as $key => $field)
+					{
+						if ($field->alias != $paramValue)
+						{
+							unset($fields[$key]);
+						}
+					}
+				}
 			}
 
 			// Mustache can't handle arrays with unsets properly
