@@ -556,6 +556,10 @@ class PlgSystemDPFields extends JPlugin
 					'}}'
 			), '', $starts[0][0]));
 
+			// Clone the fields because we are manipulating the array and need
+			// it on the next iteration again
+			$contextFields = array_merge(array(), $fields);
+
 			// Loop trough the params and set them on the model
 			foreach ($params as $string)
 			{
@@ -581,28 +585,28 @@ class PlgSystemDPFields extends JPlugin
 				{
 					$paramValue = explode(',', $paramValue);
 					JArrayHelper::toInteger($paramValue);
-					foreach ($fields as $key => $field)
+					foreach ($contextFields as $key => $field)
 					{
 						if (! in_array($field->id, $paramValue))
 						{
-							unset($fields[$key]);
+							unset($contextFields[$key]);
 						}
 					}
 				}
 				if ($paramKey == 'alias')
 				{
-					foreach ($fields as $key => $field)
+					foreach ($contextFields as $key => $field)
 					{
 						if ($field->alias != $paramValue)
 						{
-							unset($fields[$key]);
+							unset($contextFields[$key]);
 						}
 					}
 				}
 			}
 
 			// Mustache can't handle arrays with unsets properly
-			$fields = array_values($fields);
+			$contextFields = array_values($contextFields);
 
 			try
 			{
@@ -613,7 +617,7 @@ class PlgSystemDPFields extends JPlugin
 				$m = new Mustache_Engine();
 				$output = $m->render('{{#dpfields}}' . substr($item->text, $start, $end - $start) . '{{/dpfields}}',
 						array(
-								'dpfields' => $fields
+								'dpfields' => $contextFields
 						));
 
 				// Set the output on the item
