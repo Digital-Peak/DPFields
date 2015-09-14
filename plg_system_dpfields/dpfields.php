@@ -498,6 +498,11 @@ class PlgSystemDPFields extends JPlugin
 			}
 		}
 
+		if (is_string($params))
+		{
+			$params = new Registry($params);
+		}
+
 		return JLayoutHelper::render('fields.render',
 				array(
 						'item' => $item,
