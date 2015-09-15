@@ -657,14 +657,29 @@ class PlgSystemDPFields extends JPlugin
 		{
 			foreach ($tax as $context => $value)
 			{
+				// This is only a guess, needs to be improved
 				$component = strtolower($context);
 				if (strpos($context, 'com_') !== 0)
 				{
 					$component = 'com_' . $component;
 				}
 
+				// Transofrm com_article to com_content
+				if ($component == 'com_article')
+				{
+					$component = 'com_content';
+				}
+
+				// Create a dummy object with the required fields
+				$tmp = new stdClass();
+				$tmp->id = $item->__get('id');
+				if ($item->__get('catid'))
+				{
+					$tmp->catid = $item->__get('catid');
+				}
+
 				// Getting the fields for the constructed context
-				$fields = DPFieldsHelper::getFields($component . '.' . $section, $item, true);
+				$fields = DPFieldsHelper::getFields($component . '.' . $section, $tmp, true);
 				if (is_array($fields))
 				{
 					foreach ($fields as $field)
