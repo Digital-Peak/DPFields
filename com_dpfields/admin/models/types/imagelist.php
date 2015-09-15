@@ -19,6 +19,10 @@ class DPFieldsTypeImagelist extends DPFieldsTypeBase
 		$buffer = '';
 		foreach ($value as $path)
 		{
+			if (! $path)
+			{
+				continue;
+			}
 			$buffer .= '<img src="' . $field->fieldparams->get('directory', 'images') . '/' . $path . '"/>';
 		}
 		return $buffer;

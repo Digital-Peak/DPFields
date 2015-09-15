@@ -14,16 +14,15 @@ class DPFieldsTypeUser extends DPFieldsTypeBase
 
 	public function prepareValueForDisplay ($value, $field)
 	{
-		if (! is_array($value))
-		{
-			$value = array(
-					$value
-			);
-		}
+		$value = (array) $value;
 
 		$texts = array();
 		foreach ($value as $userId)
 		{
+			if (! $userId)
+			{
+				continue;
+			}
 			$user = JFactory::getUser($userId);
 			if ($user)
 			{

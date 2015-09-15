@@ -20,6 +20,10 @@ class DPFieldsTypeSql extends DPFieldsTypeBase
 		$condition = '';
 		foreach ($value as $v)
 		{
+			if (! $v)
+			{
+				continue;
+			}
 			$condition .= ', ' . $db->q($v);
 		}
 

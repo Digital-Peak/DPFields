@@ -19,6 +19,10 @@ class DPFieldsTypeMedia extends DPFieldsTypeBase
 		$buffer = '';
 		foreach ($value as $path)
 		{
+			if (! $path)
+			{
+				continue;
+			}
 			$buffer .= '<img src="' . $path . '"/>';
 		}
 		return $buffer;
