@@ -70,6 +70,9 @@ class DPFieldsTableField extends JTable
 		{
 			$this->alias = JString::increment($alias, 'dash');
 		}
+
+		$this->alias = str_replace(',', '-', $this->alias);
+
 		if (empty($this->type))
 		{
 			$this->type = 'text';

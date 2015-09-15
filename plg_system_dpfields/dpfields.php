@@ -600,9 +600,10 @@ class PlgSystemDPFields extends JPlugin
 				}
 				if ($paramKey == 'alias')
 				{
+					$paramValue = explode(',', $paramValue);
 					foreach ($contextFields as $key => $field)
 					{
-						if ($field->alias != $paramValue)
+						if (! in_array($field->alias, $paramValue))
 						{
 							unset($contextFields[$key]);
 						}
