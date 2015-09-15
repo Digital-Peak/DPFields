@@ -540,7 +540,8 @@ class PlgSystemDPFields extends JPlugin
 		}
 
 		// If we don't meet all the requirements return
-		if (! isset($item->id) || ! $item->id || ! isset($item->text) || ! $item->text || ! JString::strpos($item->text, 'dpfields') !== false)
+		if (! isset($item->id) || ! $item->id || ! isset($item->text) || ! $item->text || ! JString::strpos($item->text, 'dpfields') !== false ||
+				 ! $this->params->get('prepare_content', '1'))
 		{
 			return true;
 		}
