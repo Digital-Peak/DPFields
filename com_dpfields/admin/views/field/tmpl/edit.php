@@ -95,7 +95,9 @@ JFactory::getDocument()->addScriptDeclaration('
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 		<?php endif; ?>
 
-		<?php echo JLayoutHelper::render('joomla.edit.params', $this); ?>
+		<?php
+		$this->set('ignore_fieldsets', array('fieldparams'));
+		echo JLayoutHelper::render('joomla.edit.params', $this); ?>
 
 		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 
