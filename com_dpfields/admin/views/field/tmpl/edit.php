@@ -27,6 +27,16 @@ JFactory::getDocument()->addScriptDeclaration('
 			Joomla.submitform(task, document.getElementById("item-form"));
 		}
 	};
+	jQuery(document).ready(function() {
+		jQuery("#jform_title").data("dp-old-value", jQuery("#jform_title").val());
+		jQuery("#jform_title").change(function(data, handler) {
+			if(jQuery("#jform_title").data("dp-old-value") == jQuery("#jform_label").val()) {
+				jQuery("#jform_label").val(jQuery("#jform_title").val());
+			}
+
+			jQuery("#jform_title").data("dp-old-value", jQuery("#jform_title").val());
+		});
+	});
 ');
 
 ?>
