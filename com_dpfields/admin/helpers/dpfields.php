@@ -139,6 +139,7 @@ class DPFieldsHelper
 				{
 					$field->value = $field->default_value;
 				}
+				$field->rawvalue = $field->value;
 
 				if ($prepareValue)
 				{
