@@ -30,6 +30,12 @@ JLoader::register('DPFieldsHelper', JPATH_ADMINISTRATOR . '/components/com_dpfie
 $parts = explode('.', $context);
 $component = $parts[0];
 
+$fields = DPFieldsHelper::getFields($context, $item, true);
+if (! $fields)
+{
+	return;
+}
+
 // Load some output definitions
 $container = 'dl';
 if (key_exists('container', $displayData) && $displayData['container'])
@@ -46,7 +52,7 @@ if (key_exists('container-class', $displayData) && $displayData['container-class
 echo '<' . $container . ' class="' . $class . '">';
 
 // Loop trough the fields and print them
-foreach (DPFieldsHelper::getFields($context, $item, true) as $field)
+foreach ($fields as $field)
 {
 	// If the value is empty dp nothing
 	if (! isset($field->value) || ! $field->value)
@@ -54,14 +60,15 @@ foreach (DPFieldsHelper::getFields($context, $item, true) as $field)
 		continue;
 	}
 
-	$output = JLayoutHelper::render('field.render', array(
-			'label' => $field->label,
-			'value' => $field->value,
-			'class' => $field->render_class
-	), null, array(
-			'component' => $component,
-			'client' => 0
-	));
+	$output = JLayoutHelper::render('field.render',
+			array(
+					'label' => $field->label,
+					'value' => $field->value,
+					'class' => $field->render_class
+			), null, array(
+					'component' => $component,
+					'client' => 0
+			));
 
 	/*
 	 * Because the layout refreshes the paths before the render function is
@@ -72,14 +79,15 @@ foreach (DPFieldsHelper::getFields($context, $item, true) as $field)
 	 */
 	if (! $output)
 	{
-		$output = JLayoutHelper::render('field.render', array(
-				'label' => $field->label,
-				'value' => $field->value,
-				'class' => $field->render_class
-		), null, array(
-				'component' => 'com_dpfields',
-				'client' => 0
-		));
+		$output = JLayoutHelper::render('field.render',
+				array(
+						'label' => $field->label,
+						'value' => $field->value,
+						'class' => $field->render_class
+				), null, array(
+						'component' => 'com_dpfields',
+						'client' => 0
+				));
 	}
 
 	echo $output;
