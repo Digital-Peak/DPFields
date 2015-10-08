@@ -9,10 +9,15 @@ defined('_JEXEC') or die();
 
 use Joomla\Registry\Registry;
 
-JLoader::register('DPFieldsHelper', JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/dpfields.php');
-
 JLoader::import('joomla.filesystem.folder');
 JLoader::import('joomla.filesystem.file');
+
+if (! JFile::exists(JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/dpfields.php'))
+{
+	return;
+}
+
+JLoader::register('DPFieldsHelper', JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/dpfields.php');
 
 class PlgSystemDPFields extends JPlugin
 {
@@ -46,6 +51,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onAfterRoute ()
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return;
+		}
+
 		$app = JFactory::getApplication();
 
 		// Only add entries on back end
@@ -98,6 +108,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentBeforeSave ($context, $item, $isNew)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return true;
+		}
+
 		// Load the category context based on the extension
 		if ($context == 'com_categories.category')
 		{
@@ -167,6 +182,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentAfterSave ($context, $item, $isNew)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return true;
+		}
+
 		// Load the category context based on the extension
 		if ($context == 'com_categories.category')
 		{
@@ -241,6 +261,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onUserAfterSave ($userData, $isNew, $success, $msg)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return true;
+		}
+
 		// It is not possible to manipulate the user during save events
 		// http://joomla.stackexchange.com/questions/10693/changing-user-group-in-onuserbeforesave-of-user-profile-plugin-doesnt-work
 
@@ -268,6 +293,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentAfterDelete ($context, $item)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return true;
+		}
+
 		$parts = $this->getParts($context);
 		if (! $parts)
 		{
@@ -291,6 +321,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onUserAfterDelete ($user, $succes, $msg)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return true;
+		}
+
 		$item = new stdClass();
 		$item->id = $user['id'];
 		return $this->onContentAfterDelete('com_users.user', $item);
@@ -298,6 +333,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentPrepareForm (JForm $form, $data)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return true;
+		}
+
 		$context = $form->getName();
 
 		// Transform categories form name to a valid context
@@ -467,6 +507,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentPrepareData ($context, $data)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return;
+		}
+
 		$parts = $this->getParts($context);
 		if (! $parts)
 		{
@@ -481,6 +526,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentBeforeDisplay ($context, $item, $params, $limitstart = 0)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return '';
+		}
+
 		$parts = $this->getParts($context);
 		if (! $parts)
 		{
@@ -516,6 +566,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentPrepare ($context, $item)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return;
+		}
+
 		$parts = $this->getParts($context);
 		if (! $parts)
 		{
@@ -639,6 +694,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onAfterCleanModuleList ($modules)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return true;
+		}
+
 		foreach ($modules as $module)
 		{
 			$module->text = $module->content;
@@ -651,6 +711,11 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onPrepareFinderContent ($item)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return true;
+		}
+
 		$section = strtolower($item->layout);
 		$tax = $item->getTaxonomy('Type');
 		if ($tax)
@@ -698,6 +763,11 @@ class PlgSystemDPFields extends JPlugin
 
 	private function getParts ($context)
 	{
+		if (! $this->isComponentAvailable())
+		{
+			return null;
+		}
+
 		$parts = DPFieldsHelper::extract($context);
 		if (! $parts)
 		{
@@ -738,5 +808,10 @@ class PlgSystemDPFields extends JPlugin
 		}
 
 		return $parts;
+	}
+
+	private function isComponentAvailable ()
+	{
+		return JFile::exists(JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/dpfields.php');
 	}
 }
