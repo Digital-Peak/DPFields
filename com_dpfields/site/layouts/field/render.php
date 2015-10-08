@@ -18,9 +18,15 @@ if (! $value)
 {
 	return;
 }
+
+$class = '';
+if (isset($displayData['class']))
+{
+	$class = $displayData['class'];
+}
 ?>
 
-<dd class="dpfield-entry">
+<dd class="dpfield-entry <?php echo $class;?>">
 	<span class="dpfield-label"><?php echo htmlentities($label);?>: </span>
 	<span class="dpfield-value"><?php echo $value;?></span>
 </dd>

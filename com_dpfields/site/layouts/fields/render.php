@@ -56,7 +56,8 @@ foreach (DPFieldsHelper::getFields($context, $item, true) as $field)
 
 	$output = JLayoutHelper::render('field.render', array(
 			'label' => $field->label,
-			'value' => $field->value
+			'value' => $field->value,
+			'class' => $field->render_class
 	), null, array(
 			'component' => $component,
 			'client' => 0
@@ -73,7 +74,8 @@ foreach (DPFieldsHelper::getFields($context, $item, true) as $field)
 	{
 		$output = JLayoutHelper::render('field.render', array(
 				'label' => $field->label,
-				'value' => $field->value
+				'value' => $field->value,
+				'class' => $field->render_class
 		), null, array(
 				'component' => 'com_dpfields',
 				'client' => 0

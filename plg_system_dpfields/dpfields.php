@@ -397,7 +397,6 @@ class PlgSystemDPFields extends JPlugin
 
 		// Defining the field set
 		$fieldset = $fieldsNode->appendChild(new DOMElement('fieldset'));
-		$fieldset->setAttribute('name', 'params');
 		$fieldset->setAttribute('name', 'dpfields');
 		$fieldset->setAttribute('addfieldpath', '/administrator/components/' . $component . '/models/fields');
 		$fieldset->setAttribute('addrulepath', '/administrator/components/' . $component . '/models/rules');

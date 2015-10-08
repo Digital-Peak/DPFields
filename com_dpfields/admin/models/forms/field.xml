@@ -31,6 +31,9 @@
 	<field name="default_value" type="textarea" filter="raw"
 		label="COM_DPFIELDS_FIELD_FIELD_DEFAULT_VALUE_LABEL" description="COM_DPFIELDS_FIELD_FIELD_DEFAULT_VALUE_DESC"
 		class="input-xxlarge" size="40" />
+	<field name="render_class" type="textarea" label="COM_DPFIELDS_FIELD_FIELD_RENDER_CLASS_LABEL"
+		description="COM_DPFIELDS_FIELD_FIELD_RENDER_CLASS_DESC" class="input-xxlarge"
+		size="40" />
 	<field name="class" type="textarea" label="COM_DPFIELDS_FIELD_FIELD_CLASS_LABEL"
 		description="COM_DPFIELDS_FIELD_FIELD_CLASS_DESC" class="input-xxlarge"
 		size="40" />

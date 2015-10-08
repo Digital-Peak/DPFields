@@ -1,0 +1,1 @@
+ALTER TABLE `#__dpfields_fields` ADD `render_class` varchar(255) NOT NULL DEFAULT '' AFTER `type`;
