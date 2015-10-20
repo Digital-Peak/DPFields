@@ -7,8 +7,6 @@
  */
 defined('_JEXEC') or die();
 
-JLoader::import('joomla.filesystem.file');
-
 class DPFieldsViewFields extends JViewLegacy
 {
 
