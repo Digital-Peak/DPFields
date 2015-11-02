@@ -91,7 +91,8 @@ class PlgSystemDPFields extends JPlugin
 		if (! $section)
 		{
 			$section = $this->supportedContexts[$component];
-			$section = explode(',', $section)[0];
+			$sections = explode(',', $section);
+			$section = reset($sections);
 		}
 
 		if ($component == 'com_modules')

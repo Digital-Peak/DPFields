@@ -2,7 +2,7 @@
 <extension type="component" version="3.4" method="upgrade">
 	<name>com_dpfields</name>
 	<author>Digital Peak</author>
-	<creationDate>Oct 2015</creationDate>
+	<creationDate>Nov 2015</creationDate>
 	<copyright>(C) 2012 - 2015 Digital Peak. All rights reserved.
 	</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
