@@ -494,7 +494,7 @@ class PlgSystemDPFields extends JPlugin
 			foreach ($fields as $field)
 			{
 				$value = $model->getFieldValue($field->id, $field->context, $data->id);
-				if (! $value)
+				if ($value === null)
 				{
 					continue;
 				}

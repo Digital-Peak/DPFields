@@ -383,7 +383,7 @@ class DPFieldsModelField extends JModelAdmin
 		$needsDelete = false;
 		$needsInsert = false;
 		$needsUpdate = false;
-		if ($field->default_value == $value || ! $value)
+		if ($field->default_value == $value)
 		{
 			$needsDelete = true;
 		}

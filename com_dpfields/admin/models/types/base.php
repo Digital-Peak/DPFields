@@ -44,7 +44,10 @@ class DPFieldsTypeBase
 
 		// Set the disabled state based on the parameter and the permission
 		$authorizedToEdit = JFactory::getUser()->authorise('edit.value', $field->context . '.field.' . (int) $field->id);
-		$node->setAttribute('disabled', $field->params->get('disabled', 0) || ! $authorizedToEdit ? 'true' : 'false');
+		if ($field->params->get('disabled', 0) || ! $authorizedToEdit)
+		{
+			$node->setAttribute('disabled', 'true');
+		}
 
 		foreach ($field->fieldparams->toArray() as $key => $param)
 		{
