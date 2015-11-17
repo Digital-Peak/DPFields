@@ -28,8 +28,6 @@ class PlgSystemDPFields extends JPlugin
 
 	private $supportedContexts;
 
-	private $onUserSave = false;
-
 	public function __construct ($subject, $config)
 	{
 		parent::__construct($subject, $config);
@@ -271,7 +269,7 @@ class PlgSystemDPFields extends JPlugin
 		// http://joomla.stackexchange.com/questions/10693/changing-user-group-in-onuserbeforesave-of-user-profile-plugin-doesnt-work
 
 		// Check if data is valid or we are in a recursion
-		if (! $userData['id'] || $this->onUserSave || ! $success)
+		if (! $userData['id'] || ! $success)
 		{
 			return true;
 		}
@@ -284,10 +282,9 @@ class PlgSystemDPFields extends JPlugin
 		$this->onContentAfterSave('com_users.user', $user, false);
 
 		// Save the user with the modifed params
-		$this->onUserSave = true;
-		$user->setParameters(new Registry($user->params));
-		$user->save();
-		$this->onUserSave = false;
+		$db = JFactory::getDbo();
+		$db->setQuery('update #__users set params = ' . $db->q($user->params));
+		$db->query();
 
 		return true;
 	}

@@ -64,6 +64,7 @@ foreach ($fields as $field)
 			array(
 					'label' => $field->label,
 					'value' => $field->value,
+					'field' => $field,
 					'class' => $field->render_class
 			), null, array(
 					'component' => $component,
@@ -83,6 +84,7 @@ foreach ($fields as $field)
 				array(
 						'label' => $field->label,
 						'value' => $field->value,
+						'field' => $field,
 						'class' => $field->render_class
 				), null, array(
 						'component' => 'com_dpfields',
