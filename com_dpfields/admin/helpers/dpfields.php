@@ -143,16 +143,80 @@ class DPFieldsHelper
 
 				if ($prepareValue)
 				{
-					$type = self::loadTypeObject($field->type, $field->context);
+					$value = null;
+
+					// Is deprecated
+					$type = self::loadTypeObject($field->type, $context);
 					if ($type)
 					{
-						$field->value = $type->prepareValueForDisplay($field->value, $field);
+						$value = $type->prepareValueForDisplay($field->value, $field);
 					}
+
+					if (! $value)
+					{
+						// Prepare the value from the type layout
+						$value = self::render($context, 'field.prepare.' . $field->type, array(
+								'field' => $field
+						));
+					}
+
+					// If the value is empty, render the base layout
+					if (! $value)
+					{
+						$value = self::render($context, 'field.prepare.base', array(
+								'field' => $field
+						));
+					}
+
+					$field->value = $value;
 				}
 				$new[$key] = $field;
 			}
 			$fields = $new;
 		}
 		return $fields;
+	}
+
+	/**
+	 * Renders the layout file and data on the context and does a fall back to
+	 * DPFields afterwards.
+	 *
+	 * @param string $context
+	 * @param string $layoutFile
+	 * @param array $displayData
+	 * @return NULL|string
+	 */
+	public static function render ($context, $layoutFile, $displayData)
+	{
+
+		$value = null;
+
+		/*
+		 * Because the layout refreshes the paths before the render function is
+		 * called, so there is no way to load the layout overrides in the order
+		 * template -> context -> dpfields.
+		 * If there is no override in the context then we need to call the
+		 * layout
+		 * from DPFields.
+		 */
+		if ($parts = self::extract($context))
+		{
+			// Trying to render the layout on the component fom the context
+			$value = JLayoutHelper::render($layoutFile, $displayData, null, array(
+					'component' => $parts[0],
+					'client' => 0
+			));
+		}
+
+		if (! $value)
+		{
+			// Trying to render the layout on DPFields itself
+			$value = JLayoutHelper::render($layoutFile, $displayData, null, array(
+					'component' => 'com_dpfields',
+					'client' => 0
+			));
+		}
+
+		return $value;
 	}
 }

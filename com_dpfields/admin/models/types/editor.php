@@ -12,11 +12,6 @@ JLoader::import('components.com_dpfields.models.types.base', JPATH_ADMINISTRATOR
 class DPFieldsTypeEditor extends DPFieldsTypeBase
 {
 
-	public function prepareValueForDisplay ($value, $field)
-	{
-		return JHTML::_('content.prepare', $value);
-	}
-
 	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$fieldNode->setAttribute('buttons', $field->fieldparams->get('buttons', 0) ? 'true' : 'false');

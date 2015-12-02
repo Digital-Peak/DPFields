@@ -13,17 +13,21 @@ if (! key_exists('field', $displayData))
 }
 
 $field = $displayData['field'];
-$label = $field->label;
 $value = $field->value;
 if (! $value)
 {
 	return;
 }
 
-$class = $field->render_class;
-?>
+$value = (array) $value;
 
-<dd class="dpfield-entry <?php echo $class;?>">
-	<span class="dpfield-label"><?php echo htmlentities($label);?>: </span>
-	<span class="dpfield-value"><?php echo $value;?></span>
-</dd>
+$texts = array();
+foreach (DPFieldsHelper::loadTypeObject($field->type, $field->context)->getOptions($field) as $index => $optionsValue)
+{
+	if (in_array($index, $value))
+	{
+		$texts[] = $optionsValue;
+	}
+}
+
+echo htmlentities(implode(', ', $texts));

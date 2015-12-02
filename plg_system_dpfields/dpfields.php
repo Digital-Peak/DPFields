@@ -550,15 +550,12 @@ class PlgSystemDPFields extends JPlugin
 			$params = new Registry($params);
 		}
 
-		return JLayoutHelper::render('fields.render',
+		return DPFieldsHelper::render($context, 'fields.render',
 				array(
 						'item' => $item,
 						'context' => $context,
 						'container' => $params->get('dpfields-container'),
 						'container-class' => $params->get('dpfields-container-class')
-				), null, array(
-						'component' => 'com_dpfields',
-						'client' => 0
 				));
 	}
 

@@ -12,11 +12,6 @@ JLoader::import('components.com_dpfields.models.types.base', JPATH_ADMINISTRATOR
 class DPFieldsTypeCaptcha extends DPFieldsTypeBase
 {
 
-	public function prepareValueForDisplay ($value, $field)
-	{
-		return '';
-	}
-
 	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$input = JFactory::getApplication()->input;

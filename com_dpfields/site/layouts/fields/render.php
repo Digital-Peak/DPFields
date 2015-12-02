@@ -60,39 +60,20 @@ foreach ($fields as $field)
 		continue;
 	}
 
-	$output = JLayoutHelper::render('field.render',
+	echo DPFieldsHelper::render($context, 'field.render',
 			array(
-					'label' => $field->label,
-					'value' => $field->value,
 					'field' => $field,
+
+					// @deprecated use $field->label directly in the render
+					// layout of the field
+					'label' => $field->label,
+					// @deprecated use $field->value directly in the render
+					// layout of the field
+					'value' => $field->value,
+					// @deprecated use $field->render_class directly in the
+					// render layout of the field
 					'class' => $field->render_class
-			), null, array(
-					'component' => $component,
-					'client' => 0
 			));
-
-	/*
-	 * Because the layout refreshes the paths before the render function is
-	 * called, so there is no way to load the layout overrides in the order
-	 * template -> context -> dpfields.
-	 * If there is no override in the context then we need to call the layout
-	 * from DPField.
-	 */
-	if (! $output)
-	{
-		$output = JLayoutHelper::render('field.render',
-				array(
-						'label' => $field->label,
-						'value' => $field->value,
-						'field' => $field,
-						'class' => $field->render_class
-				), null, array(
-						'component' => 'com_dpfields',
-						'client' => 0
-				));
-	}
-
-	echo $output;
 }
 
 // Close the container

@@ -48,7 +48,7 @@ class DPFieldsTypeYesno extends DPFieldsTypeList
 		return $return;
 	}
 
-	protected function getOptions ($field)
+	public function getOptions ($field)
 	{
 		return array(
 				1 => JText::_('JYES'),

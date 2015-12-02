@@ -13,17 +13,22 @@ if (! key_exists('field', $displayData))
 }
 
 $field = $displayData['field'];
-$label = $field->label;
 $value = $field->value;
 if (! $value)
 {
 	return;
 }
 
-$class = $field->render_class;
-?>
+$value = (array) $value;
+JLoader::register('UsersHelper', JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php');
 
-<dd class="dpfield-entry <?php echo $class;?>">
-	<span class="dpfield-label"><?php echo htmlentities($label);?>: </span>
-	<span class="dpfield-value"><?php echo $value;?></span>
-</dd>
+$texts = array();
+foreach (UsersHelper::getGroups() as $group)
+{
+	if (in_array($group->value, $value))
+	{
+		$texts[] = htmlentities(trim($group->text, '- '));
+	}
+}
+
+echo htmlentities(implode(', ', $texts));

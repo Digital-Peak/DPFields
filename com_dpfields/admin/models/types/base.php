@@ -68,14 +68,12 @@ class DPFieldsTypeBase
 	 * @param stdClass $field
 	 * @param mixed $value
 	 * @return string
+	 *
+	 * @deprecated is replaced trough layouts
 	 */
 	public function prepareValueForDisplay ($value, $field)
 	{
-		if (is_array($value))
-		{
-			$value = implode(', ', $value);
-		}
-		return htmlentities($value);
+		return null;
 	}
 
 	/**

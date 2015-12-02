@@ -13,17 +13,15 @@ if (! key_exists('field', $displayData))
 }
 
 $field = $displayData['field'];
-$label = $field->label;
 $value = $field->value;
 if (! $value)
 {
 	return;
 }
 
-$class = $field->render_class;
-?>
-
-<dd class="dpfield-entry <?php echo $class;?>">
-	<span class="dpfield-label"><?php echo htmlentities($label);?>: </span>
-	<span class="dpfield-value"><?php echo $value;?></span>
-</dd>
+$attributes = '';
+if (! JUri::isInternal($value))
+{
+	$attributes = 'rel="nofollow" target="_blank"';
+}
+echo '<a href="' . $value . '" ' . $attributes . '>' . $value . '</a>';

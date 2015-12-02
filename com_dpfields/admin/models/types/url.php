@@ -12,21 +12,6 @@ JLoader::import('components.com_dpfields.models.types.base', JPATH_ADMINISTRATOR
 class DPFieldsTypeUrl extends DPFieldsTypeBase
 {
 
-	public function prepareValueForDisplay ($value, $field)
-	{
-		if (! $value)
-		{
-			return $value;
-		}
-
-		$attributes = '';
-		if (! JUri::isInternal($value))
-		{
-			$attributes = 'rel="nofollow" target="_blank"';
-		}
-		return '<a href="' . $value . '" ' . $attributes . '>' . $value . '</a>';
-	}
-
 	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$fieldNode->setAttribute('validate', 'url');

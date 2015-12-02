@@ -14,17 +14,7 @@ class DPFieldsTypeUsergrouplist extends DPFieldsTypeBase
 
 	public function prepareValueForDisplay ($value, $field)
 	{
-		$value = (array) $value;
-		JLoader::register('UsersHelper', JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php');
 
-		$texts = array();
-		foreach (UsersHelper::getGroups() as $group)
-		{
-			if (in_array($group->value, $value))
-			{
-				$texts[] = parent::prepareValueForDisplay(trim($group->text, '- '), $field);
-			}
-		}
 		return parent::prepareValueForDisplay($texts, $field);
 	}
 }

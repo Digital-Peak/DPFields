@@ -7,8 +7,16 @@
  */
 defined('_JEXEC') or die();
 
-JLoader::import('components.com_dpfields.models.types.base', JPATH_ADMINISTRATOR);
-
-class DPFieldsTypeUser extends DPFieldsTypeBase
+if (! key_exists('field', $displayData))
 {
+	return;
 }
+
+$field = $displayData['field'];
+$value = $field->value;
+if (! $value)
+{
+	return;
+}
+
+echo JHTML::_('content.prepare', $value);

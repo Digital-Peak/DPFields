@@ -12,33 +12,13 @@ JLoader::import('components.com_dpfields.models.types.base', JPATH_ADMINISTRATOR
 class DPFieldsTypeList extends DPFieldsTypeBase
 {
 
-	public function prepareValueForDisplay ($value, $field)
-	{
-		if (! is_array($value))
-		{
-			$value = array(
-					$value
-			);
-		}
-
-		$texts = array();
-		foreach ($this->getOptions($field) as $index => $optionsValue)
-		{
-			if (in_array($index, $value))
-			{
-				$texts[] = $optionsValue;
-			}
-		}
-		return parent::prepareValueForDisplay($texts, $field);
-	}
-
 	/**
 	 * Returns an array of key values to put in a list.
 	 *
 	 * @param stdClass $field
 	 * @return array
 	 */
-	protected function getOptions ($field)
+	public function getOptions ($field)
 	{
 		$options = $field->fieldparams->get('options', array());
 		if (! is_array($options))
