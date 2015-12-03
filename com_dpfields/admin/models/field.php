@@ -293,22 +293,22 @@ class DPFieldsModelField extends JModelAdmin
 
 			$form->setFieldAttribute('type', 'component', $component);
 
-			// Setting the context for the category field
-			$cat = JCategories::getInstance(str_replace('com_', '', $component));
-			if ($cat && $cat->get('root')->hasChildren())
-			{
-				$form->setFieldAttribute('catid', 'extension', $component);
-			}
-			else
-			{
-				$form->removeField('catid');
-			}
-
 			// Not alowed to change the type of an existing record
 			if ($data->id)
 			{
 				$form->setFieldAttribute('type', 'readonly', 'true');
 			}
+		}
+
+		// Setting the context for the category field
+		$cat = JCategories::getInstance(str_replace('com_', '', $component));
+		if ($cat && $cat->get('root')->hasChildren())
+		{
+			$form->setFieldAttribute('catid', 'extension', $component);
+		}
+		else
+		{
+			$form->removeField('catid');
 		}
 
 		$form->setFieldAttribute('type', 'component', $component);
