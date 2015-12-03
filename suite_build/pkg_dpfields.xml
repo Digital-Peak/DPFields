@@ -4,7 +4,7 @@
 	<packager>Digital Peak</packager>
 	<name>DPFields</name>
 	<author>Digital Peak</author>
-	<creationDate>Nov 2015</creationDate>
+	<creationDate>Dec 2015</creationDate>
 	<copyright>(C) 2015 - 2015 Digital Peak. All rights reserved.
 	</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
@@ -14,6 +14,8 @@
 	<files>
 		<file id="plg_system_dpfields" type="plugin" group="content"
 			client="site">plg_system_dpfields.zip</file>
+		<file id="plg_editors-xtd_dpfields" type="plugin" group="content"
+			client="site">plg_editors-xtd_dpfields.zip</file>
 		<file id="com_dpcalendar" type="component">com_dpfields.zip</file>
 	</files>
 

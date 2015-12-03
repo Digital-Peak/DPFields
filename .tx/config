@@ -15,6 +15,18 @@ source_file = com_dpfields/admin/language/en-GB/en-GB.com_dpfields.sys.ini
 source_lang = en_GB
 minimum_perc = 1
 
+[DPFields.plg_editors-xtd_dpfields]
+file_filter = plg_editors-xtd_dpfields/language/<lang>/<lang>.plg_editors-xtd_dpfields.ini
+source_file = plg_editors-xtd_dpfields/language/en-GB/en-GB.plg_editors-xtd_dpfields.ini
+source_lang = en_GB
+minimum_perc = 1
+
+[DPFields.plg_editors-xtd_dpfields-sys]
+file_filter = plg_editors-xtd_dpfields/language/<lang>/<lang>.plg_editors-xtd_dpfields.sys.ini
+source_file = plg_editors-xtd_dpfields/language/en-GB/en-GB.plg_editors-xtd_dpfields.sys.ini
+source_lang = en_GB
+minimum_perc = 1
+
 [DPFields.plg_system_dpfields]
 file_filter = plg_system_dpfields/language/<lang>/<lang>.plg_system_dpfields.ini
 source_file = plg_system_dpfields/language/en-GB/en-GB.plg_system_dpfields.ini

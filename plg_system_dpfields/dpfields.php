@@ -422,7 +422,8 @@ class PlgSystemDPFields extends JPlugin
 			}
 			jQuery( document ).ready(function() {
 				var formControl = '#" . $form->getFormControl() . "_catid';
-				if (!jQuery(formControl).val() != '" . $assignedCatids . "'){jQuery(formControl).val('" . $assignedCatids . "');}
+				if (!jQuery(formControl).val() != '" . $assignedCatids .
+							 "'){jQuery(formControl).val('" . $assignedCatids . "');}
 			});");
 		}
 		if (! $fields)
@@ -460,7 +461,7 @@ class PlgSystemDPFields extends JPlugin
 
 			// Defining the field set
 			$fieldset = $fieldsNode->appendChild(new DOMElement('fieldset'));
-			$fieldset->setAttribute('name', 'dpfields');
+			$fieldset->setAttribute('name', 'dpfields-' . $catid);
 			$fieldset->setAttribute('addfieldpath', '/administrator/components/' . $component . '/models/fields');
 			$fieldset->setAttribute('addrulepath', '/administrator/components/' . $component . '/models/rules');
 

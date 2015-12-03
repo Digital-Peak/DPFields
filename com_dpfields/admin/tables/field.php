@@ -89,6 +89,27 @@ class DPFieldsTableField extends JTable
 			$this->assigned_cat_ids = implode(',', $this->assigned_cat_ids);
 		}
 
+		$date = JFactory::getDate();
+		$user = JFactory::getUser();
+		if ($this->id)
+		{
+			// Existing item
+			$this->modified_time = $date->toSql();
+			$this->modified_by = $user->get('id');
+		}
+		else
+		{
+			if (! (int) $this->created_time)
+			{
+				$this->created_time = $date->toSql();
+			}
+
+			if (empty($this->created_user_id))
+			{
+				$this->created_user_id = $user->get('id');
+			}
+		}
+
 		return true;
 	}
 

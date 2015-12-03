@@ -41,6 +41,7 @@ class DPFieldsReleaseBuild
 
 		// Plugins
 		$this->createZip($buildDir . '/../plg_system_dpfields', $dpDir . '/plg_system_dpfields.zip');
+		$this->createZip($buildDir . '/../plg_editors-xtd_dpfields', $dpDir . '/plg_editors-xtd_dpfields.zip');
 
 		// Making the installable zip files
 		copy($buildDir . '/license.txt', $dpDir . '/license.txt');
