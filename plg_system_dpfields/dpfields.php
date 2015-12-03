@@ -422,8 +422,7 @@ class PlgSystemDPFields extends JPlugin
 			}
 			jQuery( document ).ready(function() {
 				var formControl = '#" . $form->getFormControl() . "_catid';
-				if (!jQuery(formControl).val() != '" . $assignedCatids .
-							 "'){jQuery(formControl).val('" . $assignedCatids . "');}
+				if (!jQuery(formControl).val() != '" . $assignedCatids . "'){jQuery(formControl).val('" . $assignedCatids . "');}
 			});");
 		}
 		if (! $fields)
@@ -579,7 +578,37 @@ class PlgSystemDPFields extends JPlugin
 		}
 	}
 
+	public function onContentAfterTitle ($context, $item, $params, $limitstart = 0)
+	{
+		if ($this->params->get('display', 2) != 1)
+		{
+			return;
+		}
+
+		return $this->display($context, $item, $params);
+	}
+
 	public function onContentBeforeDisplay ($context, $item, $params, $limitstart = 0)
+	{
+		if ($this->params->get('display', 2) != 2)
+		{
+			return;
+		}
+
+		return $this->display($context, $item, $params);
+	}
+
+	public function onContentAfterDisplay ($context, $item, $params, $limitstart = 0)
+	{
+		if ($this->params->get('display', 2) != 3)
+		{
+			return;
+		}
+
+		return $this->display($context, $item, $params);
+	}
+
+	private function display ($context, $item, $params)
 	{
 		if (! $this->isComponentAvailable())
 		{

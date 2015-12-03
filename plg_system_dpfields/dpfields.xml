@@ -21,6 +21,17 @@
 					default="com_content=article,category,form&#13;&#10;com_users=user,profile&#13;&#10;com_modules=module"
 					label="PLG_SYSTEM_DPFIELDS_CONFIG_EXTENSIONS_LABEL" description="PLG_SYSTEM_DPFIELDS_CONFIG_EXTENSIONS_DESC"
 					class="input-xxlarge" rows="10" />
+				<field name="display" type="list"
+					label="PLG_SYSTEM_DPFIELDS_CONFIG_DISPLAY_LABEL" description="PLG_SYSTEM_DPFIELDS_CONFIG_DISPLAY_DESC"
+					default="2">
+					<option value="1">PLG_SYSTEM_DPFIELDS_CONFIG_DISPLAY_AFTER_TITLE
+					</option>
+					<option value="2">PLG_SYSTEM_DPFIELDS_CONFIG_DISPLAY_BEFORE_DISPLAY
+					</option>
+					<option value="3">PLG_SYSTEM_DPFIELDS_CONFIG_DISPLAY_AFTER_DISPLAY
+					</option>
+					<option value="0">JNO</option>
+				</field>
 				<field name="prepare_content" type="radio" class="btn-group"
 					label="PLG_SYSTEM_DPFIELDS_CONFIG_PREPARE_CONTENT_LABEL"
 					description="PLG_SYSTEM_DPFIELDS_CONFIG_PREPARE_CONTENT_DESC"
