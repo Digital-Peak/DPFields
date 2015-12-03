@@ -144,9 +144,9 @@ class DPFieldsModelField extends JModelAdmin
 				$result->fieldparams = $registry->toArray();
 			}
 
-			if ($result->catid)
+			if ($result->assigned_cat_ids)
 			{
-				$result->catid = explode(',', $result->catid);
+				$result->assigned_cat_ids = explode(',', $result->assigned_cat_ids);
 			}
 
 			// Convert the created and modified dates to local user time for
@@ -284,34 +284,39 @@ class DPFieldsModelField extends JModelAdmin
 
 	protected function preprocessForm (JForm $form, $data, $group = 'content')
 	{
-		$parts = explode('.', JFactory::getApplication()->input->getCmd('context', $this->getState('field.context')));
-		$component = $parts[0];
+		$parts = DPFieldsHelper::extract(JFactory::getApplication()->input->getCmd('context', $this->getState('field.context')));
 
-		if (isset($data->type))
+		if ($parts)
 		{
-			$this->loadTypeForms($form, $data->type, $component);
+			$component = $parts[0];
+
+			if (isset($data->type))
+			{
+				$this->loadTypeForms($form, $data->type, $component);
+
+				$form->setFieldAttribute('type', 'component', $component);
+
+				// Not alowed to change the type of an existing record
+				if ($data->id)
+				{
+					$form->setFieldAttribute('type', 'readonly', 'true');
+				}
+			}
+
+			// Setting the context for the category field
+			$cat = JCategories::getInstance(str_replace('com_', '', $component));
+			if ($cat && $cat->get('root')->hasChildren())
+			{
+				$form->setFieldAttribute('assigned_cat_ids', 'extension', $component);
+			}
+			else
+			{
+				$form->removeField('assigned_cat_ids');
+			}
 
 			$form->setFieldAttribute('type', 'component', $component);
-
-			// Not alowed to change the type of an existing record
-			if ($data->id)
-			{
-				$form->setFieldAttribute('type', 'readonly', 'true');
-			}
+			$form->setFieldAttribute('catid', 'extension', $component . '.' . $parts[1] . '.fields');
 		}
-
-		// Setting the context for the category field
-		$cat = JCategories::getInstance(str_replace('com_', '', $component));
-		if ($cat && $cat->get('root')->hasChildren())
-		{
-			$form->setFieldAttribute('catid', 'extension', $component);
-		}
-		else
-		{
-			$form->removeField('catid');
-		}
-
-		$form->setFieldAttribute('type', 'component', $component);
 
 		// Trigger the default form events.
 		parent::preprocessForm($form, $data, $group);

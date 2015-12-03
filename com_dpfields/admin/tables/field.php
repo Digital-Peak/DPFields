@@ -84,9 +84,9 @@ class DPFieldsTableField extends JTable
 			$this->setError(JText::_('JGLOBAL_START_PUBLISH_AFTER_FINISH'));
 			return false;
 		}
-		if (is_array($this->catid))
+		if (is_array($this->assigned_cat_ids))
 		{
-			$this->catid = implode(',', $this->catid);
+			$this->assigned_cat_ids = implode(',', $this->assigned_cat_ids);
 		}
 
 		return true;

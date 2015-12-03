@@ -101,7 +101,7 @@ class DPFieldsModelFields extends JModelList
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.context');
-		$id .= ':' . serialize($this->getState('filter.catid'));
+		$id .= ':' . serialize($this->getState('filter.assigned_cat_ids'));
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.language');
 
@@ -150,10 +150,10 @@ class DPFieldsModelFields extends JModelList
 				$query->where('a.access = ' . (int) $access);
 			}
 		}
-		if (($categories = $this->getState('filter.catid')) && $context)
+		if (($categories = $this->getState('filter.assigned_cat_ids')) && $context)
 		{
 			$categories = (array) $categories;
-			$condition = 'a.catid = 0 ';
+			$condition = 'a.assigned_cat_ids = 0 ';
 			$parts = DPFieldsHelper::extract($context);
 			if ($parts)
 			{
@@ -161,20 +161,20 @@ class DPFieldsModelFields extends JModelList
 				$cat = JCategories::getInstance(str_replace('com_', '', $parts[0]));
 				if ($cat)
 				{
-					foreach ($categories as $catId)
+					foreach ($categories as $assignedCatIds)
 					{
 						// Check if we have the actual category
-						$parent = $cat->get($catId);
+						$parent = $cat->get($assignedCatIds);
 						if ($parent)
 						{
-							$condition .= 'or find_in_set(' . (int) $parent->id . ',a.catid) ';
+							$condition .= 'or find_in_set(' . (int) $parent->id . ',a.assigned_cat_ids) ';
 
 							// Traverse the tree up to get all the fields which
 							// are attached to a parent
 							while ($parent->getParent() && $parent->getParent()->id != 'root')
 							{
 								$parent = $parent->getParent();
-								$condition .= 'or find_in_set(' . (int) $parent->id . ',a.catid) ';
+								$condition .= 'or find_in_set(' . (int) $parent->id . ',a.assigned_cat_ids) ';
 							}
 						}
 					}

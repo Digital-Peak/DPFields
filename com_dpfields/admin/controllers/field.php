@@ -35,11 +35,6 @@ class DPFieldsControllerField extends JControllerForm
 		$parts = DPFieldsHelper::extract($this->input->getCmd('context'));
 		if ($parts)
 		{
-			if ((! isset($data['id']) || ! $data['id']) && (isset($data['catid']) && $data['catid']))
-			{
-				$data['dpfieldscatid'] = $data['catid'];
-				$data['catid'] = null;
-			}
 			$app->setUserState($parts[0] . '.edit.' . $parts[1] . '.data', $data);
 		}
 		$app->redirect(base64_decode($this->input->get->getBase64('return')));

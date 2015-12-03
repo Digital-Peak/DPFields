@@ -74,7 +74,18 @@ JFactory::getDocument()->addScriptDeclaration('
 			</div>
 			<div class="span3">
 				<?php
+
+				$this->set('fields', array(
+						array('published', 'state', 'enabled'),
+						'catid',
+						'assigned_cat_ids',
+						'access',
+						'language',
+						'tags',
+						'note'
+				));
 				echo JLayoutHelper::render('joomla.edit.global', $this);
+				$this->set('fields', null);
 				?>
 			</div>
 		</div>

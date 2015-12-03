@@ -6,8 +6,14 @@
 	<field name="asset_id" type="hidden" filter="unset" />
 	<field name="context" type="hidden" />
 
-	<field name="catid" type="category" label="JCATEGORY" extension="com_content"
-		description="JFIELD_CATEGORY_DESC" class="" multiple="true">
+	<field name="catid" type="category"
+		label="COM_DPFIELDS_FIELD_FIELD_CATEGORY_LABEL" extension="com_dpfields"
+		description="COM_DPFIELDS_FIELD_FIELD_CATEGORY_DESC" class="">
+		<option value=""></option>
+	</field>
+	<field name="assigned_cat_ids" type="category" label="JCATEGORY"
+		extension="com_content" description="JFIELD_CATEGORY_DESC" class=""
+		multiple="true">
 		<option value="">JALL</option>
 	</field>
 	<field name="title" type="text" label="JGLOBAL_TITLE"
@@ -16,7 +22,8 @@
 	<field name="alias" type="text" label="JFIELD_ALIAS_LABEL"
 		description="JFIELD_ALIAS_DESC" hint="JFIELD_ALIAS_PLACEHOLDER" size="45" />
 
-	<field name="type" type="type" label="COM_DPFIELDS_FIELD_FIELD_TYPE_LABEL" onchange="window.location.href = window.location.href + &#39;&amp;type=&#39; + jQuery(this).val();"
+	<field name="type" type="type" label="COM_DPFIELDS_FIELD_FIELD_TYPE_LABEL"
+		onchange="window.location.href = window.location.href + &#39;&amp;type=&#39; + jQuery(this).val();"
 		default="text" description="COM_DPFIELDS_FIELD_FIELD_TYPE_DESC" class=""
 		required="true">
 	</field>
@@ -31,9 +38,9 @@
 	<field name="default_value" type="textarea" filter="raw"
 		label="COM_DPFIELDS_FIELD_FIELD_DEFAULT_VALUE_LABEL" description="COM_DPFIELDS_FIELD_FIELD_DEFAULT_VALUE_DESC"
 		class="input-xxlarge" size="40" />
-	<field name="render_class" type="textarea" label="COM_DPFIELDS_FIELD_FIELD_RENDER_CLASS_LABEL"
-		description="COM_DPFIELDS_FIELD_FIELD_RENDER_CLASS_DESC" class="input-xxlarge"
-		size="40" />
+	<field name="render_class" type="textarea"
+		label="COM_DPFIELDS_FIELD_FIELD_RENDER_CLASS_LABEL" description="COM_DPFIELDS_FIELD_FIELD_RENDER_CLASS_DESC"
+		class="input-xxlarge" size="40" />
 	<field name="class" type="textarea" label="COM_DPFIELDS_FIELD_FIELD_CLASS_LABEL"
 		description="COM_DPFIELDS_FIELD_FIELD_CLASS_DESC" class="input-xxlarge"
 		size="40" />

@@ -146,7 +146,7 @@ if ($saveOrder)
 									if ($category)
 									{
 										$buffer = JText::_('JCATEGORY') . ': ';
-										$cats = explode(',', $item->catid);
+										$cats = explode(',', $item->assigned_cat_ids);
 										foreach ($cats as $cat)
 										{
 											if (empty($cat))

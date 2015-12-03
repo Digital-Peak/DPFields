@@ -55,19 +55,20 @@ class PlgSystemDPFields extends JPlugin
 		}
 
 		$app = JFactory::getApplication();
+		$input = $app->input;
 
 		// Only add entries on back end
 		if (! $app->isAdmin())
 		{
 			return;
 		}
-		$component = $app->input->getCmd('option');
+		$component = $input->getCmd('option');
 
 		// Define the component and section of the context to support
 		$section = '';
 		if ($component == 'com_dpfields' || $component == 'com_categories')
 		{
-			$context = $app->input->getCmd('context', 'com_content');
+			$context = $input->getCmd('context', 'com_content');
 			$parts = $this->getParts($context);
 			if (! $parts)
 			{
@@ -97,12 +98,15 @@ class PlgSystemDPFields extends JPlugin
 		{
 			// Add link to modules list as they don't have a navigation menu
 			JFactory::getLanguage()->load('com_modules');
-			JHtmlSidebar::addEntry(JText::_('COM_MODULES_MODULES'), 'index.php?option=com_modules', $app->input->getCmd('option') == 'com_modules');
+			JHtmlSidebar::addEntry(JText::_('COM_MODULES_MODULES'), 'index.php?option=com_modules', $input->getCmd('option') == 'com_modules');
 		}
 
 		// Add the fields entry
 		JHtmlSidebar::addEntry(JText::_('PLG_SYSTEM_DPFIELDS_FIELDS'), 'index.php?option=com_dpfields&context=' . $component . '.' . $section,
-				$app->input->getCmd('option') == 'com_dpfields');
+				$input->getCmd('option') == 'com_dpfields');
+		JHtmlSidebar::addEntry(JText::_('PLG_SYSTEM_DPFIELDS_FIELD_CATEGORIES'),
+				'index.php?option=com_categories&extension=' . $component . '.' . $section . '.fields',
+				$input->getCmd('extension') == $component . '.' . $section . '.fields');
 	}
 
 	public function onContentBeforeSave ($context, $item, $isNew)
@@ -366,18 +370,18 @@ class PlgSystemDPFields extends JPlugin
 		$component = $parts[0];
 		$section = $parts[1];
 
-		$catid = isset($data->catid) ? $data->catid : (isset($data->dpfieldscatid) ? $data->dpfieldscatid : null);
-		if (! $catid && $form->getField('catid'))
+		$assignedCatids = isset($data->catid) ? $data->catid : (isset($data->dpfieldscatid) ? $data->dpfieldscatid : null);
+		if (! $assignedCatids && $form->getField('assigned_cat_ids'))
 		{
 			// Choose the first category available
 			$xml = new DOMDocument();
-			$xml->loadHTML($form->getField('catid')
+			$xml->loadHTML($form->getField('assigned_cat_ids')
 				->__get('input'));
 			$options = $xml->getElementsByTagName('option');
 			if ($firstChoice = $options->item(0))
 			{
-				$catid = $firstChoice->getAttribute('value');
-				$data->dpfieldscatid = $catid;
+				$assignedCatids = $firstChoice->getAttribute('value');
+				$data->dpfieldscatid = $assignedCatids;
 			}
 		}
 
@@ -411,14 +415,15 @@ class PlgSystemDPFields extends JPlugin
 			JFactory::getDocument()->addScriptDeclaration(
 					"function categoryHasChanged(element){
 				var cat = jQuery(element);
-				if (cat.val() == '" . $catid . "')return;
+				if (cat.val() == '" . $assignedCatids . "')return;
 				jQuery('input[name=task]').val('field.catchange');
 				element.form.action='" . $uri . "';
 				element.form.submit();
 			}
 			jQuery( document ).ready(function() {
 				var formControl = '#" . $form->getFormControl() . "_catid';
-				if (!jQuery(formControl).val() != '" . $catid . "'){jQuery(formControl).val('" . $catid . "');}
+				if (!jQuery(formControl).val() != '" . $assignedCatids .
+							 "'){jQuery(formControl).val('" . $assignedCatids . "');}
 			});");
 		}
 		if (! $fields)
@@ -433,52 +438,104 @@ class PlgSystemDPFields extends JPlugin
 		$fieldsNode->setAttribute('addfieldpath', '/administrator/components/com_dpfields/models/fields');
 		$fieldsNode->setAttribute('addrulepath', '/administrator/components/com_dpfields/models/rules');
 
-		// Defining the field set
-		$fieldset = $fieldsNode->appendChild(new DOMElement('fieldset'));
-		$fieldset->setAttribute('name', 'dpfields');
-		$fieldset->setAttribute('addfieldpath', '/administrator/components/' . $component . '/models/fields');
-		$fieldset->setAttribute('addrulepath', '/administrator/components/' . $component . '/models/rules');
-
-		$lang = JFactory::getLanguage();
-		$key = strtoupper($component . '_FIELDS_' . $section . '_LABEL');
-		if (! $lang->hasKey($key))
-		{
-			$key = 'PLG_SYSTEM_DPFIELDS_FIELDS';
-		}
-		$fieldset->setAttribute('label', JText::_($key));
-		$key = strtoupper($component . '_FIELDS_' . $section . '_DESC');
-		if ($lang->hasKey($key))
-		{
-			$fieldset->setAttribute('description', JText::_($key));
-		}
-
-		// Looping trough the fields for that context
+		// Organizing the fields according to their category
+		$fieldsPerCategory = array(
+				0 => array()
+		);
 		foreach ($fields as $field)
 		{
-			// Creating the XML form data
-			$type = DPFieldsHelper::loadTypeObject($field->type, $field->context);
-			if ($type === false)
+			if (! key_exists($field->catid, $fieldsPerCategory))
+			{
+				$fieldsPerCategory[$field->catid] = array();
+			}
+			$fieldsPerCategory[$field->catid][] = $field;
+		}
+
+		// Looping trough the categories
+		foreach ($fieldsPerCategory as $catid => $catFields)
+		{
+			if (! $catFields)
 			{
 				continue;
 			}
-			try
-			{
-				// Rendering the type
-				$node = $type->appendXMLFieldTag($field, $fieldset, $form);
 
-				// If the field belongs to a catid but the catid in the data is
-				// not known, set the required flag to false on any circumstance
-				if (! $catid && $field->catid)
+			// Defining the field set
+			$fieldset = $fieldsNode->appendChild(new DOMElement('fieldset'));
+			$fieldset->setAttribute('name', 'dpfields');
+			$fieldset->setAttribute('addfieldpath', '/administrator/components/' . $component . '/models/fields');
+			$fieldset->setAttribute('addrulepath', '/administrator/components/' . $component . '/models/rules');
+
+			$label = '';
+			$description = '';
+			if ($catid > 0)
+			{
+				// JCategories can't handle com_content with a section, going
+				// directly to the table
+				$category = JTable::getInstance('Category');
+				$category->load($catid);
+				if ($category->id)
 				{
-					$node->setAttribute('required', 'false');
+					$label = $category->title;
+					$description = $category->description;
 				}
 			}
-			catch (Exception $e)
+
+			if (! $label || ! $description)
 			{
-				JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+				$lang = JFactory::getLanguage();
+
+				if (! $label)
+				{
+					$key = strtoupper($component . '_FIELDS_' . $section . '_LABEL');
+					if (! $lang->hasKey($key))
+					{
+						$key = 'PLG_SYSTEM_DPFIELDS_FIELDS';
+					}
+					$label = JText::_($key);
+				}
+
+				if (! $description)
+				{
+					$key = strtoupper($component . '_FIELDS_' . $section . '_DESC');
+					if ($lang->hasKey($key))
+					{
+						$description = JText::_($key);
+					}
+				}
+			}
+
+			$fieldset->setAttribute('label', $label);
+			$fieldset->setAttribute('description', $description);
+
+			// Looping trough the fields for that context
+			foreach ($catFields as $field)
+			{
+				// Creating the XML form data
+				$type = DPFieldsHelper::loadTypeObject($field->type, $field->context);
+				if ($type === false)
+				{
+					continue;
+				}
+				try
+				{
+					// Rendering the type
+					$node = $type->appendXMLFieldTag($field, $fieldset, $form);
+
+					// If the field belongs to a assigned_cat_ids but the
+					// assigned_cat_ids in the data is not known, set the
+					// required
+					// flag to false on any circumstance
+					if (! $assignedCatids && $field->assigned_cat_ids)
+					{
+						$node->setAttribute('required', 'false');
+					}
+				}
+				catch (Exception $e)
+				{
+					JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+				}
 			}
 		}
-
 		// Loading the XML fields string into the form
 		$form->load($xml->saveXML());
 

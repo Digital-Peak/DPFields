@@ -20,6 +20,8 @@ class DPFieldsReleaseBuild
 		$dpVersion = new SimpleXMLElement(file_get_contents(dirname(__FILE__) . '/pkg_dpfields.xml'));
 		$dpVersion = (string) $dpVersion->version;
 
+		echo ' Creating version: ' . $dpVersion;
+
 		$dpVersion = str_replace('.', '_', $dpVersion);
 
 		exec('rm -rf ' . $buildDir . '/dist');
