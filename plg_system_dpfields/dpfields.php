@@ -68,7 +68,7 @@ class PlgSystemDPFields extends JPlugin
 		$section = '';
 		if ($component == 'com_dpfields' || $component == 'com_categories')
 		{
-			$context = $input->getCmd('context', 'com_content');
+			$context = $input->getCmd($component == 'com_dpfields' ? 'context' : 'extension');
 			$parts = $this->getParts($context);
 			if (! $parts)
 			{
@@ -422,8 +422,7 @@ class PlgSystemDPFields extends JPlugin
 			}
 			jQuery( document ).ready(function() {
 				var formControl = '#" . $form->getFormControl() . "_catid';
-				if (!jQuery(formControl).val() != '" . $assignedCatids .
-							 "'){jQuery(formControl).val('" . $assignedCatids . "');}
+				if (!jQuery(formControl).val() != '" . $assignedCatids . "'){jQuery(formControl).val('" . $assignedCatids . "');}
 			});");
 		}
 		if (! $fields)
