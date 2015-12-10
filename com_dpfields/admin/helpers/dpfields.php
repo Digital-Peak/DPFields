@@ -79,8 +79,8 @@ class DPFieldsHelper
 	 * Returns the fields for the given context.
 	 * If the item is an object the returned fields do have an additional field
 	 * "value" which represents the value for the given item. If the item has a
-	 * assigned_cat_ids field, then additionally fields which belong to that category will
-	 * be returned.
+	 * assigned_cat_ids field, then additionally fields which belong to that
+	 * category will be returned.
 	 * Should the value being prepared to be shown in a HTML context
 	 * prepareValue must be set to true. Then no further escaping needs to be
 	 * don.
@@ -101,7 +101,7 @@ class DPFieldsHelper
 					'ignore_request' => true
 			));
 			self::$fieldsCache->setState('filter.published', 1);
-			self::$fieldsCache->setState('filter.language', JFactory::getLanguage()->getTag());
+			self::$fieldsCache->setState('filter.language', isset($item->language) ? $item->language : JFactory::getLanguage()->getTag());
 			self::$fieldsCache->setState('list.limit', 0);
 		}
 		self::$fieldsCache->setState('filter.context', $context);
@@ -111,8 +111,8 @@ class DPFieldsHelper
 			$item = (object) $item;
 		}
 
-		// If item has assigned_cat_ids parameter display only fields which belong to the
-		// category
+		// If item has assigned_cat_ids parameter display only fields which
+		// belong to the category
 		if ($item && (isset($item->catid) || isset($item->dpfieldscatid)))
 		{
 			$assignedCatIds = isset($item->catid) ? $item->catid : $item->dpfieldscatid;
@@ -188,7 +188,6 @@ class DPFieldsHelper
 	 */
 	public static function render ($context, $layoutFile, $displayData)
 	{
-
 		$value = null;
 
 		/*

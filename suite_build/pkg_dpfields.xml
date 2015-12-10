@@ -10,7 +10,7 @@
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@digital-peak.com</authorEmail>
 	<authorUrl>joomla.digital-peak.com</authorUrl>
-	<version>1.1.1</version>
+	<version>1.1.2</version>
 	<files>
 		<file id="plg_system_dpfields" type="plugin" group="content"
 			client="site">plg_system_dpfields.zip</file>
