@@ -422,7 +422,8 @@ class PlgSystemDPFields extends JPlugin
 			}
 			jQuery( document ).ready(function() {
 				var formControl = '#" . $form->getFormControl() . "_catid';
-				if (!jQuery(formControl).val() != '" . $assignedCatids . "'){jQuery(formControl).val('" . $assignedCatids . "');}
+				if (!jQuery(formControl).val() != '" . $assignedCatids .
+							 "'){jQuery(formControl).val('" . $assignedCatids . "');}
 			});");
 		}
 		if (! $fields)
@@ -434,8 +435,8 @@ class PlgSystemDPFields extends JPlugin
 		$xml = new DOMDocument('1.0', 'UTF-8');
 		$fieldsNode = $xml->appendChild(new DOMElement('form'))->appendChild(new DOMElement('fields'));
 		$fieldsNode->setAttribute('name', 'params');
-		$fieldsNode->setAttribute('addfieldpath', '/administrator/components/com_dpfields/models/fields');
-		$fieldsNode->setAttribute('addrulepath', '/administrator/components/com_dpfields/models/rules');
+		$fieldsNode->setAttribute('addfieldpath', '/administrator/components/com_dpfields/models/types/fields');
+		$fieldsNode->setAttribute('addrulepath', '/administrator/components/com_dpfields/models/types/rules');
 
 		// Organizing the fields according to their category
 		$fieldsPerCategory = array(
