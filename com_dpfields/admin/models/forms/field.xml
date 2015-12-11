@@ -121,6 +121,18 @@
 				<option value="2">COM_DPFIELDS_FIELD_FIELD_SHOW_ON_ADMIN</option>
 				<option value="">COM_DPFIELDS_FIELD_FIELD_SHOW_ON_BOTH</option>
 			</field>
+			<field name="display" type="list"
+				label="COM_DPFIELDS_FIELD_FIELD_DISPLAY_LABEL" description="COM_DPFIELDS_FIELD_FIELD_DISPLAY_DESC"
+				default="-1">
+				<option value="1">COM_DPFIELDS_FIELD_FIELD_DISPLAY_AFTER_TITLE
+				</option>
+				<option value="2">COM_DPFIELDS_FIELD_FIELD_DISPLAY_BEFORE_DISPLAY
+				</option>
+				<option value="3">COM_DPFIELDS_FIELD_FIELD_DISPLAY_AFTER_DISPLAY
+				</option>
+				<option value="0">JNO</option>
+				<option value="-1">JLIB_FORM_VALUE_INHERITED</option>
+			</field>
 		</fieldset>
 	</fields>
 </form>

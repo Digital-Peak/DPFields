@@ -581,35 +581,20 @@ class PlgSystemDPFields extends JPlugin
 
 	public function onContentAfterTitle ($context, $item, $params, $limitstart = 0)
 	{
-		if ($this->params->get('display', 2) != 1)
-		{
-			return;
-		}
-
-		return $this->display($context, $item, $params);
+		return $this->display($context, $item, $params, 1);
 	}
 
 	public function onContentBeforeDisplay ($context, $item, $params, $limitstart = 0)
 	{
-		if ($this->params->get('display', 2) != 2)
-		{
-			return;
-		}
-
-		return $this->display($context, $item, $params);
+		return $this->display($context, $item, $params, 2);
 	}
 
 	public function onContentAfterDisplay ($context, $item, $params, $limitstart = 0)
 	{
-		if ($this->params->get('display', 2) != 3)
-		{
-			return;
-		}
-
-		return $this->display($context, $item, $params);
+		return $this->display($context, $item, $params, 3);
 	}
 
-	private function display ($context, $item, $params)
+	private function display ($context, $item, $params, $displayType)
 	{
 		if (! $this->isComponentAvailable())
 		{
@@ -637,13 +622,36 @@ class PlgSystemDPFields extends JPlugin
 			$params = new Registry($params);
 		}
 
-		return DPFieldsHelper::render($context, 'fields.render',
-				array(
-						'item' => $item,
-						'context' => $context,
-						'container' => $params->get('dpfields-container'),
-						'container-class' => $params->get('dpfields-container-class')
-				));
+		$fields = DPFieldsHelper::getFields($context, $item, true);
+		if ($fields)
+		{
+			foreach ($fields as $key => $field)
+			{
+				$fieldDisplayType = $field->params->get('display', '-1');
+				if ($fieldDisplayType == '-1')
+				{
+					$fieldDisplayType = $this->params->get('display', '2');
+				}
+				if ($fieldDisplayType == $displayType)
+				{
+					continue;
+				}
+				unset($fields[$key]);
+			}
+		}
+
+		if ($fields)
+		{
+			return DPFieldsHelper::render($context, 'fields.render',
+					array(
+							'item' => $item,
+							'context' => $context,
+							'fields' => $fields,
+							'container' => $params->get('dpfields-container'),
+							'container-class' => $params->get('dpfields-container-class')
+					));
+		}
+		return '';
 	}
 
 	public function onContentPrepare ($context, $item)

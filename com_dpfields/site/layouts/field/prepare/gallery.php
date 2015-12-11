@@ -32,7 +32,7 @@ $value = (array) $value;
 
 $thumbWidth = $field->fieldparams->get('thumbnail_size', '64');
 
-$buffer = '<div class="fotorama" data-nav="thumbs">';
+$buffer = '<div class="fotorama" data-nav="thumbs" data-width="100%">';
 foreach ($value as $path)
 {
 	if (! $path)

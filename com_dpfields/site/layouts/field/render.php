@@ -23,7 +23,7 @@ if (! $value)
 $class = $field->render_class;
 ?>
 
-<dd class="dpfield-entry <?php echo $class;?>">
+<dd class="dpfield-entry <?php echo $class;?>" id="dpfield-entry-<?php echo $field->id;?>">
 	<span class="dpfield-label"><?php echo htmlentities($label);?>: </span>
 	<span class="dpfield-value"><?php echo $value;?></span>
 </dd>

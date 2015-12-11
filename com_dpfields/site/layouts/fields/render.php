@@ -30,7 +30,16 @@ JLoader::register('DPFieldsHelper', JPATH_ADMINISTRATOR . '/components/com_dpfie
 $parts = explode('.', $context);
 $component = $parts[0];
 
-$fields = DPFieldsHelper::getFields($context, $item, true);
+$fields = null;
+if (key_exists('fields', $displayData))
+{
+	$fields = $displayData['fields'];
+}
+else
+{
+	$fields = $item->dpfields ? $item->dpfields : DPFieldsHelper::getFields($context, $item, true);
+}
+
 if (! $fields)
 {
 	return;
@@ -49,7 +58,7 @@ if (key_exists('container-class', $displayData) && $displayData['container-class
 }
 
 // Print the container tag
-echo '<' . $container . ' class="' . $class . '">';
+echo '<' . $container . ' class="dpfields-container ' . $class . '">';
 
 // Loop trough the fields and print them
 foreach ($fields as $field)
