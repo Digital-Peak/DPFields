@@ -31,4 +31,9 @@ $context = $this->escape($this->state->get('filter.context'));
 			<?php echo JHtml::_('batch.tag'); ?>
 		</div>
 	</div>
+	<div class="control-group span6">
+		<div class="controls">
+			<?php echo JHtml::_('batch.item', $context . '.fields');?>
+		</div>
+	</div>
 </div>
