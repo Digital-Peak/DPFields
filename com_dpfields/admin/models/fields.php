@@ -157,7 +157,7 @@ class DPFieldsModelFields extends JModelList
 		if (($categories = $this->getState('filter.assigned_cat_ids')) && $context)
 		{
 			$categories = (array) $categories;
-			$condition = 'a.assigned_cat_ids = 0 ';
+			$condition = "a.assigned_cat_ids = '' or find_in_set(0, a.assigned_cat_ids) ";
 			$parts = DPFieldsHelper::extract($context);
 			if ($parts)
 			{
@@ -257,7 +257,7 @@ class DPFieldsModelFields extends JModelList
 			$query->order($db->escape($listOrdering) . ' ' . $listDirn);
 		}
 
-		// Echo nl2br(str_replace('#__', 'j_', $query)); die();
+		// Echo nl2br(str_replace('#__', 'j_', $query)); //die();
 		return $query;
 	}
 
