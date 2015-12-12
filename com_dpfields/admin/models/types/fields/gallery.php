@@ -19,6 +19,11 @@ class JFormFieldGallery extends JFormFieldList
 	{
 		$options = array();
 
+		if (! $this->required)
+		{
+			$options[] = JHtml::_('select.option', '', JText::alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)));
+		}
+
 		$path = (string) $this->element['directory'];
 
 		if (! is_dir($path))

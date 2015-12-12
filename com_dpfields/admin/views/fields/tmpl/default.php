@@ -72,6 +72,9 @@ if ($saveOrder)
 						<th>
 							<?php echo JHtml::_('searchtools.sort', 'COM_DPFIELDS_FIELD_FIELD_TYPE_LABEL', 'a.type', $listDirn, $listOrder); ?>
 						</th>
+						<th>
+							<?php echo JHtml::_('searchtools.sort', 'COM_DPFIELDS_FIELD_FIELD_CATEGORY_LABEL', 'category_title', $listDirn, $listOrder); ?>
+						</th>
 						<th width="10%" class="nowrap hidden-phone">
 							<?php echo JHtml::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'a.access', $listDirn, $listOrder); ?>
 						</th>
@@ -174,6 +177,9 @@ if ($saveOrder)
 									$label = JString::ucfirst($item->type);
 								}
 								echo $this->escape(JText::_($label)); ?>
+							</td>
+							<td class="">
+								<?php echo $this->escape($item->category_title); ?>
 							</td>
 							<td class="small hidden-phone">
 								<?php echo $this->escape($item->access_level); ?>
