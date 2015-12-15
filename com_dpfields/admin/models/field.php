@@ -431,7 +431,7 @@ class DPFieldsModelField extends JModelAdmin
 
 			foreach ($value as $v)
 			{
-				$query .= '(' . (int) $fieldId . ', ' . $db->q($context) . ', ' . $db->q($itemId) . ', ' . $db->q($db->escape($v)) . '),';
+				$query .= '(' . (int) $fieldId . ', ' . $db->q($context) . ', ' . $db->q($itemId) . ', ' . $db->q($v) . '),';
 			}
 			$query = trim($query, ',');
 
