@@ -2,7 +2,7 @@
 /**
  * @package    DPFields
  * @author     Digital Peak http://www.digital-peak.com
- * @copyright  Copyright (C) 2015 - 2015 Digital Peak. All rights reserved.
+ * @copyright  Copyright (C) 2015 - 2016 Digital Peak. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die();
@@ -355,13 +355,6 @@ class PlgSystemDPFields extends JPlugin
 			return true;
 		}
 
-		// Getting the fields
-		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data);
-		if (! $fields)
-		{
-			return true;
-		}
-
 		// If we are on the save command we need the actual data
 		$jformData = JFactory::getApplication()->input->get('jform', array(), 'array');
 		if ($jformData && ! $data)
@@ -372,6 +365,13 @@ class PlgSystemDPFields extends JPlugin
 		if (is_array($data))
 		{
 			$data = (object) $data;
+		}
+
+		// Getting the fields
+		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data);
+		if (! $fields)
+		{
+			return true;
 		}
 
 		$component = $parts[0];

@@ -4,13 +4,13 @@
 	<packager>Digital Peak</packager>
 	<name>DPFields</name>
 	<author>Digital Peak</author>
-	<creationDate>Dec 2015</creationDate>
-	<copyright>(C) 2015 - 2015 Digital Peak. All rights reserved.
+	<creationDate>Jan 2016</creationDate>
+	<copyright>(C) 2015 - 2016 Digital Peak. All rights reserved.
 	</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@digital-peak.com</authorEmail>
 	<authorUrl>joomla.digital-peak.com</authorUrl>
-	<version>1.2.0</version>
+	<version>1.2.1</version>
 	<files>
 		<file id="plg_system_dpfields" type="plugin" group="content"
 			client="site">plg_system_dpfields.zip</file>
