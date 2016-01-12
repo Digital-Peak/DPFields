@@ -33,9 +33,8 @@ class JFormFieldType extends JFormFieldList
 			{
 				continue;
 			}
-
 			// Looping trough the types
-			foreach (JFolder::files($path, 'php', true, true) as $filePath)
+			foreach (JFolder::files($path, 'php', false, true) as $filePath)
 			{
 				$name = str_replace('.php', '', basename($filePath));
 				if ($name == 'base')
