@@ -355,8 +355,10 @@ class PlgSystemDPFields extends JPlugin
 			return true;
 		}
 
+		$input = JFactory::getApplication()->input;
+
 		// If we are on the save command we need the actual data
-		$jformData = JFactory::getApplication()->input->get('jform', array(), 'array');
+		$jformData = $input->get('jform', array(), 'array');
 		if ($jformData && ! $data)
 		{
 			$data = $jformData;
@@ -542,6 +544,13 @@ class PlgSystemDPFields extends JPlugin
 		$model = JModelLegacy::getInstance('Field', 'DPFieldsModel', array(
 				'ignore_request' => true
 		));
+
+		if ((! isset($data->id) || ! $data->id) && $input->getCmd('controller') == 'config.display.modules' && JFactory::getApplication()->isSite())
+		{
+			// Modules on front end editing don't have data and an id set
+			$data->id = $input->getInt('id');
+		}
+
 		// Looping trough the fields again to set the value
 		if (isset($data->id) && $data->id)
 		{
@@ -864,8 +873,17 @@ class PlgSystemDPFields extends JPlugin
 			return null;
 		}
 
-		// Check for supported contexts
 		$component = $parts[0];
+
+		if ($component == 'com_config' && $parts[1] == 'modules')
+		{
+			// Modules on front end editing come with com_config
+			$component = 'com_modules';
+			$parts[0] = $component;
+			$parts[1] = 'module';
+		}
+
+		// Check for supported contexts
 		if (key_exists($component, $this->supportedContexts))
 		{
 			$section = $this->supportedContexts[$component];
