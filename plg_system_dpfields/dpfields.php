@@ -340,6 +340,8 @@ class PlgSystemDPFields extends JPlugin
 			return true;
 		}
 
+		$isSite  = JFactory::getApplication()->isSite();
+
 		$context = $form->getName();
 
 		// Transform categories form name to a valid context
@@ -368,6 +370,13 @@ class PlgSystemDPFields extends JPlugin
 		{
 			$data = (object) $data;
 		}
+
+		$component = $parts[0];
+		$section = $parts[1];
+
+		$activeMenu = JFactory::getApplication()->getMenu()->getActive();
+		$params = $activeMenu->params;
+		$data->catid = $params->get('catid');
 
 		// Getting the fields
 		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data);
@@ -417,8 +426,10 @@ class PlgSystemDPFields extends JPlugin
 
 			// Setting the onchange event to reload the page when the category
 			// has changed
-			$form->setFieldAttribute('catid', 'onchange', "categoryHasChanged(this);");
-			JFactory::getDocument()->addScriptDeclaration(
+			if (!$isSite)
+			{
+				$form->setFieldAttribute('catid', 'onchange', "categoryHasChanged(this);");
+				JFactory::getDocument()->addScriptDeclaration(
 					"function categoryHasChanged(element){
 				var cat = jQuery(element);
 				if (cat.val() == '" . $assignedCatids . "')return;
@@ -431,6 +442,7 @@ class PlgSystemDPFields extends JPlugin
 				if (!jQuery(formControl).val() != '" . $assignedCatids .
 							 "'){jQuery(formControl).val('" . $assignedCatids . "');}
 			});");
+			}
 		}
 
 		// Creating the dom
@@ -446,11 +458,19 @@ class PlgSystemDPFields extends JPlugin
 		);
 		foreach ($fields as $field)
 		{
-			if (! key_exists($field->catid, $fieldsPerCategory))
+			if ($isSite && strpos($field->assigned_cat_ids, $assignedCatids))
 			{
-				$fieldsPerCategory[$field->catid] = array();
+				$fieldsPerCategory[$field->catid][] = $field;
 			}
-			$fieldsPerCategory[$field->catid][] = $field;
+			elseif (!$isSite)
+			{
+				if (! key_exists($field->catid, $fieldsPerCategory))
+				{
+					$fieldsPerCategory[$field->catid] = array();
+				}
+
+				$fieldsPerCategory[$field->catid][] = $field;
+			}
 		}
 
 		// Looping trough the categories
