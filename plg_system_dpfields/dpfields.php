@@ -35,8 +35,8 @@ class PlgSystemDPFields extends JPlugin
 		$this->supportedContexts = array();
 
 		foreach (explode(PHP_EOL,
-						$this->params->get('contexts',
-								'com_content=article,category,form' . PHP_EOL . 'com_users=user,profile' . PHP_EOL . 'com_modules=module')) as $entry)
+				$this->params->get('contexts',
+						'com_content=article,category,form' . PHP_EOL . 'com_users=user,profile' . PHP_EOL . 'com_modules=module')) as $entry)
 		{
 			$parts = explode('=', trim($entry));
 			if (count($parts) < 2)
@@ -103,10 +103,10 @@ class PlgSystemDPFields extends JPlugin
 
 		// Add the fields entry
 		JHtmlSidebar::addEntry(JText::_('PLG_SYSTEM_DPFIELDS_FIELDS'), 'index.php?option=com_dpfields&context=' . $component . '.' . $section,
-						$input->getCmd('option') == 'com_dpfields');
+				$input->getCmd('option') == 'com_dpfields');
 		JHtmlSidebar::addEntry(JText::_('PLG_SYSTEM_DPFIELDS_FIELD_CATEGORIES'),
-						'index.php?option=com_categories&extension=' . $component . '.' . $section . '.fields',
-						$input->getCmd('extension') == $component . '.' . $section . '.fields');
+				'index.php?option=com_categories&extension=' . $component . '.' . $section . '.fields',
+				$input->getCmd('extension') == $component . '.' . $section . '.fields');
 	}
 
 	public function onContentBeforeSave ($context, $item, $isNew)
@@ -224,7 +224,7 @@ class PlgSystemDPFields extends JPlugin
 
 		// Loading the model
 		$model = JModelLegacy::getInstance('Field', 'DPFieldsModel', array(
-						'ignore_request' => true
+				'ignore_request' => true
 		));
 		foreach ($fields as $field)
 		{
@@ -310,7 +310,7 @@ class PlgSystemDPFields extends JPlugin
 		JLoader::import('joomla.application.component.model');
 		JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_dpfields/models', 'DPFieldsModel');
 		$model = JModelLegacy::getInstance('Field', 'DPFieldsModel', array(
-						'ignore_request' => true
+				'ignore_request' => true
 		));
 		$model->cleanupValues($context, $item->id);
 		return true;
@@ -428,18 +428,18 @@ class PlgSystemDPFields extends JPlugin
 			// has changed
 			$form->setFieldAttribute('catid', 'onchange', "categoryHasChanged(this);");
 			JFactory::getDocument()->addScriptDeclaration(
-							"function categoryHasChanged(element){
-						var cat = jQuery(element);
-						if (cat.val() == '" . $assignedCatids . "')return;
-						jQuery('input[name=task]').val('field.catchange');
-						element.form.action='" . $uri . "';
-						element.form.submit();
-					}
-					jQuery( document ).ready(function() {
-						var formControl = '#" . $form->getFormControl() . "_catid';
-						if (!jQuery(formControl).val() != '" . $assignedCatids .
-							"'){jQuery(formControl).val('" . $assignedCatids . "');}
-					});");
+					"function categoryHasChanged(element){
+				var cat = jQuery(element);
+				if (cat.val() == '" . $assignedCatids . "')return;
+				jQuery('input[name=task]').val('field.catchange');
+				element.form.action='" . $uri . "';
+				element.form.submit();
+			}
+			jQuery( document ).ready(function() {
+				var formControl = '#" . $form->getFormControl() . "_catid';
+				if (!jQuery(formControl).val() != '" . $assignedCatids .
+							 "'){jQuery(formControl).val('" . $assignedCatids . "');}
+			});");
 		}
 
 		// Creating the dom
@@ -451,7 +451,7 @@ class PlgSystemDPFields extends JPlugin
 
 		// Organizing the fields according to their category
 		$fieldsPerCategory = array(
-						0 => array()
+				0 => array()
 		);
 		foreach ($fields as $field)
 		{
@@ -559,7 +559,7 @@ class PlgSystemDPFields extends JPlugin
 		$form->load($xml->saveXML());
 
 		$model = JModelLegacy::getInstance('Field', 'DPFieldsModel', array(
-						'ignore_request' => true
+				'ignore_request' => true
 		));
 
 		if ((! isset($data->id) || ! $data->id) && $input->getCmd('controller') == 'config.display.modules' && JFactory::getApplication()->isSite())
@@ -669,13 +669,13 @@ class PlgSystemDPFields extends JPlugin
 		if ($fields)
 		{
 			return DPFieldsHelper::render($context, 'fields.render',
-							array(
-								'item' => $item,
-								'context' => $context,
-								'fields' => $fields,
-								'container' => $params->get('dpfields-container'),
-								'container-class' => $params->get('dpfields-container-class')
-							));
+					array(
+							'item' => $item,
+							'context' => $context,
+							'fields' => $fields,
+							'container' => $params->get('dpfields-container'),
+							'container-class' => $params->get('dpfields-container-class')
+					));
 		}
 		return '';
 	}
@@ -711,7 +711,7 @@ class PlgSystemDPFields extends JPlugin
 
 		// If we don't meet all the requirements return
 		if (! isset($item->id) || ! $item->id || ! isset($item->text) || ! $item->text || ! JString::strpos($item->text, 'dpfields') !== false ||
-						 ! $this->params->get('prepare_content', '1'))
+				 ! $this->params->get('prepare_content', '1'))
 		{
 			return true;
 		}
@@ -728,8 +728,8 @@ class PlgSystemDPFields extends JPlugin
 			$start = $starts[0][1] + strlen($starts[0][0]);
 			$end = $ends[0][1];
 			$params = explode(' ', str_replace(array(
-							'{{#dpfields',
-							'}}'
+					'{{#dpfields',
+					'}}'
 			), '', $starts[0][0]));
 
 			// Clone the fields because we are manipulating the array and need
@@ -793,9 +793,9 @@ class PlgSystemDPFields extends JPlugin
 
 				$m = new Mustache_Engine();
 				$output = $m->render('{{#dpfields}}' . substr($item->text, $start, $end - $start) . '{{/dpfields}}',
-								array(
-									'dpfields' => $contextFields
-								));
+						array(
+								'dpfields' => $contextFields
+						));
 
 				// Set the output on the item
 				$item->text = substr_replace($item->text, $output, $starts[0][1], $end + 13 - $starts[0][1]);
