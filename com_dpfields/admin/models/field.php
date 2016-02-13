@@ -63,6 +63,10 @@ class DPFieldsModelField extends JModelAdmin
 			$field = $this->getItem($data['id']);
 		}
 
+		if (! isset($data['assigned_cat_ids']))
+		{
+			$data['assigned_cat_ids'] = [];
+		}
 		$success = parent::save($data);
 
 		// If the options have changed delete the values
