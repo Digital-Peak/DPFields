@@ -6,6 +6,9 @@
 				label="COM_DPFIELDS_FIELD_FIELD_GALLERY_THUMBNAIL_WIDTH_LABEL"
 				description="COM_DPFIELDS_FIELD_FIELD_GALLERY_THUMBNAIL_WIDTH_DESC"
 				size="5" />
+			<field name="max_width" type="text" class=""
+				label="COM_DPFIELDS_FIELD_FIELD_GALLERY_MAX_WIDTH_LABEL"
+				description="COM_DPFIELDS_FIELD_FIELD_GALLERY_MAX_WIDTH_DESC" size="5" />
 			<field name="recursive" type="radio" class="btn-group" default="1"
 				label="COM_DPFIELDS_FIELD_FIELD_GALLERY_RECURSIVE_LABEL"
 				description="COM_DPFIELDS_FIELD_FIELD_GALLERY_RECURSIVE_DESC">

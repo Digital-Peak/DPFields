@@ -32,7 +32,8 @@ $doc->addStyleSheet('media/com_dpfields/css/fotorama.min.css');
 
 $value = (array) $value;
 
-$thumbWidth = $field->fieldparams->get('thumbnail_size', '64');
+$thumbWidth = $field->fieldparams->get('thumbnail_width', '64');
+$maxImageWidth = $field->fieldparams->get('max_width');
 
 // Main container
 $buffer = '<div class="fotorama" data-nav="thumbs" data-width="100%">';
@@ -45,8 +46,8 @@ foreach ($value as $path)
 	}
 
 	// The root folder
-	$root = $field->fieldparams->get('directory', 'images') . '/' . $path;
-	foreach (JFolder::files(JPATH_ROOT . '/' . $root, '.', $field->fieldparams->get('recursive', '1'), true) as $file)
+	$root = $field->fieldparams->get('directory', 'images');
+	foreach (JFolder::files(JPATH_ROOT . '/' . $root . '/' . $path, '.', $field->fieldparams->get('recursive', '1'), true) as $file)
 	{
 		// Skip none image files
 		if (! in_array(strtolower(JFile::getExt($file)), array(
@@ -61,6 +62,33 @@ foreach ($value as $path)
 
 		// Relative path
 		$localPath = str_replace(JPATH_ROOT . '/' . $root . '/', '', $file);
+		$webImagePath = $root . '/' . $localPath;
+
+		if ($maxImageWidth)
+		{
+			$resize = JPATH_CACHE . '/com_dpfields/gallery/' . $field->id . '/' . $maxImageWidth . '/' . $localPath;
+			if (! JFile::exists($resize))
+			{
+				// Creating the folder structure for the max sized image
+				if (! JFolder::exists(dirname($resize)))
+				{
+					JFolder::create(dirname($resize));
+				}
+				// Getting the properties of the image
+				$properties = JImage::getImageFileProperties($file);
+				if ($properties->width > $maxImageWidth)
+				{
+					// Creating the max sized image for the image
+					$imgObject = new JImage($file);
+					$imgObject->resize($maxImageWidth, 0, false, JImage::SCALE_INSIDE);
+					$imgObject->toFile($resize);
+				}
+			}
+			if (JFile::exists($resize))
+			{
+				$webImagePath = JUri::base(true) . str_replace(JPATH_ROOT, '', $resize);
+			}
+		}
 
 		// Thumbnail path for the image
 		$thumb = JPATH_CACHE . '/com_dpfields/gallery/' . $field->id . '/' . $thumbWidth . '/' . $localPath;
@@ -94,12 +122,12 @@ foreach ($value as $path)
 		if (JFile::exists($thumb))
 		{
 			// Linking to the real image and loading only the thumbnail
-			$buffer .= '<a href="' . $root . '/' . $localPath . '"><img src="' . JUri::base(true) . str_replace(JPATH_ROOT, '', $thumb) . '"/></a>';
+			$buffer .= '<a href="' . $webImagePath . '"><img src="' . JUri::base(true) . str_replace(JPATH_ROOT, '', $thumb) . '"/></a>';
 		}
 		else
 		{
 			// Thumbnail doesn't exist, loading the full image
-			$buffer .= '<img src="' . $root . '/' . $localPath . '"/>';
+			$buffer .= '<img src="' . $webImagePath . '"/>';
 		}
 	}
 }
