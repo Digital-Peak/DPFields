@@ -340,6 +340,8 @@ class PlgSystemDPFields extends JPlugin
 			return true;
 		}
 
+		$isSite  = JFactory::getApplication()->isSite();
+
 		$context = $form->getName();
 
 		// Transform categories form name to a valid context
@@ -369,6 +371,13 @@ class PlgSystemDPFields extends JPlugin
 			$data = (object) $data;
 		}
 
+		if ($isSite)
+		{
+			$activeMenu  = JFactory::getApplication()->getMenu()->getActive();
+			$params      = $activeMenu->params;
+			$data->catid = $params->get('catid');
+		}
+
 		// Getting the fields
 		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data);
 		if (! $fields)
@@ -396,7 +405,7 @@ class PlgSystemDPFields extends JPlugin
 
 		// If there is a catid field we need to reload the page when the catid
 		// is changed
-		if ($form->getField('catid') && $parts[0] != 'com_dpfields')
+		if ($form->getField('catid') && !$isSite && $parts[0] != 'com_dpfields')
 		{
 			// The uri to submit to
 			$uri = clone JUri::getInstance('index.php');
@@ -446,11 +455,19 @@ class PlgSystemDPFields extends JPlugin
 		);
 		foreach ($fields as $field)
 		{
-			if (! key_exists($field->catid, $fieldsPerCategory))
+			if ($isSite && strpos($field->assigned_cat_ids, $assignedCatids))
 			{
-				$fieldsPerCategory[$field->catid] = array();
+				$fieldsPerCategory[$field->catid][] = $field;
 			}
-			$fieldsPerCategory[$field->catid][] = $field;
+			elseif (!$isSite)
+			{
+				if (! key_exists($field->catid, $fieldsPerCategory))
+				{
+					$fieldsPerCategory[$field->catid] = array();
+				}
+
+				$fieldsPerCategory[$field->catid][] = $field;
+			}
 		}
 
 		// Looping trough the categories
