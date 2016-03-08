@@ -355,6 +355,13 @@ class PlgSystemDPFields extends JPlugin
 			return true;
 		}
 
+		// When no fields available return here
+		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], new JObject());
+		if (! $fields)
+		{
+			return true;
+		}
+
 		$input = JFactory::getApplication()->input;
 
 		// If we are on the save command we need the actual data
@@ -374,13 +381,6 @@ class PlgSystemDPFields extends JPlugin
 			$activeMenu = JFactory::getApplication()->getMenu()->getActive();
 			$params = $activeMenu->params;
 			$data->catid = $params->get('catid');
-		}
-
-		// Getting the fields
-		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data);
-		if (! $fields)
-		{
-			return true;
 		}
 
 		$component = $parts[0];
@@ -437,6 +437,13 @@ class PlgSystemDPFields extends JPlugin
 				var formControl = '#" . $form->getFormControl() . "_catid';
 				if (!jQuery(formControl).val() != '" . $assignedCatids . "'){jQuery(formControl).val('" . $assignedCatids . "');}
 			});");
+		}
+
+		// Getting the fields
+		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data);
+		if (! $fields)
+		{
+			return true;
 		}
 
 		// Creating the dom
