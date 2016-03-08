@@ -369,6 +369,13 @@ class PlgSystemDPFields extends JPlugin
 			$data = (object) $data;
 		}
 
+		if ((! isset($data->catid) || ! $data->catid) && JFactory::getApplication()->isSite() && $component = 'com_content')
+		{
+			$activeMenu = JFactory::getApplication()->getMenu()->getActive();
+			$params = $activeMenu->params;
+			$data->catid = $params->get('catid');
+		}
+
 		// Getting the fields
 		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data);
 		if (! $fields)
@@ -428,8 +435,7 @@ class PlgSystemDPFields extends JPlugin
 			}
 			jQuery( document ).ready(function() {
 				var formControl = '#" . $form->getFormControl() . "_catid';
-				if (!jQuery(formControl).val() != '" . $assignedCatids .
-							 "'){jQuery(formControl).val('" . $assignedCatids . "');}
+				if (!jQuery(formControl).val() != '" . $assignedCatids . "'){jQuery(formControl).val('" . $assignedCatids . "');}
 			});");
 		}
 
