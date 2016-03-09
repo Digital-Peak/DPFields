@@ -133,6 +133,8 @@
 				<option value="0">JNO</option>
 				<option value="-1">JLIB_FORM_VALUE_INHERITED</option>
 			</field>
+			<field name="output" type="editor"
+				label="COM_DPFIELDS_FIELD_FIELD_OUTPUT_LABEL" description="COM_DPFIELDS_FIELD_FIELD_OUTPUT_DESC" />
 		</fieldset>
 	</fields>
 </form>

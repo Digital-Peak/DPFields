@@ -145,11 +145,30 @@ class DPFieldsHelper
 				{
 					$value = null;
 
-					// Is deprecated
-					$type = self::loadTypeObject($field->type, $context);
-					if ($type)
+					if ($output = $field->params->get('output'))
 					{
-						$value = $type->prepareValueForDisplay($field->value, $field);
+						try
+						{
+							// Load the mustache engine
+							JLoader::import('components.com_dpfields.libraries.Mustache.Autoloader', JPATH_ADMINISTRATOR);
+							Mustache_Autoloader::register();
+
+							$m = new Mustache_Engine();
+							$value = $m->render($output, $field);
+						}
+						catch (Exception $e)
+						{
+							JFactory::getApplication()->enqueueMessage($e->getMessage(), 'warning');
+						}
+					}
+					else
+					{
+						// Is deprecated
+						$type = self::loadTypeObject($field->type, $context);
+						if ($type)
+						{
+							$value = $type->prepareValueForDisplay($field->value, $field);
+						}
 					}
 
 					if (! $value)
