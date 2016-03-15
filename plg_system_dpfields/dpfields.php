@@ -380,7 +380,11 @@ class PlgSystemDPFields extends JPlugin
 		{
 			$activeMenu = JFactory::getApplication()->getMenu()->getActive();
 			$params = $activeMenu->params;
-			$data->catid = $params->get('catid');
+			
+			if (isset($params))
+			{
+				$data->catid = $params->get('catid');
+			}
 		}
 
 		$component = $parts[0];
