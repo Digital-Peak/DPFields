@@ -379,8 +379,11 @@ class PlgSystemDPFields extends JPlugin
 		if ((! isset($data->catid) || ! $data->catid) && JFactory::getApplication()->isSite() && $component = 'com_content')
 		{
 			$activeMenu = JFactory::getApplication()->getMenu()->getActive();
-			$params = $activeMenu->params;
-			$data->catid = $params->get('catid');
+			if ($activeMenu->params)
+			{
+				$params = $activeMenu->params;
+				$data->catid = $params->get('catid');
+			}
 		}
 
 		$component = $parts[0];
@@ -435,7 +438,8 @@ class PlgSystemDPFields extends JPlugin
 			}
 			jQuery( document ).ready(function() {
 				var formControl = '#" . $form->getFormControl() . "_catid';
-				if (!jQuery(formControl).val() != '" . $assignedCatids . "'){jQuery(formControl).val('" . $assignedCatids . "');}
+				if (!jQuery(formControl).val() != '" . $assignedCatids .
+							 "'){jQuery(formControl).val('" . $assignedCatids . "');}
 			});");
 		}
 
