@@ -64,6 +64,13 @@ class PlgSystemDPFields extends JPlugin
 		}
 		$component = $input->getCmd('option');
 
+		// Simple check on current user
+		$userTmp = JFactory::getUser();
+		if ($userTmp->requireReset || $userTmp->block)
+		{
+			return;
+		}
+
 		// Define the component and section of the context to support
 		$section = '';
 		if ($component == 'com_dpfields' || $component == 'com_categories')
@@ -378,10 +385,11 @@ class PlgSystemDPFields extends JPlugin
 
 		if ((! isset($data->catid) || ! $data->catid) && JFactory::getApplication()->isSite() && $component = 'com_content')
 		{
-			$activeMenu = JFactory::getApplication()->getMenu()->getActive();
-			if ($activeMenu->params)
+			$activeMenu  = JFactory::getApplication()->getMenu()->getActive();
+
+			if (isset($activeMenu))
 			{
-				$params = $activeMenu->params;
+				$params      = $activeMenu->params;
 				$data->catid = $params->get('catid');
 			}
 		}
