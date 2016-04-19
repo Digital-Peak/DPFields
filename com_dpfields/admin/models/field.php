@@ -65,7 +65,7 @@ class DPFieldsModelField extends JModelAdmin
 
 		if (! isset($data['assigned_cat_ids']))
 		{
-			$data['assigned_cat_ids'] = [];
+			$data['assigned_cat_ids'] = array();
 		}
 		$success = parent::save($data);
 
