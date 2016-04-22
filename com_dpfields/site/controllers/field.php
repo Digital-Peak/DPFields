@@ -10,7 +10,7 @@ defined('_JEXEC') or die();
 class DPFieldsControllerField extends JControllerLegacy
 {
 
-	public function catchange ()
+	public function storeform ()
 	{
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
