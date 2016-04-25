@@ -67,6 +67,18 @@ class DPFieldsModelField extends JModelAdmin
 		{
 			$data['assigned_cat_ids'] = array();
 		}
+		else
+		{
+			$cats = (array) $data['assigned_cat_ids'];
+			foreach ($cats as $key => $c)
+			{
+				if (empty($c))
+				{
+					unset($cats[$key]);
+				}
+			}
+			$data['assigned_cat_ids'] = $cats;
+		}
 		$success = parent::save($data);
 
 		// If the options have changed delete the values
