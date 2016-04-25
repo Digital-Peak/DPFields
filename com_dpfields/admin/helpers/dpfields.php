@@ -237,4 +237,43 @@ class DPFieldsHelper
 
 		return $value;
 	}
+
+	public static function countItems (&$items)
+	{
+		$db = JFactory::getDbo();
+		foreach ($items as $item)
+		{
+			$item->count_trashed = 0;
+			$item->count_archived = 0;
+			$item->count_unpublished = 0;
+			$item->count_published = 0;
+			$query = $db->getQuery(true);
+			$query->select('state, count(*) AS count')
+				->from($db->qn('#__dpfields_fields'))
+				->where('catid = ' . (int) $item->id)
+				->group('state');
+			$db->setQuery($query);
+			$fields = $db->loadObjectList();
+			foreach ($fields as $field)
+			{
+				if ($field->state == 1)
+				{
+					$item->count_published = $field->count;
+				}
+				if ($field->state == 0)
+				{
+					$item->count_unpublished = $field->count;
+				}
+				if ($field->state == 2)
+				{
+					$item->count_archived = $field->count;
+				}
+				if ($field->state == - 2)
+				{
+					$item->count_trashed = $field->count;
+				}
+			}
+		}
+		return $items;
+	}
 }
