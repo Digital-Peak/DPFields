@@ -152,7 +152,7 @@ class DPFieldsHelper
 					$dispatcher = JEventDispatcher::getInstance();
 					if ($field->value)
 					{
-						$dispatcher->trigger('onFieldBeforePrepare', array($context, $item, &$field));
+						$dispatcher->trigger('onDPFieldBeforePrepare', array($context, $item, &$field));
 					}
 
 					if ($output = $field->params->get('output'))
@@ -203,7 +203,7 @@ class DPFieldsHelper
 					 */
 					if ($value)
 					{
-						$dispatcher->trigger('onFieldAfterPrepare', array($context, $item, $field, &$value));
+						$dispatcher->trigger('onDPFieldAfterPrepare', array($context, $item, $field, &$value));
 					}
 					$field->value = $value;
 				}
