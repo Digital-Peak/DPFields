@@ -145,6 +145,13 @@ class DPFieldsHelper
 				{
 					$value = null;
 
+					/*
+					 * On before field prepare
+					 * Event allow plugins to modfify the output of the field before it is prepared
+					 */
+					$dispatcher = JEventDispatcher::getInstance();
+					$dispatcher->trigger('onDPFieldBeforePrepare', array($context, $item, &$field));
+
 					if ($output = $field->params->get('output'))
 					{
 						try
@@ -187,6 +194,11 @@ class DPFieldsHelper
 						));
 					}
 
+					/*
+					 * On after field render
+					 * Event allow plugins to modfify the output of the prepared field
+					 */
+					$dispatcher->trigger('onDPFieldAfterPrepare', array($context, $item, $field, &$value));
 					$field->value = $value;
 				}
 				$new[$key] = $field;
