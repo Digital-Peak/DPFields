@@ -7,14 +7,14 @@
  */
 defined('_JEXEC') or die();
 
-if (! key_exists('field', $displayData))
+if (!key_exists('field', $displayData))
 {
 	return;
 }
 
 $field = $displayData['field'];
 $value = $field->value;
-if (! $value)
+if (!$value)
 {
 	return;
 }
@@ -30,17 +30,19 @@ $doc = JFactory::getDocument();
 $doc->addScript('media/com_dpfields/js/fotorama.min.js');
 $doc->addStyleSheet('media/com_dpfields/css/fotorama.min.css');
 
-$value = (array) $value;
+$value = (array)$value;
 
 $thumbWidth = $field->fieldparams->get('thumbnail_width', '64');
-$maxImageWidth = $field->fieldparams->get('max_width');
+$maxImageWidth = $field->fieldparams->get('max_width', 0);
+$maxImageHeight = $field->fieldparams->get('max_height', 0);
 
 // Main container
-$buffer = '<div class="fotorama" data-nav="thumbs" data-width="100%">';
+$buffer = '<div class="fotorama" data-nav="thumbs" data-width="100%" ' . ($maxImageHeight ? 'data-height="' . $maxImageHeight . '"' : '') . '>';
+
 foreach ($value as $path)
 {
 	// Only process valid paths
-	if (! $path)
+	if (!$path)
 	{
 		continue;
 	}
@@ -50,7 +52,7 @@ foreach ($value as $path)
 	foreach (JFolder::files(JPATH_ROOT . '/' . $root . '/' . $path, '.', $field->fieldparams->get('recursive', '1'), true) as $file)
 	{
 		// Skip none image files
-		if (! in_array(strtolower(JFile::getExt($file)), array(
+		if (!in_array(strtolower(JFile::getExt($file)), array(
 				'jpg',
 				'png',
 				'bmp',
@@ -60,28 +62,42 @@ foreach ($value as $path)
 			continue;
 		}
 
+		// Getting the properties of the image
+		$properties = JImage::getImageFileProperties($file);
+
 		// Relative path
 		$localPath = str_replace(JPATH_ROOT . '/' . $root . '/', '', $file);
 		$webImagePath = $root . '/' . $localPath;
 
-		if ($maxImageWidth)
+		if (($maxImageWidth && $properties->width > $maxImageWidth) || ($maxImageHeight && $properties->height > $maxImageHeight))
 		{
-			$resize = JPATH_CACHE . '/com_dpfields/gallery/' . $field->id . '/' . $maxImageWidth . '/' . $localPath;
-			if (! JFile::exists($resize))
+			$resizeWidth = $maxImageWidth ? $maxImageWidth : '';
+			$resizeHeight = $maxImageHeight ? $maxImageHeight : '';
+			if ($resizeWidth && $resizeHeight)
+			{
+				$resizeWidth .= 'x';
+			}
+			$resize = JPATH_CACHE . '/com_dpfields/gallery/' . $field->id . '/' . $resizeWidth . $resizeHeight . '/' . $localPath;
+			if (!JFile::exists($resize))
 			{
 				// Creating the folder structure for the max sized image
-				if (! JFolder::exists(dirname($resize)))
+				if (!JFolder::exists(dirname($resize)))
 				{
 					JFolder::create(dirname($resize));
 				}
-				// Getting the properties of the image
-				$properties = JImage::getImageFileProperties($file);
-				if ($properties->width > $maxImageWidth)
+				try
 				{
 					// Creating the max sized image for the image
 					$imgObject = new JImage($file);
-					$imgObject->resize($maxImageWidth, 0, false, JImage::SCALE_INSIDE);
+
+					$imgObject = $imgObject->resize($properties->width > $maxImageWidth ? $maxImageWidth : 0,
+							$properties->height > $maxImageHeight ? $maxImageHeight : 0, true, JImage::SCALE_INSIDE);
+
 					$imgObject->toFile($resize);
+				}
+				catch (Exception $e)
+				{
+					JFactory::getApplication()->enqueueMessage(JText::sprintf('COM_DPFIELDS_TYPE_GALLERY_IMAGE_ERROR', $file, $e->getMessage()));
 				}
 			}
 			if (JFile::exists($resize))
@@ -93,12 +109,12 @@ foreach ($value as $path)
 		// Thumbnail path for the image
 		$thumb = JPATH_CACHE . '/com_dpfields/gallery/' . $field->id . '/' . $thumbWidth . '/' . $localPath;
 
-		if (! JFile::exists($thumb))
+		if (!JFile::exists($thumb))
 		{
 			try
 			{
 				// Creating the folder structure for the thumbnail
-				if (! JFolder::exists(dirname($thumb)))
+				if (!JFolder::exists(dirname($thumb)))
 				{
 					JFolder::create(dirname($thumb));
 				}
@@ -122,7 +138,7 @@ foreach ($value as $path)
 		if (JFile::exists($thumb))
 		{
 			// Linking to the real image and loading only the thumbnail
-			$buffer .= '<a href="' . $webImagePath . '"><img src="' . JUri::base(true) . str_replace(JPATH_ROOT, '', $thumb) . '"/></a>';
+			$buffer .= '<a href="' . $webImagePath . '"><img src="' . JUri::base(true) . str_replace(JPATH_ROOT, '', $thumb) . '" /></a>';
 		}
 		else
 		{
