@@ -101,15 +101,16 @@ class DPFieldsHelper
 					'ignore_request' => true
 			));
 			self::$fieldsCache->setState('filter.published', 1);
-			self::$fieldsCache->setState('filter.language', isset($item->language) ? $item->language : JFactory::getLanguage()->getTag());
 			self::$fieldsCache->setState('list.limit', 0);
 		}
-		self::$fieldsCache->setState('filter.context', $context);
 
 		if (is_array($item))
 		{
 			$item = (object) $item;
 		}
+
+		self::$fieldsCache->setState('filter.language', isset($item->language) ? $item->language : JFactory::getLanguage()->getTag());
+		self::$fieldsCache->setState('filter.context', $context);
 
 		// If item has assigned_cat_ids parameter display only fields which
 		// belong to the category
