@@ -171,7 +171,14 @@ class PlgSystemDPFields extends JPlugin
 			// Only safe the fields with the alias from the data
 			if (! key_exists($field->alias, $params))
 			{
-				continue;
+				if ($field->type == 'checkboxes')
+				{
+					$params[$field->alias] = array(null);
+				}
+				else
+				{
+					continue;
+				}
 			}
 
 			// Set the param on the dpfields variable
