@@ -12,7 +12,7 @@ use Joomla\Registry\Registry;
 JLoader::import('joomla.filesystem.folder');
 JLoader::import('joomla.filesystem.file');
 
-if (! JFile::exists(JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/dpfields.php'))
+if (!JFile::exists(JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/dpfields.php'))
 {
 	return;
 }
@@ -28,7 +28,7 @@ class PlgSystemDPFields extends JPlugin
 
 	private $supportedContexts;
 
-	public function __construct ($subject, $config)
+	public function __construct($subject, $config)
 	{
 		parent::__construct($subject, $config);
 
@@ -47,9 +47,9 @@ class PlgSystemDPFields extends JPlugin
 		}
 	}
 
-	public function onAfterRoute ()
+	public function onAfterRoute()
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return;
 		}
@@ -58,7 +58,7 @@ class PlgSystemDPFields extends JPlugin
 		$input = $app->input;
 
 		// Only add entries on back end
-		if (! $app->isAdmin())
+		if (!$app->isAdmin())
 		{
 			return;
 		}
@@ -77,7 +77,7 @@ class PlgSystemDPFields extends JPlugin
 		{
 			$context = $input->getCmd($component == 'com_dpfields' ? 'context' : 'extension');
 			$parts = $this->getParts($context);
-			if (! $parts)
+			if (!$parts)
 			{
 				$component = $context;
 			}
@@ -89,12 +89,12 @@ class PlgSystemDPFields extends JPlugin
 		}
 
 		// Only do supported contexts
-		if (! key_exists($component, $this->supportedContexts))
+		if (!key_exists($component, $this->supportedContexts))
 		{
 			return;
 		}
 
-		if (! $section)
+		if (!$section)
 		{
 			$section = $this->supportedContexts[$component];
 			$sections = explode(',', $section);
@@ -116,9 +116,9 @@ class PlgSystemDPFields extends JPlugin
 				$input->getCmd('extension') == $component . '.' . $section . '.fields');
 	}
 
-	public function onContentBeforeSave ($context, $item, $isNew)
+	public function onContentBeforeSave($context, $item, $isNew)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return true;
 		}
@@ -130,7 +130,7 @@ class PlgSystemDPFields extends JPlugin
 		}
 
 		$parts = $this->getParts($context);
-		if (! $parts)
+		if (!$parts)
 		{
 			return true;
 		}
@@ -138,7 +138,7 @@ class PlgSystemDPFields extends JPlugin
 
 		// Loading the fields
 		$fields = DPFieldsHelper::getFields($context, $item);
-		if (! $fields)
+		if (!$fields)
 		{
 			return true;
 		}
@@ -159,7 +159,7 @@ class PlgSystemDPFields extends JPlugin
 		}
 		$params = $params->toArray();
 
-		if (! $params)
+		if (!$params)
 		{
 			return true;
 		}
@@ -169,11 +169,13 @@ class PlgSystemDPFields extends JPlugin
 		foreach ($fields as $field)
 		{
 			// Only safe the fields with the alias from the data
-			if (! key_exists($field->alias, $params))
+			if (!key_exists($field->alias, $params))
 			{
 				if ($field->type == 'checkboxes')
 				{
-					$params[$field->alias] = array(null);
+					$params[$field->alias] = array(
+							null
+					);
 				}
 				else
 				{
@@ -197,9 +199,9 @@ class PlgSystemDPFields extends JPlugin
 		}
 	}
 
-	public function onContentAfterSave ($context, $item, $isNew)
+	public function onContentAfterSave($context, $item, $isNew)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return true;
 		}
@@ -211,7 +213,7 @@ class PlgSystemDPFields extends JPlugin
 		}
 
 		$parts = $this->getParts($context);
-		if (! $parts)
+		if (!$parts)
 		{
 			return true;
 		}
@@ -224,14 +226,14 @@ class PlgSystemDPFields extends JPlugin
 			$dpfields = $item->_dpfields;
 		}
 
-		if (! $dpfields)
+		if (!$dpfields)
 		{
 			return true;
 		}
 
 		// Loading the fields
 		$fields = DPFieldsHelper::getFields($context, $item);
-		if (! $fields)
+		if (!$fields)
 		{
 			return true;
 		}
@@ -243,7 +245,7 @@ class PlgSystemDPFields extends JPlugin
 		foreach ($fields as $field)
 		{
 			// Only safe the fields with the alias from the data
-			if (! key_exists($field->alias, $dpfields))
+			if (!key_exists($field->alias, $dpfields))
 			{
 				continue;
 			}
@@ -254,7 +256,7 @@ class PlgSystemDPFields extends JPlugin
 				$id = $item->id;
 			}
 
-			if (! $id)
+			if (!$id)
 			{
 				continue;
 			}
@@ -266,19 +268,19 @@ class PlgSystemDPFields extends JPlugin
 		return true;
 	}
 
-	public function onExtensionBeforeSave ($context, $item, $isNew)
+	public function onExtensionBeforeSave($context, $item, $isNew)
 	{
 		return $this->onContentBeforeSave($context, $item, $isNew);
 	}
 
-	public function onExtensionAfterSave ($context, $item, $isNew)
+	public function onExtensionAfterSave($context, $item, $isNew)
 	{
 		return $this->onContentAfterSave($context, $item, $isNew);
 	}
 
-	public function onUserAfterSave ($userData, $isNew, $success, $msg)
+	public function onUserAfterSave($userData, $isNew, $success, $msg)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return true;
 		}
@@ -287,13 +289,13 @@ class PlgSystemDPFields extends JPlugin
 		// http://joomla.stackexchange.com/questions/10693/changing-user-group-in-onuserbeforesave-of-user-profile-plugin-doesnt-work
 
 		// Check if data is valid or we are in a recursion
-		if (! $userData['id'] || ! $success)
+		if (!$userData['id'] || !$success)
 		{
 			return true;
 		}
 
 		$user = JFactory::getUser($userData['id']);
-		$user->params = (string) $user->getParameters();
+		$user->params = (string)$user->getParameters();
 
 		// Trigger the events with a real user
 		$this->onContentBeforeSave('com_users.user', $user, false);
@@ -307,15 +309,15 @@ class PlgSystemDPFields extends JPlugin
 		return true;
 	}
 
-	public function onContentAfterDelete ($context, $item)
+	public function onContentAfterDelete($context, $item)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return true;
 		}
 
 		$parts = $this->getParts($context);
-		if (! $parts)
+		if (!$parts)
 		{
 			return true;
 		}
@@ -330,14 +332,14 @@ class PlgSystemDPFields extends JPlugin
 		return true;
 	}
 
-	public function onExtensionAfterDelete ($context, $item)
+	public function onExtensionAfterDelete($context, $item)
 	{
 		return $this->onContentAfterDelete($context, $item);
 	}
 
-	public function onUserAfterDelete ($user, $succes, $msg)
+	public function onUserAfterDelete($user, $succes, $msg)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return true;
 		}
@@ -347,9 +349,9 @@ class PlgSystemDPFields extends JPlugin
 		return $this->onContentAfterDelete('com_users.user', $item);
 	}
 
-	public function onContentPrepareForm (JForm $form, $data)
+	public function onContentPrepareForm(JForm $form, $data)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return true;
 		}
@@ -364,14 +366,14 @@ class PlgSystemDPFields extends JPlugin
 
 		// Extracting the component and section
 		$parts = $this->getParts($context);
-		if (! $parts)
+		if (!$parts)
 		{
 			return true;
 		}
 
 		// When no fields available return here
 		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], new JObject());
-		if (! $fields)
+		if (!$fields)
 		{
 			return true;
 		}
@@ -380,23 +382,23 @@ class PlgSystemDPFields extends JPlugin
 
 		// If we are on the save command we need the actual data
 		$jformData = $input->get('jform', array(), 'array');
-		if ($jformData && ! $data)
+		if ($jformData && !$data)
 		{
 			$data = $jformData;
 		}
 
 		if (is_array($data))
 		{
-			$data = (object) $data;
+			$data = (object)$data;
 		}
 
-		if ((! isset($data->catid) || ! $data->catid) && JFactory::getApplication()->isSite() && $component = 'com_content')
+		if ((!isset($data->catid) || !$data->catid) && JFactory::getApplication()->isSite() && $component = 'com_content')
 		{
-			$activeMenu  = JFactory::getApplication()->getMenu()->getActive();
+			$activeMenu = JFactory::getApplication()->getMenu()->getActive();
 
 			if (isset($activeMenu))
 			{
-				$params      = $activeMenu->params;
+				$params = $activeMenu->params;
 				$data->catid = $params->get('catid');
 			}
 		}
@@ -405,7 +407,7 @@ class PlgSystemDPFields extends JPlugin
 		$section = $parts[1];
 
 		$assignedCatids = isset($data->catid) ? $data->catid : (isset($data->dpfieldscatid) ? $data->dpfieldscatid : null);
-		if (! $assignedCatids && $form->getField('assigned_cat_ids'))
+		if (!$assignedCatids && $form->getField('assigned_cat_ids'))
 		{
 			// Choose the first category available
 			$xml = new DOMDocument();
@@ -459,8 +461,8 @@ class PlgSystemDPFields extends JPlugin
 		}
 
 		// Getting the fields
-		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data);
-		if (! $fields)
+		$fields = DPFieldsHelper::getFields($parts[0] . '.' . $parts[1], $data, true);
+		if (!$fields)
 		{
 			return true;
 		}
@@ -478,7 +480,7 @@ class PlgSystemDPFields extends JPlugin
 		);
 		foreach ($fields as $field)
 		{
-			if (! key_exists($field->catid, $fieldsPerCategory))
+			if (!key_exists($field->catid, $fieldsPerCategory))
 			{
 				$fieldsPerCategory[$field->catid] = array();
 			}
@@ -488,7 +490,7 @@ class PlgSystemDPFields extends JPlugin
 		// Looping trough the categories
 		foreach ($fieldsPerCategory as $catid => $catFields)
 		{
-			if (! $catFields)
+			if (!$catFields)
 			{
 				continue;
 			}
@@ -514,21 +516,21 @@ class PlgSystemDPFields extends JPlugin
 				}
 			}
 
-			if (! $label || ! $description)
+			if (!$label || !$description)
 			{
 				$lang = JFactory::getLanguage();
 
-				if (! $label)
+				if (!$label)
 				{
 					$key = strtoupper($component . '_FIELDS_' . $section . '_LABEL');
-					if (! $lang->hasKey($key))
+					if (!$lang->hasKey($key))
 					{
 						$key = 'PLG_SYSTEM_DPFIELDS_FIELDS';
 					}
 					$label = JText::_($key);
 				}
 
-				if (! $description)
+				if (!$description)
 				{
 					$key = strtoupper($component . '_FIELDS_' . $section . '_DESC');
 					if ($lang->hasKey($key))
@@ -559,7 +561,7 @@ class PlgSystemDPFields extends JPlugin
 					// assigned_cat_ids in the data is not known, set the
 					// required
 					// flag to false on any circumstance
-					if (! $assignedCatids && $field->assigned_cat_ids)
+					if (!$assignedCatids && $field->assigned_cat_ids)
 					{
 						$node->setAttribute('required', 'false');
 					}
@@ -577,7 +579,7 @@ class PlgSystemDPFields extends JPlugin
 				'ignore_request' => true
 		));
 
-		if ((! isset($data->id) || ! $data->id) && $input->getCmd('controller') == 'config.display.modules' && JFactory::getApplication()->isSite())
+		if ((!isset($data->id) || !$data->id) && $input->getCmd('controller') == 'config.display.modules' && JFactory::getApplication()->isSite())
 		{
 			// Modules on front end editing don't have data and an id set
 			$data->id = $input->getInt('id');
@@ -593,6 +595,20 @@ class PlgSystemDPFields extends JPlugin
 				{
 					continue;
 				}
+
+				// As the user profile is shown out of a form, use the prepared
+				// value
+				if (JFactory::getApplication()->isSite() && $context == 'com_users.profile' && $input->get('view') == 'profile' &&
+						 $input->get('layout') != 'edit' && (!isset($activeMenu->query['layout']) || $activeMenu->query['layout'] != 'edit'))
+				{
+					$value = $field->value;
+					JHtml::register('users.' . $form->getFormControl() . '_params_' . $field->alias,
+							function ($value)
+							{
+								return $value;
+							});
+				}
+
 				// Setting the value on the field
 				$form->setValue($field->alias, 'params', $value);
 			}
@@ -601,15 +617,15 @@ class PlgSystemDPFields extends JPlugin
 		return true;
 	}
 
-	public function onContentPrepareData ($context, $data)
+	public function onContentPrepareData($context, $data)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return;
 		}
 
 		$parts = $this->getParts($context);
-		if (! $parts)
+		if (!$parts)
 		{
 			return;
 		}
@@ -620,30 +636,30 @@ class PlgSystemDPFields extends JPlugin
 		}
 	}
 
-	public function onContentAfterTitle ($context, $item, $params, $limitstart = 0)
+	public function onContentAfterTitle($context, $item, $params, $limitstart = 0)
 	{
 		return $this->display($context, $item, $params, 1);
 	}
 
-	public function onContentBeforeDisplay ($context, $item, $params, $limitstart = 0)
+	public function onContentBeforeDisplay($context, $item, $params, $limitstart = 0)
 	{
 		return $this->display($context, $item, $params, 2);
 	}
 
-	public function onContentAfterDisplay ($context, $item, $params, $limitstart = 0)
+	public function onContentAfterDisplay($context, $item, $params, $limitstart = 0)
 	{
 		return $this->display($context, $item, $params, 3);
 	}
 
-	private function display ($context, $item, $params, $displayType)
+	private function display($context, $item, $params, $displayType)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return '';
 		}
 
 		$parts = $this->getParts($context);
-		if (! $parts)
+		if (!$parts)
 		{
 			return '';
 		}
@@ -695,15 +711,15 @@ class PlgSystemDPFields extends JPlugin
 		return '';
 	}
 
-	public function onContentPrepare ($context, $item)
+	public function onContentPrepare($context, $item)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return;
 		}
 
 		$parts = $this->getParts($context);
-		if (! $parts)
+		if (!$parts)
 		{
 			return;
 		}
@@ -725,8 +741,8 @@ class PlgSystemDPFields extends JPlugin
 		}
 
 		// If we don't meet all the requirements return
-		if (! isset($item->id) || ! $item->id || ! isset($item->text) || ! $item->text || ! JString::strpos($item->text, 'dpfields') !== false ||
-				 ! $this->params->get('prepare_content', '1'))
+		if (!isset($item->id) || !$item->id || !isset($item->text) || !$item->text || !JString::strpos($item->text, 'dpfields') !== false ||
+				 !$this->params->get('prepare_content', '1'))
 		{
 			return true;
 		}
@@ -755,7 +771,7 @@ class PlgSystemDPFields extends JPlugin
 			foreach ($params as $string)
 			{
 				$string = trim($string);
-				if (! $string)
+				if (!$string)
 				{
 					continue;
 				}
@@ -778,7 +794,7 @@ class PlgSystemDPFields extends JPlugin
 					JArrayHelper::toInteger($paramValue);
 					foreach ($contextFields as $key => $field)
 					{
-						if (! in_array($field->id, $paramValue))
+						if (!in_array($field->id, $paramValue))
 						{
 							unset($contextFields[$key]);
 						}
@@ -789,7 +805,7 @@ class PlgSystemDPFields extends JPlugin
 					$paramValue = explode(',', $paramValue);
 					foreach ($contextFields as $key => $field)
 					{
-						if (! in_array($field->alias, $paramValue))
+						if (!in_array($field->alias, $paramValue))
 						{
 							unset($contextFields[$key]);
 						}
@@ -823,9 +839,9 @@ class PlgSystemDPFields extends JPlugin
 		return true;
 	}
 
-	public function onAfterCleanModuleList ($modules)
+	public function onAfterCleanModuleList($modules)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return true;
 		}
@@ -840,9 +856,9 @@ class PlgSystemDPFields extends JPlugin
 		return true;
 	}
 
-	public function onPrepareFinderContent ($item)
+	public function onPrepareFinderContent($item)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return true;
 		}
@@ -892,15 +908,15 @@ class PlgSystemDPFields extends JPlugin
 		return true;
 	}
 
-	private function getParts ($context)
+	private function getParts($context)
 	{
-		if (! $this->isComponentAvailable())
+		if (!$this->isComponentAvailable())
 		{
 			return null;
 		}
 
 		$parts = DPFieldsHelper::extract($context);
-		if (! $parts)
+		if (!$parts)
 		{
 			return null;
 		}
@@ -950,7 +966,7 @@ class PlgSystemDPFields extends JPlugin
 		return $parts;
 	}
 
-	private function isComponentAvailable ()
+	private function isComponentAvailable()
 	{
 		return JFile::exists(JPATH_ADMINISTRATOR . '/components/com_dpfields/helpers/dpfields.php');
 	}
