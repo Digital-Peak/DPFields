@@ -16,6 +16,21 @@ class DPFieldsTypeMedia extends DPFieldsTypeBase
 	{
 		$fieldNode->setAttribute('hide_default', 'true');
 
+		if ($field->fieldparams->get('home'))
+		{
+			$userName = JFactory::getUser()->username;
+			$root = $field->fieldparams->get('directory');
+
+			$directory = JPATH_ROOT . '/images/' . trim($root, '/') . '/' . $userName;
+
+			if (!JFolder::exists($directory))
+			{
+				JFolder::create($directory);
+			}
+
+			$fieldNode->setAttribute('directory', str_replace(JPATH_ROOT . '/images', '', $directory));
+		}
+
 		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
 }

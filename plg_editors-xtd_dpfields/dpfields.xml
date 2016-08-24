@@ -9,7 +9,7 @@
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@digital-peak.com</authorEmail>
 	<authorUrl>joomla.digital-peak.com</authorUrl>
-	<version>1.3.1</version>
+	<version>1.3.2</version>
 	<description>PLG_EDITORS-XTD_DPFIELDS_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="dpfields">dpfields.php</filename>
