@@ -24,6 +24,11 @@ $class = $field->render_class;
 ?>
 
 <dd class="dpfield-entry <?php echo $class;?>" id="dpfield-entry-<?php echo $field->id;?>">
+	<?php
+	if (!$field->params->get('hide_label'))
+	{ ?>
 	<span class="dpfield-label"><?php echo htmlentities($label);?>: </span>
+	<?php
+	} ?>
 	<span class="dpfield-value"><?php echo $value;?></span>
 </dd>
