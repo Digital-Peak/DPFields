@@ -674,7 +674,7 @@ class PlgSystemDPFields extends JPlugin
 			}
 		}
 
-		if (is_string($params))
+		if (!$params instanceof Registry)
 		{
 			$params = new Registry($params);
 		}
