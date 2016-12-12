@@ -15,6 +15,10 @@ class DPFieldsTypeImagelist extends DPFieldsTypeBase
 	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
 	{
 		$fieldNode->setAttribute('hide_default', 'true');
+		$fieldNode->setAttribute('hide_none', 'true');
+
+		$element = $fieldNode->appendChild(new DOMElement('option', JText::_('JOPTION_DO_NOT_USE')));
+		$element->setAttribute('value', '');
 
 		return parent::postProcessDomNode($field, $fieldNode, $form);
 	}
