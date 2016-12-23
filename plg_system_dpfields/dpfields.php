@@ -823,7 +823,7 @@ class PlgSystemDPFields extends JPlugin
 				Mustache_Autoloader::register();
 
 				$m = new Mustache_Engine();
-				$output = $m->render('{{#dpfields}}' . substr($item->text, $start, $end - $start) . '{{/dpfields}}',
+				$output = $m->render('{{#dpfields}}{' . substr($item->text, $start, $end - $start) . '}{{/dpfields}}',
 						array(
 								'dpfields' => $contextFields
 						));
