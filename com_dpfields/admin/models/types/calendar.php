@@ -11,4 +11,8 @@ JLoader::import('components.com_dpfields.models.types.base', JPATH_ADMINISTRATOR
 
 class DPFieldsTypeCalendar extends DPFieldsTypeBase
 {
+	protected function postProcessDomNode ($field, DOMElement $fieldNode, JForm $form)
+	{
+		$fieldNode->setAttribute('filter', 'none');
+	}
 }
