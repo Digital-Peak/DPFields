@@ -1,8 +1,8 @@
-DPFields
+EDPFields
 =============
-This is the official DPFields Github repository. DPFields is a Joomla extension suite which adds custom fields for Articles, Users, Categories, Modules, DPCalendar events or DPCases cases. But it's main purpose is to serve Joomla extension developers a custom fields feature with minimal code changes.
+This is the official DPFields Github repository. DPFields is a Joomla extension suite which adds custom fields for Articles, Users, Categories, Modules, DPCalendar events or DPCases cases. But it's main purpose is to provide Joomla extension developers a custom fields feature with minimal code changes.
 
-PREREQUISITS
+PREREQUISITES
 ------------
 - Joomla 3.4 and above
 - mysql >= 5.0.0
@@ -10,7 +10,7 @@ PREREQUISITS
 
 INSTALLATION
 ------------
-Just install the downloaded zip file trough the Joomla extension manager and make sure the plugins are
+Just install the downloaded zip file through the Joomla extension manager and make sure the plugins are
 enabled.
 
 INTEGRATION
