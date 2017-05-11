@@ -39,8 +39,12 @@ foreach ($value as $path) {
 		continue;
 	}
 
+	if ($path == '-1') {
+		$path = '';
+	}
+
 	// The root folder
-	$root = $fieldParams->get('directory', 'images');
+	$root = 'images/' . $fieldParams->get('directory', '');
 
 	foreach (JFolder::files(JPATH_ROOT . '/' . $root . '/' . $path, '.', $fieldParams->get('recursive', '1'), true) as $file) {
 		// Skip none image files

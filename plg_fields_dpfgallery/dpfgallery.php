@@ -15,20 +15,12 @@ class PlgFieldsDPFGallery extends FieldsPlugin
 	{
 		$fieldNode = parent::onCustomFieldsPrepareDom($field, $parent, $form);
 
-		if (!$fieldNode)
-		{
+		if (!$fieldNode) {
 			return $fieldNode;
 		}
 
-		$directory = $fieldNode->getAttribute('directory');
-
-		// Can be empty when the plugin doesn't get saved.
-		if (!$directory)
-		{
-			$directory = 'images';
-		}
-
-		$fieldNode->setAttribute('directory', $directory);
+		$fieldNode->setAttribute('directory', 'images/' . $fieldNode->getAttribute('directory'));
+		$fieldNode->setAttribute('hide_default', true);
 
 		return $fieldNode;
 	}

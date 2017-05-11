@@ -129,7 +129,7 @@ class DPFieldsModelEntities extends JModelList
 		$context = $this->getUserStateFromRequest($this->context . '.context', 'context');
 		$this->setState('filter.context', $context);
 
-		$params = JComponentHelper::getParams('com_dpcalendar');
+		$params = JComponentHelper::getParams('com_dpfields');
 
 		if ($app->isClient('site')) {
 			$params = $app->getParams();
@@ -289,14 +289,9 @@ class DPFieldsModelEntities extends JModelList
 				);
 		}
 
-		// Add the list ordering clause.
-		$orderCol  = $this->state->get('list.fullordering');
-		$orderDirn = 'asc';
+		$orderCol  = $this->state->get('list.ordering', 'a.title');
+		$orderDirn = $this->state->get('list.direction', 'asc');
 
-		if (empty($orderCol)) {
-			$orderCol  = $this->state->get('list.ordering', 'a.title');
-			$orderDirn = $this->state->get('list.direction', 'asc');
-		}
 		if (empty($orderCol)) {
 			$orderCol = 'a.title';
 		}

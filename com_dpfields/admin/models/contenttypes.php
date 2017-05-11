@@ -7,8 +7,6 @@
  */
 defined('_JEXEC') or die();
 
-use Joomla\Utilities\ArrayHelper;
-
 class DPFieldsModelContentTypes extends JModelList
 {
 	public function __construct($config = array())
@@ -129,13 +127,11 @@ class DPFieldsModelContentTypes extends JModelList
 			}
 		}
 
-		// Add the list ordering clause.
-		$orderCol = $this->state->get('list.fullordering', 'a.id');
-		$orderDirn = '';
+		$orderCol  = $this->state->get('list.ordering', 'a.title');
+		$orderDirn = $this->state->get('list.direction', 'asc');
 
 		if (empty($orderCol)) {
-			$orderCol = $this->state->get('list.ordering', 'a.id');
-			$orderDirn = $this->state->get('list.direction', 'DESC');
+			$orderCol = 'a.title';
 		}
 
 		$query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));

@@ -25,14 +25,14 @@ if (!empty($return)) {
 
 // The columns
 $cols = array(
-	JHtml::_('grid.sort', JText::_('JGLOBAL_TITLE'), 'a.title', $listDirn, $listOrder, null, 'asc', '', 'dp-category-form')
+	JHtml::_('grid.sort', JText::_('JGLOBAL_TITLE'), 'a.title', $listDirn, $listOrder, null, 'asc', '', 'dp-category-filters-form')
 );
 
 // Loop over the configured columns
 foreach ($this->params->get('category_columns') as $col) {
 	// When there is only one column, make it sortable
 	if (count($col['fields']) == 1) {
-		$cols[] = JHtml::_('grid.sort', $col['name'], 'jcfield' . $col['fields'][0], $listDirn, $listOrder, null, 'asc', '', 'dp-category-form');
+		$cols[] = JHtml::_('grid.sort', $col['name'], 'jcfield' . $col['fields'][0], $listDirn, $listOrder, null, 'asc', '', 'dp-category-filters-form');
 	} else {
 		$cols[] = $col['name'];
 	}

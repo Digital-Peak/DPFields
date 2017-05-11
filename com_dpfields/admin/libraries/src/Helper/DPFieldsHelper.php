@@ -22,7 +22,7 @@ class DPFieldsHelper
 		\JHtmlSidebar::addEntry(\JText::_('COM_DPFIELDS_CONTENT_TYPES'), 'index.php?option=com_dpfields&view=contenttypes', $vName == 'contenttypes');
 
 		\JLoader::import('components.com_dpfields.models.contenttypes', JPATH_ADMINISTRATOR);
-		$model        = new \DPFieldsModelContentTypes();
+		$model        = new \DPFieldsModelContentTypes(array('ignore_request' => true));
 		$contentTypes = $model->getItems();
 
 		// Loop over the content types

@@ -47,7 +47,7 @@ class DPFieldsControllerEntityForm extends DPFieldsControllerEntity
 			}
 		} else {
 			$this->setRedirect(
-				JRoute::_(DPFieldsHelperRoute::getEntityRoute($app->getUserState('dpcalendar.event.id'), $data['catid'], $data['language']))
+				JRoute::_(DPFieldsHelperRoute::getEntityRoute($app->getUserState('dpfields.entity.id'), $data['catid'], $data['language']))
 			);
 		}
 
