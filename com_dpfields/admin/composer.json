@@ -1,0 +1,22 @@
+{
+  "config": {
+    "platform": {
+      "php": "5.5.9"
+    }
+  },
+  "require": {
+    "mustache/mustache": "2.11.*",
+    "Digital-Peak/ccl": "dev-unstable"
+  },
+  "repositories": [
+    {
+      "url": "https://github.com/Digital-Peak/ccl",
+      "type": "vcs"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DPFields\\": "libraries/src"
+    }
+  }
+}

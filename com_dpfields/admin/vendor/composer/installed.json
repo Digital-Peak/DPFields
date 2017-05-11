@@ -1,0 +1,98 @@
+[
+    {
+        "name": "mustache/mustache",
+        "version": "v2.11.1",
+        "version_normalized": "2.11.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/bobthecow/mustache.php.git",
+            "reference": "a3f6d55996dd28b58f3a909d474189a3c1aa693f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/a3f6d55996dd28b58f3a909d474189a3c1aa693f",
+            "reference": "a3f6d55996dd28b58f3a909d474189a3c1aa693f",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.4"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "~1.11",
+            "phpunit/phpunit": "~3.7|~4.0|~5.0"
+        },
+        "time": "2016-07-31T06:18:27+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Mustache": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Justin Hileman",
+                "email": "justin@justinhileman.info",
+                "homepage": "http://justinhileman.com"
+            }
+        ],
+        "description": "A Mustache implementation in PHP.",
+        "homepage": "https://github.com/bobthecow/mustache.php",
+        "keywords": [
+            "mustache",
+            "templating"
+        ]
+    },
+    {
+        "name": "Digital-Peak/ccl",
+        "version": "dev-unstable",
+        "version_normalized": "dev-unstable",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Digital-Peak/ccl.git",
+            "reference": "1d2d3e05368d75c33611151c81394fdf58282eeb"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Digital-Peak/ccl/zipball/1d2d3e05368d75c33611151c81394fdf58282eeb",
+            "reference": "1d2d3e05368d75c33611151c81394fdf58282eeb",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^5",
+            "satooshi/php-coveralls": "^1.0",
+            "squizlabs/php_codesniffer": "^2"
+        },
+        "time": "2017-05-05T12:22:11+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "CCL\\": "src/CCL"
+            }
+        },
+        "autoload-dev": {
+            "psr-4": {
+                "CCL\\Tests\\": "tests/CCL"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "description": "Cross CMS Library from Digital Peak",
+        "homepage": "https://github.com/Digital-Peak/ccl",
+        "keywords": [
+            "cms",
+            "framework",
+            "library"
+        ],
+        "support": {
+            "source": "https://github.com/Digital-Peak/ccl/tree/unstable",
+            "issues": "https://github.com/Digital-Peak/ccl/issues"
+        }
+    }
+]

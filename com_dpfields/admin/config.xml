@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset name="integration" label="COM_DPFIELDS_CONFIG_INTEGRATION_LABEL">
+		<field name="frontend_framework" type="list" default="BS2" label="COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_LABEL"
+		       description="COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_DESC">
+			<option value="0">JNONE</option>
+			<option value="BS2">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_BS2</option>
+			<option value="BS3">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_BS3</option>
+			<option value="BS4">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_BS4</option>
+			<option value="UIkit2">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_UIKIT2</option>
+		</field>
+		<field name="icon_framework" type="list" default="Joomla" label="COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_LABEL"
+		       description="COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_DESC">
+			<option value="0">JNONE</option>
+			<option value="Joomla">COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_JOOMLA</option>
+			<option value="FontAwesome4">COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_FONTAWESOME4</option>
+		</field>
+	</fieldset>
+	<fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
+		<field name="rules" type="rules" component="com_dpfields" filter="rules" validate="rules" label="JCONFIG_PERMISSIONS_LABEL"
+		       section="component"/>
+	</fieldset>
+</config>

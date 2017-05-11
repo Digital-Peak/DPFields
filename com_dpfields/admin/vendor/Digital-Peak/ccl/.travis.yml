@@ -1,0 +1,24 @@
+language: php
+
+php:
+  - '5.6'
+  - '7.0'
+  - '7.1'
+  - hhvm
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
+
+before_script:
+  - composer selfupdate
+  - composer install --prefer-dist
+
+script:
+  - mkdir -p build/logs
+  - vendor/bin/phpunit
+  - vendor/bin/phpcs --report=full -p -s --standard=scripts/phpcs/CCL src tests
+
+after_success:
+  - travis_retry php vendor/bin/coveralls

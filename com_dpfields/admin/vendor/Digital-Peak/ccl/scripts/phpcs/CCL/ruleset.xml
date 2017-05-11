@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ruleset name="CCL">
+	<description>The CCL coding standard, based on PSR-2.</description>
+
+	<rule ref="PSR2">
+		<!-- Being more relaxed on multiline function calls -->
+<!-- 		<exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact" />
+		<exclude name="PSR2.Methods.FunctionCallSignature.Indent" />
+		<exclude name="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" />
+		<exclude name="PSR2.Methods.FunctionCallSignature.CloseBracketLine" />
+		<exclude name="PSR2.Methods.FunctionCallSignature.MultipleArguments" /> -->
+		<exclude name="Generic.WhiteSpace.DisallowTabIndent" />
+	</rule>
+
+	<!-- Use tabs instead of spaces -->
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" value="4" />
+			<property name="tabIndent" value="true" />
+		</properties>
+	</rule>
+
+	<!-- Allow line length 150 -->
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<property name="lineLimit" value="150" />
+			<property name="absoluteLineLimit" value="0" />
+		</properties>
+	</rule>
+</ruleset>

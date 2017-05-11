@@ -1,0 +1,21 @@
+#dp-category-filters .dp-category-field-filters_user .controls {
+	margin-left: 0px
+}
+
+#dp-category-filters .dp-category-field-filters_user .subform-layout .control-group {
+	float: left;
+	margin-right: 5px
+}
+
+#dp-category-filters-toggle {
+	cursor: pointer;
+	text-align: center;
+	clear: both;
+	width: 100%;
+	display: block;
+}
+
+#dp-category-filters-toggle i[data-direction="up"],
+#dp-category-filters-form {
+	display: none;
+}

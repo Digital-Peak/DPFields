@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.4" type="package" method="upgrade">
+<extension version="3.7" type="package" method="upgrade">
 	<packagename>dpfields</packagename>
 	<packager>Digital Peak</packager>
 	<name>DPFields</name>
 	<author>Digital Peak</author>
 	<creationDate>Aug 2016</creationDate>
-	<copyright>(C) 2015 - 2016 Digital Peak. All rights reserved.
-	</copyright>
+	<copyright>(C) 2015 - 2017 Digital Peak. All rights reserved.</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@digital-peak.com</authorEmail>
 	<authorUrl>joomla.digital-peak.com</authorUrl>
-	<version>1.3.3</version>
+	<version>2.0.0</version>
 	<files>
-		<file id="plg_system_dpfields" type="plugin" group="content"
-			client="site">plg_system_dpfields.zip</file>
-		<file id="plg_editors-xtd_dpfields" type="plugin" group="content"
-			client="site">plg_editors-xtd_dpfields.zip</file>
-		<file id="com_dpcalendar" type="component">com_dpfields.zip</file>
+		<file id="plg_content_dpfields" type="plugin" group="content" client="site">plg_content_dpfields.zip</file>
+		<file id="plg_editors-xtd_dpfields" type="plugin" group="content" client="site">plg_editors-xtd_dpfields.zip</file>
+		<file id="plg_fields_dpfgallery" type="plugin" group="fields" client="site">plg_fields_dpfgallery.zip</file>
+		<file id="com_dpfields" type="component">com_dpfields.zip</file>
 	</files>
-
+	<scriptfile>script.php</scriptfile>
 	<updateservers>
-		<server type="extension" priority="1" name="DPFields Update Site"><![CDATA[https://joomla.digital-peak.com/index.php?option=com_ars&view=update&task=stream&format=xml&id=10&ext=extension.xml]]></server>
+		<server type="extension" priority="1" name="DPFields Update Site">
+			<![CDATA[https://joomla.digital-peak.com/index.php?option=com_ars&view=update&task=stream&format=xml&id=10&ext=extension.xml]]></server>
 	</updateservers>
 </extension>

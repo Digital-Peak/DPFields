@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="filters" label="COM_DPFIELDS_FILTERS">
+		<field name="filters_user" type="subform" icon="list" multiple="true"
+		       hiddenLabel="true" description="" label="">
+			<form hidden="true" name="filters_field" repeat="true">
+				<field name="field" label="" type="dpfields"/>
+				<field name="operator" label="" type="list">
+					<option value="=">=</option>
+					<option value="&gt;=">&gt;=</option>
+					<option value="&lt;=">&lt;=</option>
+					<option value="text">COM_DPFIELDS_VIEW_CATEGORY_FILTERS_OPERATOR_TEXT</option>
+				</field>
+				<field name="value" label="" type="text"/>
+			</form>
+		</field>
+	</fieldset>
+</form>
