@@ -7,9 +7,9 @@
  */
 defined('_JEXEC') or die();
 
-JFormHelper::loadFieldClass('folderlist');
+JFormHelper::loadFieldClass('media');
 
-class JFormFieldDPFGallery extends JFormFieldFolderList
+class JFormFieldDPFMedia extends JFormFieldMedia
 {
-	public $type = 'DPFGallery';
+	public $type = 'DPFMedia';
 }

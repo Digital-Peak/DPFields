@@ -92,6 +92,9 @@ class Com_DPFieldsInstallerScript
 				if ($type == 'gallery') {
 					$type = 'dpfgallery';
 				}
+				if ($type == 'media') {
+					$type = 'dpfmedia';
+				}
 				$data['type'] = $type;
 
 				$data['note']        = strip_tags($field->note);
@@ -188,6 +191,7 @@ class Com_DPFieldsInstallerScript
 			// Activate the new plugins
 			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfields'");
 			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfgallery'");
+			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfmedia'");
 		}
 	}
 
@@ -212,6 +216,7 @@ class Com_DPFieldsInstallerScript
 		if ($type == 'install') {
 			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfields'");
 			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfgallery'");
+			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfmedia'");
 		}
 	}
 

@@ -27,14 +27,26 @@ source_file = plg_editors-xtd_dpfields/language/en-GB/en-GB.plg_editors-xtd_dpfi
 source_lang = en_GB
 minimum_perc = 1
 
-[DPFields.plg_system_dpfields]
-file_filter = plg_system_dpfields/language/<lang>/<lang>.plg_system_dpfields.ini
-source_file = plg_system_dpfields/language/en-GB/en-GB.plg_system_dpfields.ini
+[DPFields.plg_fields_dpfgallery]
+file_filter = plg_fields_dpfgallery/language/<lang>/<lang>.plg_fields_dpfgallery.ini
+source_file = plg_fields_dpfgallery/language/en-GB/en-GB.plg_fields_dpfgallery.ini
 source_lang = en_GB
 minimum_perc = 1
 
-[DPFields.plg_system_dpfields-sys]
-file_filter = plg_system_dpfields/language/<lang>/<lang>.plg_system_dpfields.sys.ini
-source_file = plg_system_dpfields/language/en-GB/en-GB.plg_system_dpfields.sys.ini
+[DPFields.plg_fields_dpfgallery-sys]
+file_filter = plg_fields_dpfgallery/language/<lang>/<lang>.plg_fields_dpfgallery.sys.ini
+source_file = plg_fields_dpfgallery/language/en-GB/en-GB.plg_fields_dpfgallery.sys.ini
+source_lang = en_GB
+minimum_perc = 1
+
+[DPFields.plg_fields_dpfmedia]
+file_filter = plg_fields_dpfmedia/language/<lang>/<lang>.plg_fields_dpfmedia.ini
+source_file = plg_fields_dpfmedia/language/en-GB/en-GB.plg_fields_dpfmedia.ini
+source_lang = en_GB
+minimum_perc = 1
+
+[DPFields.plg_fields_dpfmedia-sys]
+file_filter = plg_fields_dpfmedia/language/<lang>/<lang>.plg_fields_dpfmedia.sys.ini
+source_file = plg_fields_dpfmedia/language/en-GB/en-GB.plg_fields_dpfmedia.sys.ini
 source_lang = en_GB
 minimum_perc = 1
