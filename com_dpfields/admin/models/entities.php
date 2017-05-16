@@ -325,6 +325,10 @@ class DPFieldsModelEntities extends JModelList
 			$query->select('fv.value as ' . $this->getDbo()->quoteName($orderCol));
 		}
 
+		if (!$this->getState('params')) {
+			return;
+		}
+
 		// Set up the filters
 		$filters = $this->getState('params')->get('filters', array());
 		$filters = array_merge($this->getState('filters_user'), $filters);

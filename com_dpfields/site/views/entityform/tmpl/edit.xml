@@ -5,4 +5,12 @@
 			<![CDATA[COM_DPFIELDS_VIEW_ENTITYFORM_DEFAULT_DESC]]>
 		</message>
 	</layout>
+
+	<fields name="request">
+		<fieldset name="request"
+		          addfieldpath="/administrator/components/com_dpfields/models/fields">
+			<field name="c_id" type="dpfcontenttype" label="COM_DPFIELDS_VIEW_ENTITYFORM_CHOOSE_CONTENT_TYPE_LABEL"
+			       description="COM_DPFIELDS_VIEW_ENTITYFORM_CHOOSE_CONTENT_TYPE_DESC" required="true"/>
+		</fieldset>
+	</fields>
 </metadata>

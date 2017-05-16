@@ -561,6 +561,12 @@ class DPFieldsModelEntity extends JModelAdmin
 		$this->setState('form.id', $pk);
 
 		$context = $app->input->get('context');
+		if (!$context) {
+			$contentType = $this->getContentType($app->input->getInt('c_id'));
+			if ($contentType->id) {
+				$context = 'com_dpfields.' . $contentType->name;
+			}
+		}
 		$this->setState('entity.context', $context);
 
 		$return = $app->input->get('return', null, 'default', 'base64');

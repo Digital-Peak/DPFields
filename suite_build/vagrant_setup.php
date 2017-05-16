@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-$wwwRoot    = '/var/www/jdev/';
+$wwwRoot    = '/var/www/j/';
 $folderRoot = dirname(__FILE__) . '/../';
 
 echo 'Starting to create the links.' . PHP_EOL;

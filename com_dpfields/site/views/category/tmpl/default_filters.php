@@ -66,7 +66,7 @@ JLayoutHelper::render(
 	array(
 		'type'    => Icon::SEARCH,
 		'root'    => $form,
-		'text'    => 'JSEARCH_FILTER',
+		'text'    => 'COM_DPFIELDS_VIEW_CATEGORY_APPLY_FILTER_TEXT',
 		'onclick' => "this.form.submit();"
 	)
 );
