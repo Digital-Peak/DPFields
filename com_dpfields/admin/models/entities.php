@@ -300,7 +300,7 @@ class DPFieldsModelEntities extends JModelList
 
 		$query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
 
-		//echo nl2br(str_replace('#__', 'j_', $query));//die;
+		//echo nl2br(str_replace('#__', 'j_', $query));die;
 
 		return $query;
 	}
@@ -329,6 +329,8 @@ class DPFieldsModelEntities extends JModelList
 			return;
 		}
 
+		$operatorMap = array('=' => '=', '>=' => '>=', '<=' => '<=', 'text' => 'like');
+
 		// Set up the filters
 		$filters = $this->getState('params')->get('filters', array());
 		$filters = array_merge($this->getState('filters_user'), $filters);
@@ -340,12 +342,11 @@ class DPFieldsModelEntities extends JModelList
 				continue;
 			}
 
-			$operator = $filter['operator'];
+			$operator = key_exists($filter['operator'], $operatorMap) ? $operatorMap[$filter['operator']] : 'text';
 			$value    = $filter['value'];
 
 			// Transform the text operator to a like
-			if ($operator == 'text') {
-				$operator = 'like';
+			if ($operator == 'like') {
 				$value    = str_replace('*', '%', $value);
 				$value    = $this->getDbo()->quote($value);
 			} else {
