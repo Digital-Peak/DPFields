@@ -39,6 +39,7 @@ class DPFieldsReleaseBuild
 
 		// Plugins
 		$this->createZip($buildDir . '/../plg_content_dpfields', $dpDir . '/plg_content_dpfields.zip');
+		$this->createZip($buildDir . '/../plg_fields_dpfarticle', $dpDir . '/plg_fields_dpfarticle.zip');
 		$this->createZip($buildDir . '/../plg_fields_dpfgallery', $dpDir . '/plg_fields_dpfgallery.zip');
 		$this->createZip($buildDir . '/../plg_fields_dpfmedia', $dpDir . '/plg_fields_dpfmedia.zip');
 		$this->createZip($buildDir . '/../plg_editors-xtd_dpfields', $dpDir . '/plg_editors-xtd_dpfields.zip');

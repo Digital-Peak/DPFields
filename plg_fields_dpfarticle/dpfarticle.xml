@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="plugin" version="3.7" group="fields" method="upgrade">
+	<name>plg_fields_dpfarticle</name>
+	<author>Digital Peak</author>
+	<creationDate>May 2017</creationDate>
+	<copyright>(C) 2015 - 2017 Digital Peak. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>info@digital-peak.com</authorEmail>
+	<authorUrl>joomla.digital-peak.com</authorUrl>
+	<version>2.0.2</version>
+	<description>PLG_FIELDS_DPFarticle_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="dpfarticle">dpfarticle.php</filename>
+		<folder>fields</folder>
+		<folder>language</folder>
+		<folder>params</folder>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="show_title" type="radio" class="btn-group" default="1"
+				       label="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_TITLE_LABEL" description="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_TITLE_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="show_tags" type="radio" class="btn-group" default="1"
+				       label="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_TAGS_LABEL" description="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_TAGS_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="show_intro_image" type="radio" class="btn-group" default="1"
+				       label="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_INTRO_IMAGE_LABEL" description="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_INTRO_IMAGE_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="show_full_image" type="radio" class="btn-group" default="1"
+				       label="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_FULL_IMAGE_LABEL" description="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_FULL_IMAGE_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="show_description" type="radio" class="btn-group" default="1"
+				       label="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_DESCRIPTION_LABEL" description="PLG_FIELDS_DPFARTICLE_PARAMS_SHOW_DESCRIPTION_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

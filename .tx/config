@@ -27,6 +27,18 @@ source_file = plg_editors-xtd_dpfields/language/en-GB/en-GB.plg_editors-xtd_dpfi
 source_lang = en_GB
 minimum_perc = 1
 
+[DPFields.plg_fields_dpfarticle]
+file_filter = plg_fields_dpfarticle/language/<lang>/<lang>.plg_fields_dpfarticle.ini
+source_file = plg_fields_dpfarticle/language/en-GB/en-GB.plg_fields_dpfarticle.ini
+source_lang = en_GB
+minimum_perc = 1
+
+[DPFields.plg_fields_dpfarticle-sys]
+file_filter = plg_fields_dpfarticle/language/<lang>/<lang>.plg_fields_dpfarticle.sys.ini
+source_file = plg_fields_dpfarticle/language/en-GB/en-GB.plg_fields_dpfarticle.sys.ini
+source_lang = en_GB
+minimum_perc = 1
+
 [DPFields.plg_fields_dpfgallery]
 file_filter = plg_fields_dpfgallery/language/<lang>/<lang>.plg_fields_dpfgallery.ini
 source_file = plg_fields_dpfgallery/language/en-GB/en-GB.plg_fields_dpfgallery.ini

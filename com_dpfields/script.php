@@ -95,6 +95,9 @@ class Com_DPFieldsInstallerScript
 				if ($type == 'media') {
 					$type = 'dpfmedia';
 				}
+				if ($type == 'modal_article') {
+					$type = 'dpfarticle';
+				}
 				$data['type'] = $type;
 
 				$data['note']        = strip_tags($field->note);
@@ -193,6 +196,11 @@ class Com_DPFieldsInstallerScript
 			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfgallery'");
 			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfmedia'");
 		}
+
+
+		if (version_compare($version, '2.0.3') == -1) {
+			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfarticle'");
+		}
 	}
 
 	public function uninstall($parent)
@@ -214,9 +222,7 @@ class Com_DPFieldsInstallerScript
 	public function postflight($type, $parent)
 	{
 		if ($type == 'install') {
-			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfields'");
-			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfgallery'");
-			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfmedia'");
+			$this->run("update `#__extensions` set enabled = 1 where type = 'plugin' and element like 'dpf%'");
 		}
 	}
 
