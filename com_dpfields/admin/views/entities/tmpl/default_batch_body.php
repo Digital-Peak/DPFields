@@ -1,12 +1,12 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_content
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package    DPFields
+ * @author     Digital Peak http://www.digital-peak.com
+ * @copyright  Copyright (C) 2015 - 2017 Digital Peak. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL
  */
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
+
 $published = $this->state->get('filter.published');
 ?>
 
@@ -27,7 +27,7 @@ $published = $this->state->get('filter.published');
 		<?php if ($published >= 0) : ?>
 			<div class="control-group span6">
 				<div class="controls">
-					<?php echo JHtml::_('batch.item', 'com_content'); ?>
+					<?php echo JHtml::_('batch.item', $this->state->get('filter.context')); ?>
 				</div>
 			</div>
 		<?php endif; ?>
@@ -38,3 +38,5 @@ $published = $this->state->get('filter.published');
 		</div>
 	</div>
 </div>
+
+<input type="hidden" name="context" value="<?php echo $this->state->get('filter.context');?>"/>
