@@ -29,6 +29,13 @@ class DPFieldsViewEntity extends \DPFields\View\LayoutView
 			// Only allow to select tags with All language or with the forced language.
 			$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
 		}
+
+
+		if (JLanguageAssociations::isEnabled()) {
+			JHtml::_('jquery.framework');
+			JHtml::_('script', 'com_dpfields/layouts/entity/form/default.js', false, true);
+			JLayoutHelper::render('joomla.edit.associations', $this);
+		}
 	}
 
 	protected function addToolbar()

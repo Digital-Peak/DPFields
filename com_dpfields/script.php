@@ -197,9 +197,9 @@ class Com_DPFieldsInstallerScript
 			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfmedia'");
 		}
 
-
 		if (version_compare($version, '2.0.3') == -1) {
-			$this->run("update `#__extensions` set enabled=1 where type = 'plugin' and element = 'dpfarticle'");
+			$this->run("update `#__extensions` set enabled = 1 where type = 'plugin' and element = 'dpfarticle'");
+			$this->run("update `#__fields` set type = 'dpfarticle' where type = 'modal_article'");
 		}
 	}
 

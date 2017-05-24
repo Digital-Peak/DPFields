@@ -11,13 +11,13 @@ use Joomla\Utilities\ArrayHelper;
 
 abstract class JHtmlDPFieldsAdministrator
 {
-	public static function association($entityId)
+	public static function association($entityId, $context)
 	{
 		// Defaults
 		$html = '';
 
 		// Get the associations
-		if ($associations = JLanguageAssociations::getAssociations('com_dpfields', '#__dpfields_entities', 'com_dpfields.entity', $entityId))
+		if ($associations = JLanguageAssociations::getAssociations($context, '#__dpfields_entities', 'com_dpfields.entity', $entityId))
 		{
 			foreach ($associations as $tag => $associated)
 			{
@@ -87,8 +87,8 @@ abstract class JHtmlDPFieldsAdministrator
 
 		// Array of image, task, title, action
 		$states = array(
-			0 => array('unfeatured', 'articles.featured', 'COM_CONTENT_UNFEATURED', 'JGLOBAL_TOGGLE_FEATURED'),
-			1 => array('featured', 'articles.unfeatured', 'COM_CONTENT_FEATURED', 'JGLOBAL_TOGGLE_FEATURED'),
+			0 => array('unfeatured', 'entities.featured', 'COM_CONTENT_UNFEATURED', 'JGLOBAL_TOGGLE_FEATURED'),
+			1 => array('featured', 'entities.unfeatured', 'COM_CONTENT_FEATURED', 'JGLOBAL_TOGGLE_FEATURED'),
 		);
 		$state = ArrayHelper::getValue($states, (int) $value, $states[1]);
 		$icon  = $state[0];

@@ -189,7 +189,7 @@ class DPFieldsModelEntity extends JModelAdmin
 			$item->associations = array();
 
 			if ($item->id != null) {
-				$associations = JLanguageAssociations::getAssociations('com_dpfields', '#__dpfields_entities', 'com_dpfields.entity', $item->id);
+				$associations = JLanguageAssociations::getAssociations($this->getState('entity.context'), '#__dpfields_entities', 'com_dpfields.entity', $item->id);
 
 				foreach ($associations as $tag => $association) {
 					$item->associations[$tag] = $association->id;
@@ -496,6 +496,7 @@ class DPFieldsModelEntity extends JModelAdmin
 				$fields->addAttribute('name', 'associations');
 				$fieldset = $fields->addChild('fieldset');
 				$fieldset->addAttribute('name', 'item_associations');
+				$fieldset->addAttribute('label', JText::_('COM_DPFIELDS_ASSOCIATION'));
 
 				foreach ($languages as $language) {
 					$field = $fieldset->addChild('field');
@@ -508,6 +509,7 @@ class DPFieldsModelEntity extends JModelAdmin
 					$field->addAttribute('new', 'true');
 					$field->addAttribute('edit', 'true');
 					$field->addAttribute('clear', 'true');
+					$field->addAttribute('context', $this->getState('entity.context'));
 				}
 
 				$form->load($addform, false);

@@ -1,13 +1,11 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_dpfields
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package    DPFields
+ * @author     Digital Peak http://www.digital-peak.com
+ * @copyright  Copyright (C) 2015 - 2017 Digital Peak. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL
  */
-
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
@@ -84,7 +82,7 @@ $assoc = JLanguageAssociations::isEnabled();
 						<?php if ($assoc) : ?>
 							<?php $columns++; ?>
 							<th width="5%" class="nowrap hidden-phone">
-								<?php echo JHtml::_('searchtools.sort', 'COM_CONTENT_HEADING_ASSOCIATION', 'association', $listDirn, $listOrder); ?>
+								<?php echo JHtml::_('searchtools.sort', 'COM_DPFIELDS_ASSOCIATION', 'association', $listDirn, $listOrder); ?>
 							</th>
 						<?php endif; ?>
 						<th width="10%" class="nowrap hidden-phone">
@@ -197,7 +195,7 @@ $assoc = JLanguageAssociations::isEnabled();
 						<?php if ($assoc) : ?>
 						<td class="hidden-phone">
 							<?php if ($item->association) : ?>
-								<?php echo JHtml::_('dpfieldsadministrator.association', $item->id); ?>
+								<?php echo JHtml::_('dpfieldsadministrator.association', $item->id, $this->state->get('filter.context')); ?>
 							<?php endif; ?>
 						</td>
 						<?php endif; ?>

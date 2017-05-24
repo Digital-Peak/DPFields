@@ -1,13 +1,11 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_content
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package    DPFields
+ * @author     Digital Peak http://www.digital-peak.com
+ * @copyright  Copyright (C) 2015 - 2017 Digital Peak. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL
  */
-
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 $app = JFactory::getApplication();
 
@@ -31,8 +29,9 @@ JHtml::_('formbehavior.chosen', 'select');
 $searchFilterDesc = $this->filterForm->getFieldAttribute('search', 'description', null, 'filter');
 JHtml::_('bootstrap.tooltip', '#filter_search', array('title' => JText::_($searchFilterDesc), 'placement' => 'bottom'));
 
-$function  = $app->input->getCmd('function', 'jSelectArticle');
+$function  = $app->input->getCmd('function', 'jSelectEntity');
 $editor    = $app->input->getCmd('editor', '');
+$context   = $app->input->getCmd('context', '');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 $onclick   = $this->escape($function);
@@ -40,13 +39,13 @@ $onclick   = $this->escape($function);
 if (!empty($editor))
 {
 	// This view is used also in com_menus. Load the xtd script only if the editor is set!
-	JFactory::getDocument()->addScriptOptions('xtd-articles', array('editor' => $editor));
-	$onclick = "jSelectArticle";
+	JFactory::getDocument()->addScriptOptions('xtd-entities', array('editor' => $editor));
+	$onclick = "jSelectEntity";
 }
 ?>
 <div class="container-popup">
 
-	<form action="<?php echo JRoute::_('index.php?option=com_content&view=articles&layout=modal&tmpl=component&function=' . $function . '&' . JSession::getFormToken() . '=1&editor=' . $editor); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
+	<form action="<?php echo JRoute::_('index.php?option=com_dpfields&view=entities&layout=modal&tmpl=component&function=' . $function . '&' . JSession::getFormToken() . '=1&editor=' . $editor . '&context=' . $context); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
 
 		<?php echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
 
@@ -126,7 +125,7 @@ if (!empty($editor))
 								. ' data-id="' . $item->id . '"'
 								. ' data-title="' . $this->escape(addslashes($item->title)) . '"'
 								. ' data-cat-id="' . $this->escape($item->catid) . '"'
-								. ' data-uri="' . $this->escape(DPFieldsHelperRoute::getArticleRoute($item->id, $item->catid, $item->language)) . '"'
+								. ' data-uri="' . $this->escape(DPFieldsHelperRoute::getEntityRoute($item->id, $item->catid, $item->language)) . '"'
 								. ' data-language="' . $this->escape($lang) . '"';
 							?>
 							<a class="select-link" href="javascript:void(0)" <?php echo $attribs; ?>>
