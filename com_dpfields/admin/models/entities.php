@@ -347,8 +347,8 @@ class DPFieldsModelEntities extends JModelList
 
 			// Transform the text operator to a like
 			if ($operator == 'like') {
-				$value    = str_replace('*', '%', $value);
-				$value    = $this->getDbo()->quote($value);
+				$value = str_replace('*', '%', $value);
+				$value = $this->getDbo()->quote($value);
 			} else {
 				$value = (float)$value;
 			}
@@ -408,6 +408,15 @@ class DPFieldsModelEntities extends JModelList
 		}
 
 		return $items;
+	}
+
+	public function getFilterForm($data = array(), $loadData = true)
+	{
+		$form = parent::getFilterForm($data, $loadData);
+
+		$form->setFieldAttribute('category_id', 'extension', $this->getState('filter.context'), 'filter');
+
+		return $form;
 	}
 
 	public function getAdvancedFiltersForm()
