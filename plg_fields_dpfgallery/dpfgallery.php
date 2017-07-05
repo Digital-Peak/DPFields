@@ -18,9 +18,26 @@ class PlgFieldsDPFGallery extends FieldsPlugin
 		if (!$fieldNode) {
 			return $fieldNode;
 		}
+		$directory = $fieldNode->getAttribute('directory');
 
-		$fieldNode->setAttribute('directory', 'images/' . $fieldNode->getAttribute('directory'));
+		// All directories is selected
+		if ($directory == '0') {
+			$directory = '';
+		}
+
+		$fieldNode->setAttribute('directory', 'images/' . $directory);
 		$fieldNode->setAttribute('hide_default', true);
+		$fieldNode->setAttribute('hide_none', true);
+
+		// Add all option
+		$option            = new DOMElement('option');
+		$option->nodeValue = htmlspecialchars('- ' . JText::_('JALL') . ' -', ENT_COMPAT, 'UTF-8');
+		$fieldNode->appendChild($option);
+
+		// Add none option
+		$option            = new DOMElement('option', '-1');
+		$option->nodeValue = htmlspecialchars('- ' . JText::_('JNONE') . ' -', ENT_COMPAT, 'UTF-8');
+		$fieldNode->appendChild($option)->setAttribute('value', -1);
 
 		return $fieldNode;
 	}

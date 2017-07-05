@@ -7,24 +7,18 @@
  */
 defined('_JEXEC') or die();
 
-$value = $field->value;
+$value = (array)$field->value;
 
-if (!$value) {
+// Check if disabled
+if (count($value) == 1 && in_array('-1', $value)) {
 	return;
 }
 
-// Loading the language
-JFactory::getLanguage()->load('plg_fields_dpfgallery', JPATH_ADMINISTRATOR);
-
 JHtml::_('jquery.framework');
-
-$doc = JFactory::getDocument();
 
 // Adding the javascript gallery library
 JHtml::_('script', 'plg_fields_dpfgallery/fotorama.min.js', array('version' => 'auto', 'relative' => true));
 JHtml::_('stylesheet', 'plg_fields_dpfgallery/fotorama.min.css', array('version' => 'auto', 'relative' => true));
-
-$value = (array)$value;
 
 $thumbWidth     = $fieldParams->get('thumbnail_width', '64');
 $maxImageWidth  = $fieldParams->get('max_width', 0);
@@ -34,17 +28,17 @@ $maxImageHeight = $fieldParams->get('max_height', 0);
 $buffer = '<div class="fotorama" data-nav="thumbs" data-width="100%" ' . ($maxImageHeight ? 'data-height="' . $maxImageHeight . '"' : '') . '>';
 
 foreach ($value as $path) {
-	// Only process valid paths
-	if (!$path) {
+	if ($path == '-1') {
 		continue;
 	}
 
-	if ($path == '-1') {
-		$path = '';
+	$directory = $fieldParams->get('directory', '');
+	if ($directory == '0') {
+		$directory = '';
 	}
 
 	// The root folder
-	$root = 'images/' . $fieldParams->get('directory', '');
+	$root = 'images/' . $directory;
 
 	foreach (JFolder::files(JPATH_ROOT . '/' . $root . '/' . $path, '.', $fieldParams->get('recursive', '1'), true) as $file) {
 		// Skip none image files
