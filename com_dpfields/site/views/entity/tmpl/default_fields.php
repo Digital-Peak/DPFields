@@ -29,6 +29,10 @@ foreach ($this->params->get('entity_sections') as $name => $section) {
 	$counter = 0;
 	$row     = null;
 	foreach ($section['fields'] as $fieldId) {
+		if (!key_exists($fieldId, $entity->jcfields)) {
+			continue;
+		}
+
 		$columns = $section['columns'] ?: 1;
 		if ($counter % $columns == 0) {
 			$row = $grid->addRow(new Row(count($grid->getChildren()) + 1));

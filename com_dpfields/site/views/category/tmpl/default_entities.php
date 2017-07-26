@@ -107,6 +107,10 @@ foreach ($this->entities as $entity) {
 
 		// Loop over the selected fields for that column
 		foreach ($col['fields'] as $fieldId) {
+			if (!key_exists($fieldId, $entity->jcfields)) {
+				continue;
+			}
+
 			// Fill the content of the cell with the value of the field
 			$field = $entity->jcfields[$fieldId];
 			$cell->addChild(new Container($field->id))->setContent($field->value);
