@@ -2,12 +2,12 @@
 <extension type="plugin" version="3.7" group="fields" method="upgrade">
 	<name>plg_fields_dpfgallery</name>
 	<author>Digital Peak</author>
-	<creationDate>Jun 2017</creationDate>
+	<creationDate>Jul 2017</creationDate>
 	<copyright>(C) 2015 - 2017 Digital Peak. All rights reserved.</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@digital-peak.com</authorEmail>
 	<authorUrl>joomla.digital-peak.com</authorUrl>
-	<version>2.0.3</version>
+	<version>2.0.4</version>
 	<description>PLG_FIELDS_DPFGALLERY_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="dpfgallery">dpfgallery.php</filename>

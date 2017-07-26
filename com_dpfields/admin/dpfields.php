@@ -13,6 +13,12 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_dpfields')) {
 
 JLoader::import('components.com_dpfields.vendor.autoload', JPATH_ADMINISTRATOR);
 
+$input = JFactory::getApplication()->input;
+
+if (strpos($input->get('task'), '.reload')) {
+	$input->set('task', 'entity.reload');
+}
+
 $controller = JControllerLegacy::getInstance('DPFields');
-$controller->execute(JFactory::getApplication()->input->get('task'));
+$controller->execute($input->get('task'));
 $controller->redirect();
