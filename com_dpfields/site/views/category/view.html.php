@@ -12,7 +12,7 @@ class DPFieldsViewCategory extends \DPFields\View\BaseView
 	public function display($tpl = null)
 	{
 		JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_dpfields/models');
-		$model = JModelLegacy::getInstance('Entities', 'DPFieldsModel');
+		$model = JModelLegacy::getInstance('Entities', 'DPFieldsModel', array('ignore_request' => true));
 		$this->setModel($model, true);
 
 		return parent::display($tpl);
@@ -20,27 +20,32 @@ class DPFieldsViewCategory extends \DPFields\View\BaseView
 
 	public function init()
 	{
-		$dispatcher = JEventDispatcher::getInstance();
+		// Set up the model
+		$model = $this->getModel();
+		$model->setState('filter.published', 1);
 
-		$category       = $this->getModel()->getCategory($this->input->getInt('id'));
+		// Get the category
+		$category = $model->getCategory($this->input->getInt('id'));
+
+		// Map the description to the text field for the events
 		$category->text = $category->description;
 
 		$category->event = new stdClass();
 
-		$dispatcher->trigger('onContentPrepare', array($category->extension . '.categories', &$category, &$category->params, 0));
+		$this->app->triggerEvent('onContentPrepare', array($category->extension . '.categories', &$category, &$category->params, 0));
 
 		// Fetch the event data
-		$results = $dispatcher->trigger('onContentAfterTitle', array($category->extension . '.categories', &$category, &$category->params, 0));
+		$results = $this->app->triggerEvent('onContentAfterTitle', array($category->extension . '.categories', &$category, &$category->params, 0));
 		// Compile the event data
 		$category->event->afterDisplayTitle = trim(implode("\n", $results));
 
 		// Fetch the event data
-		$results = $dispatcher->trigger('onContentBeforeDisplay', array($category->extension . '.categories', &$category, &$category->params, 0));
+		$results = $this->app->triggerEvent('onContentBeforeDisplay', array($category->extension . '.categories', &$category, &$category->params, 0));
 		// Compile the event data
 		$category->event->beforeDisplayContent = trim(implode("\n", $results));
 
 		// Fetch the event data
-		$results = $dispatcher->trigger('onContentAfterDisplay', array($category->extension . '.categories', &$category, &$category->params, 0));
+		$results = $this->app->triggerEvent('onContentAfterDisplay', array($category->extension . '.categories', &$category, &$category->params, 0));
 		// Compile the event data
 		$category->event->afterDisplayContent = trim(implode("\n", $results));
 
@@ -48,14 +53,13 @@ class DPFieldsViewCategory extends \DPFields\View\BaseView
 
 		$this->category = $category;
 
-		$model = $this->getModel();
 		$model->setState('filter.context', $category->extension);
 
 		$this->entities = $this->get('Items');
 
 		foreach ($this->entities as $entity) {
 			$entity->text = '';
-			$dispatcher->trigger('onContentPrepare', array($category->extension, &$entity, &$entity->params, 0));
+			$this->app->triggerEvent('onContentPrepare', array($category->extension, &$entity, &$entity->params, 0));
 		}
 
 		$this->filterForm = $this->get('AdvancedFiltersForm');
