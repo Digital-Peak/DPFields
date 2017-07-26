@@ -228,7 +228,7 @@ class DPFieldsModelContentType extends JModelAdmin
 
 		$success = parent::save($data);
 
-		if ($success) {
+		if ($success && empty($data['id'])) {
 			$id = $this->getState($this->getName() . '.id');
 
 			$contentType = $this->getItem($id);
