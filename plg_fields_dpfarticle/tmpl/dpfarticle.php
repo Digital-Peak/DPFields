@@ -16,7 +16,8 @@ if ($value == '') {
 
 JLoader::import('joomla.application.component.model');
 JModelLegacy::addIncludePath(JPATH_BASE . '/components/com_content/models', 'ContentModel');
-$model = JModelLegacy::getInstance('Article', 'ContentModel');
+$model = JModelLegacy::getInstance('Article', 'ContentModel', array('ignore_request' => true));
+$model->setState('filter.published', 1);
 
 // If the article is not found an error is thrown we need to hold the old error handler
 $errorHandler = JError::getErrorHandling(E_ERROR);
