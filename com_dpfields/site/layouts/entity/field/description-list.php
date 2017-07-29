@@ -22,5 +22,5 @@ use CCL\Content\Element\Basic\Description\Term;
 extract($displayData);
 
 $dl = $root->addChild(new DescriptionListHorizontal('field', array('description')));
-$dl->setTerm(new Term('label', array('label')))->setContent($field->label);
+$dl->setTerm(new Term('label', array('label')))->setContent(JText::_($field->label));
 $dl->setDescription(new Description('value', array('value')))->setContent($field->value);

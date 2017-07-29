@@ -13,46 +13,6 @@ use CCL\Content\Element\Basic\Table;
 use CCL\Content\Element\Component\Icon;
 use DPFields\Helper\DPFieldsHelper;
 
-// Will be removed on Joomla 3.7.2 when pr https://github.com/joomla/joomla-cms/pull/15826 got merged.
-JHtml::register('grid.sort',
-	function ($title, $order, $direction = 'asc', $selected = '', $task = null, $new_direction = 'asc', $tip = '', $form = null) {
-		JHtml::_('behavior.core');
-		JHtml::_('bootstrap.popover');
-
-		$direction = strtolower($direction);
-		$icon      = array('arrow-up-3', 'arrow-down-3');
-		$index     = (int)($direction == 'desc');
-
-		if ($order != $selected) {
-			$direction = $new_direction;
-		} else {
-			$direction = ($direction == 'desc') ? 'asc' : 'desc';
-		}
-
-		if ($form) {
-			$form = ', document.getElementById(\'' . $form . '\')';
-		}
-
-		$html = '<a href="#" onclick="Joomla.tableOrdering(\'' . $order . '\',\'' . $direction . '\',\'' . $task . '\'' . $form . ');return false;"'
-			. ' class="hasPopover" title="' . htmlspecialchars(JText::_($tip ?: $title)) . '"'
-			. ' data-content="' . htmlspecialchars(JText::_('JGLOBAL_CLICK_TO_SORT_THIS_COLUMN')) . '" data-placement="top">';
-
-		if (isset($title['0']) && $title['0'] == '<') {
-			$html .= $title;
-		} else {
-			$html .= JText::_($title);
-		}
-
-		if ($order == $selected) {
-			$html .= '<span class="icon-' . $icon[$index] . '"></span>';
-		}
-
-		$html .= '</a>';
-
-		return $html;
-	}
-);
-
 // Ordering parameters
 $listOrder = $this->escape($this->state->get('list.ordering', 'a.title'));
 $listDirn  = $this->escape($this->state->get('list.direction'));

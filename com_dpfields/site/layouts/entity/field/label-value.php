@@ -20,5 +20,5 @@ use CCL\Content\Element\Basic\TextBlock;
 extract($displayData);
 
 $c = $root->addChild(new Container('field'));
-$c->addChild(new TextBlock('label', array('label')))->setContent($field->label);
+$c->addChild(new TextBlock('label', array('label')))->setContent(JText::_($field->label));
 $c->addChild(new TextBlock('value', array('value')))->setContent($field->value);
