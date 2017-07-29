@@ -30,9 +30,26 @@ $cols = array(
 
 // Loop over the configured columns
 foreach ($this->params->get('category_columns') as $col) {
+	if (!key_exists('fields', $col)) {
+		continue;
+	}
+
+	$fieldsToDisplay = $col['fields'];
+
+	// Check which fields do exist
+	foreach ($fieldsToDisplay as $key => $fieldId) {
+		if (!key_exists($fieldId, $this->fields)) {
+			unset($fieldsToDisplay[$key]);
+		}
+	}
+
+	if (!$fieldsToDisplay) {
+		continue;
+	}
+
 	// When there is only one column, make it sortable
-	if (count($col['fields']) == 1) {
-		$cols[] = JHtml::_('grid.sort', $col['name'], 'jcfield' . $col['fields'][0], $listDirn, $listOrder, null, 'asc', '',
+	if (count($fieldsToDisplay) == 1) {
+		$cols[] = JHtml::_('grid.sort', $col['name'], 'jcfield' . $fieldsToDisplay[0], $listDirn, $listOrder, null, 'asc', '',
 			'dp-category-filters-form');
 	} else {
 		$cols[] = $col['name'];
@@ -63,12 +80,20 @@ foreach ($this->entities as $entity) {
 	// Loop over the configured columns
 	foreach ($this->params->get('category_columns') as $index => $col) {
 		// The cell for the column
-		$cell = $row->addCell(new Table\Cell($index));
+		$cell = null;
 
 		// Loop over the selected fields for that column
 		foreach ($col['fields'] as $fieldId) {
+			if (!key_exists($fieldId, $this->fields)) {
+				continue;
+			}
+
 			if (!key_exists($fieldId, $entity->jcfields)) {
 				continue;
+			}
+
+			if ($cell == null) {
+				$cell = $row->addCell(new Table\Cell($index));
 			}
 
 			// Fill the content of the cell with the value of the field

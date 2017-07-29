@@ -310,21 +310,23 @@ class DPFieldsModelEntities extends JModelList
 		$context = $this->getDbo()->quote($this->getState('filter.context'));
 		$groups  = implode(',', JFactory::getUser()->getAuthorisedViewLevels());
 
-		// Join over Fields.
-		$query->join('LEFT', '#__fields_values AS fv ON fv.item_id = ' . $query->castAsChar('a.id'))
-			->join('LEFT', '#__fields AS f ON f.id = fv.field_id')
-			->where('(f.context IS NULL OR f.context = ' . $context . ')')
-			->where('(f.state IS NULL OR f.state = 1)')
-			->where('(f.access IS NULL OR f.access IN (' . $groups . '))')
-			->group('a.id');
-
 		// Check if the ordering is based on a field
 		$orderCol = $this->getState('list.ordering', 'a.title');
 		if (strpos($orderCol, 'jcfield') === 0) {
+			// Join over fields to sort
+			$query->join('LEFT',
+				'#__fields_values AS fv ON fv.item_id = ' . $query->castAsChar('a.id') . ' and fv.field_id = ' . (int)str_replace('jcfield', '',
+					$orderCol))
+				->join('LEFT', '#__fields AS f ON f.id = fv.field_id')
+				->where('(f.context IS NULL OR f.context = ' . $context . ')')
+				->where('(f.state = 0 OR f.state = 1)')
+				->where('(f.access IS NULL OR f.access IN (' . $groups . '))');
+
 			// Add the order column as column in the result
 			$query->select('fv.value as ' . $this->getDbo()->quoteName($orderCol));
 		}
 
+		// Check if there are some filters
 		if (!$this->getState('params')) {
 			return;
 		}
@@ -340,6 +342,16 @@ class DPFieldsModelEntities extends JModelList
 			// Can be empty by the user fields when all are deleted
 			if (!$filter) {
 				continue;
+			}
+
+			// When there are at least one filter, add the conditions
+			if (!$condition) {
+				// Join over fields to filter
+				$query->join('RIGHT', '#__fields_values AS fvf ON fvf.item_id = ' . $query->castAsChar('a.id'))
+					->join('RIGHT', '#__fields AS ff ON ff.id = fvf.field_id')
+					->where('ff.context = ' . $context)
+					->where('ff.state = 1')
+					->where('ff.access IN (' . $groups . ')');
 			}
 
 			$operator = key_exists($filter['operator'], $operatorMap) ? $operatorMap[$filter['operator']] : 'text';
@@ -359,8 +371,8 @@ class DPFieldsModelEntities extends JModelList
 			}
 
 			// Compile the where clause
-			$condition .= '(fv.field_id = ' . (int)$filter['field'];
-			$condition .= ' and fv.value ' . $operator . ' ' . $value;
+			$condition .= '(fvf.field_id = ' . (int)$filter['field'];
+			$condition .= ' and fvf.value ' . $operator . ' ' . $value;
 			$condition .= ')';
 		}
 

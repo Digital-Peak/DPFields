@@ -12,7 +12,7 @@ class DPFieldsViewCategory extends \DPFields\View\BaseView
 	public function display($tpl = null)
 	{
 		JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_dpfields/models');
-		$model = JModelLegacy::getInstance('Entities', 'DPFieldsModel', array('ignore_request' => true));
+		$model = JModelLegacy::getInstance('Entities', 'DPFieldsModel');
 		$this->setModel($model, true);
 
 		return parent::display($tpl);
@@ -63,5 +63,13 @@ class DPFieldsViewCategory extends \DPFields\View\BaseView
 		}
 
 		$this->filterForm = $this->get('AdvancedFiltersForm');
+
+		// Create the array with ids as key
+		$fields = [];
+		foreach (FieldsHelper::getFields($category->extension) as $field) {
+			$fields[$field->id] = $field;
+		}
+
+		$this->fields = $fields;
 	}
 }

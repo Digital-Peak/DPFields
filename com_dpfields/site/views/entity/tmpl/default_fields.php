@@ -29,7 +29,7 @@ foreach ($this->params->get('entity_sections') as $name => $section) {
 	$counter = 0;
 	$row     = null;
 	foreach ($section['fields'] as $fieldId) {
-		if (!key_exists($fieldId, $entity->jcfields)) {
+		if (!key_exists($fieldId, $this->entity->jcfields)) {
 			continue;
 		}
 
