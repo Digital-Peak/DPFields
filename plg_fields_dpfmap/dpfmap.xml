@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="plugin" version="3.7" group="fields" method="upgrade">
+    <name>plg_fields_dpfmap</name>
+    <author>Digital Peak</author>
+    <creationDate>Aug 2017</creationDate>
+    <copyright>(C) 2015 - 2017 Digital Peak. All rights reserved.</copyright>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <authorEmail>info@digital-peak.com</authorEmail>
+    <authorUrl>joomla.digital-peak.com</authorUrl>
+    <version>2.1.0</version>
+    <description>PLG_FIELDS_DPFMAP_XML_DESCRIPTION</description>
+    <files>
+        <filename plugin="dpfmap">dpfmap.php</filename>
+        <folder>fields</folder>
+        <folder>language</folder>
+        <folder>params</folder>
+        <folder>tmpl</folder>
+    </files>
+    <media destination="plg_fields_dpfmap" folder="media">
+        <folder>css</folder>
+    </media>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="api_key" type="text" label="PLG_FIELDS_DPFMAP_PARAMS_API_KEY_LABEL"
+                       description="PLG_FIELDS_DPFMAP_PARAMS_API_KEY_DESC"/>
+                <field name="mode" type="list" label="PLG_FIELDS_DPFMAP_PARAMS_MODE_LABEL" default="place"
+                       description="PLG_FIELDS_DPFMAP_PARAMS_MODE_DESC">
+                    <option value="place">PLG_FIELDS_DPFMAP_PARAMS_MODE_PLACE</option>
+                    <option value="directions">PLG_FIELDS_DPFMAP_PARAMS_MODE_DIRECTIONS</option>
+                    <option value="search">PLG_FIELDS_DPFMAP_PARAMS_MODE_SEARCH</option>
+                    <option value="view">PLG_FIELDS_DPFMAP_PARAMS_MODE_VIEW</option>
+                    <option value="streetview">PLG_FIELDS_DPFMAP_PARAMS_MODE_STREETVIEW</option>
+                </field>
+                <field name="zoom" type="text" label="PLG_FIELDS_DPFMAP_PARAMS_ZOOM_LABEL" default="8"
+                       description="PLG_FIELDS_DPFMAP_PARAMS_ZOOM_DESC"/>
+                <field name="type" type="list" label="PLG_FIELDS_DPFMAP_PARAMS_TYPE_LABEL" default="roadmap"
+                       description="PLG_FIELDS_DPFMAP_PARAMS_TYPE_DESC">
+                    <option value="roadmap">PLG_FIELDS_DPFMAP_PARAMS_TYPE_ROADMAP</option>
+                    <option value="satellite">PLG_FIELDS_DPFMAP_PARAMS_TYPE_SATELLITE</option>
+                </field>
+                <field name="height" type="text" label="PLG_FIELDS_DPFMAP_PARAMS_HEIGHT_LABEL" default="500"
+                       description="PLG_FIELDS_DPFMAP_PARAMS_HEIGHT_LABEL"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

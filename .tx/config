@@ -63,6 +63,18 @@ source_file = plg_fields_dpfgallery/language/en-GB/en-GB.plg_fields_dpfgallery.s
 source_lang = en_GB
 minimum_perc = 1
 
+[DPFields.plg_fields_dpfmap]
+file_filter = plg_fields_dpfmap/language/<lang>/<lang>.plg_fields_dpfmap.ini
+source_file = plg_fields_dpfmap/language/en-GB/en-GB.plg_fields_dpfmap.ini
+source_lang = en_GB
+minimum_perc = 1
+
+[DPFields.plg_fields_dpfmap-sys]
+file_filter = plg_fields_dpfmap/language/<lang>/<lang>.plg_fields_dpfmap.sys.ini
+source_file = plg_fields_dpfmap/language/en-GB/en-GB.plg_fields_dpfmap.sys.ini
+source_lang = en_GB
+minimum_perc = 1
+
 [DPFields.plg_fields_dpfmedia]
 file_filter = plg_fields_dpfmedia/language/<lang>/<lang>.plg_fields_dpfmedia.ini
 source_file = plg_fields_dpfmedia/language/en-GB/en-GB.plg_fields_dpfmedia.ini

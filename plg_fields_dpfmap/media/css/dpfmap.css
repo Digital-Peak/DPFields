@@ -1,0 +1,13 @@
+.dpfmap-responsive-map {
+    overflow: hidden;
+    position: relative;
+    height: 0;
+}
+
+.dpfmap-responsive-map iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
