@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_DPFIELDS_VIEW_ENTITY_DEFAULT_TITLE">
-		<message>
-			<![CDATA[COM_DPFIELDS_VIEW_ENTITY_DEFAULT_DESC]]>
-		</message>
-	</layout>
+    <layout title="COM_DPFIELDS_VIEW_ENTITY_DEFAULT_TITLE">
+        <message>
+            <![CDATA[COM_DPFIELDS_VIEW_ENTITY_DEFAULT_DESC]]>
+        </message>
+    </layout>
 
-	<fields name="request">
-		<fieldset name="request"
-		          addfieldpath="/administrator/components/com_dpfields/models/fields">
-			<field name="e_id" type="dpfentity" label="COM_DPFIELDS_VIEW_ENTITY_CHOOSE_ENTITY_LABEL"
-			       description="COM_DPFIELDS_VIEW_ENTITY_CHOOSE_ENTITY_DESC" required="true"/>
-		</fieldset>
-	</fields>
-	<fields name="params"
-	        addfieldpath="/administrator/components/com_dpfields/models/fields">
-		<fieldset name="layout" label="COM_DPFIELDS_LAYOUT" addfieldpath="/administrator/components/com_dpfields/models/fields">
-			<field name="entity_sections" type="subform" layout="joomla.form.field.subform.repeatable-table" icon="list" multiple="true"
-			       description="COM_DPFIELDS_VIEW_ENTITY_SECTIONS_DESC" label="COM_DPFIELDS_VIEW_ENTITY_SECTIONS_LABEL">
-				<form hidden="true" name="category_columns_field" repeat="true">
-					<field name="name" label="COM_DPFIELDS_NAME" type="text"/>
-					<field name="columns" label="COM_DPFIELDS_COLUMNS" type="integer" first="1" last="4" step="1"/>
-					<field name="fields" label="COM_DPFIELDS_FIELDS" type="dpfields" multiple="true"/>
-					<field name="layout" label="COM_DPFIELDS_LAYOUT" type="filelist" directory="components/com_dpfields/layouts/entity/field"
-					       hide_none="true" stripext="true"/>
-				</form>
-			</field>
-		</fieldset>
-		<fieldset name="integration" label="COM_DPFIELDS_CONFIG_INTEGRATION_LABEL">
-			<field name="frontend_framework" type="list" label="COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_LABEL"
-			       description="COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_DESC" useglobal="true">
-				<option value="0">JNONE</option>
-				<option value="BS2">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_BS2</option>
-				<option value="BS3">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_BS3</option>
-				<option value="BS4">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_BS4</option>
-				<option value="UIkit2">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_UIKIT2</option>
-			</field>
-			<field name="icon_framework" type="list" label="COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_LABEL"
-			       description="COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_DESC" useglobal="true">
-				<option value="0">JNONE</option>
-				<option value="Joomla">COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_JOOMLA</option>
-				<option value="FontAwesome4">COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_FONTAWESOME4</option>
-			</field>
-		</fieldset>
-	</fields>
+    <fields name="request">
+        <fieldset name="request"
+                  addfieldpath="/administrator/components/com_dpfields/models/fields">
+            <field name="e_id" type="dpfentity" label="COM_DPFIELDS_VIEW_ENTITY_CHOOSE_ENTITY_LABEL"
+                   description="COM_DPFIELDS_VIEW_ENTITY_CHOOSE_ENTITY_DESC" required="true"/>
+        </fieldset>
+    </fields>
+    <fields name="params"
+            addfieldpath="/administrator/components/com_dpfields/models/fields">
+        <fieldset name="layout" label="COM_DPFIELDS_LAYOUT" addfieldpath="/administrator/components/com_dpfields/models/fields">
+            <field name="entity_sections" type="subform" layout="joomla.form.field.subform.repeatable-table" icon="list" multiple="true"
+                   description="COM_DPFIELDS_VIEW_ENTITY_SECTIONS_DESC" label="COM_DPFIELDS_VIEW_ENTITY_SECTIONS_LABEL">
+                <form hidden="true" name="category_columns_field" repeat="true">
+                    <field name="name" label="COM_DPFIELDS_NAME" type="text"/>
+                    <field name="columns" label="COM_DPFIELDS_COLUMNS" type="integer" first="1" last="4" step="1"/>
+                    <field name="fields" label="COM_DPFIELDS_FIELDS" type="dpfields" multiple="true">
+                        <option value="-1">JCATEGORY</option>
+                    </field>
+                    <field name="layout" label="COM_DPFIELDS_LAYOUT" type="filelist" directory="components/com_dpfields/layouts/entity/field"
+                           hide_none="true" stripext="true"/>
+                </form>
+            </field>
+        </fieldset>
+        <fieldset name="integration" label="COM_DPFIELDS_CONFIG_INTEGRATION_LABEL">
+            <field name="frontend_framework" type="list" label="COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_LABEL"
+                   description="COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_DESC" useglobal="true">
+                <option value="0">JNONE</option>
+                <option value="BS2">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_BS2</option>
+                <option value="BS3">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_BS3</option>
+                <option value="BS4">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_BS4</option>
+                <option value="UIkit2">COM_DPFIELDS_CONFIG_INTEGRATION_FRONTEND_FRAMEWORK_UIKIT2</option>
+            </field>
+            <field name="icon_framework" type="list" label="COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_LABEL"
+                   description="COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_DESC" useglobal="true">
+                <option value="0">JNONE</option>
+                <option value="Joomla">COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_JOOMLA</option>
+                <option value="FontAwesome4">COM_DPFIELDS_CONFIG_INTEGRATION_ICON_FRAMEWORK_FONTAWESOME4</option>
+            </field>
+        </fieldset>
+    </fields>
 </metadata>

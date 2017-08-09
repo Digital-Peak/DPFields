@@ -15,6 +15,21 @@ use CCL\Content\Element\Component\Grid\Column;
 use CCL\Content\Element\Component\Grid\Row;
 use DPFields\Helper\DPFieldsHelper;
 
+// The fields of the entity
+$fields = $this->entity->jcfields;
+
+// Add a field for the category
+$categoryField           = new stdClass();
+$categoryField->id       = -1;
+$categoryField->name     = 'internal_category';
+$categoryField->title    = JText::_('JCATEGORY');
+$categoryField->label    = $categoryField->title;
+$categoryField->value    = '<a href="' . DPFieldsHelperRoute::getCategoryRoute($this->category->id) . '">' . $this->category->title . '</a>';
+$categoryField->rawvalue = $this->category->id;
+$categoryField->params   = new \Joomla\Registry\Registry(['showlabel' => 1]);
+
+$fields[-1] = $categoryField;
+
 // Loop over the configured columns
 foreach ($this->params->get('entity_sections') as $name => $section) {
 	$s = $this->root->addChild(new Container($name));
@@ -29,7 +44,7 @@ foreach ($this->params->get('entity_sections') as $name => $section) {
 	$counter = 0;
 	$row     = null;
 	foreach ($section['fields'] as $fieldId) {
-		if (!key_exists($fieldId, $this->entity->jcfields)) {
+		if (!key_exists($fieldId, $fields)) {
 			continue;
 		}
 
@@ -41,7 +56,7 @@ foreach ($this->params->get('entity_sections') as $name => $section) {
 		// Render the field
 		$col = $row->addColumn(new Column($fieldId, 100 / $columns));
 
-		$field = $this->entity->jcfields[$fieldId];
+		$field = $fields[$fieldId];
 
 		if (!$section['layout']) {
 			$col->setContent(FieldsHelper::render('com_dpfields.' . $this->contentType->name, 'field.render', array('field' => $field)));

@@ -20,18 +20,8 @@ $entity = $this->entity;
 // The category container
 $c = $this->root->addChild(new Container($entity->id));
 
-// The category of the entity
-$category = JCategories::getInstance('DPFields', array('extension' => 'com_dpfields.' . $this->contentType->name))->get($entity->catid);
-
 // The title
 $c->addChild(new Heading('title', 2))->setContent($entity->title);
-
-$dl = $this->root->addChild(new DescriptionListHorizontal('category'));
-$dl->setTerm(new Term('label'))->setContent(JText::_('JCATEGORY'));
-
-// The category link
-$l = $dl->setDescription(new Description('value'))->addChild(new Link('category', DPFieldsHelperRoute::getCategoryRoute($category->id)));
-$l->setContent($category->title);
 
 // The tags when available
 if ($entity->tags->itemTags) {

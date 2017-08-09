@@ -19,7 +19,9 @@
 			       description="COM_DPFIELDS_VIEW_CATEGORY_COLUMNS_DESC" label="COM_DPFIELDS_VIEW_CATEGORY_COLUMNS_LABEL">
 				<form hidden="true" name="category_columns_field" repeat="true">
 					<field name="name" label="COM_DPFIELDS_NAME" type="text"/>
-					<field name="fields" label="COM_DPFIELDS_FIELDS" type="dpfields" multiple="true"/>
+					<field name="fields" label="COM_DPFIELDS_FIELDS" type="dpfields" multiple="true">
+						<option value="-1">JCATEGORY</option>
+					</field>
 				</form>
 			</field>
 		</fieldset>
@@ -44,7 +46,9 @@
 				<form hidden="true" name="category_columns_field" repeat="true">
 					<field name="name" label="COM_DPFIELDS_NAME" type="text"/>
 					<field name="columns" label="COM_DPFIELDS_COLUMNS" type="integer" first="1" last="4" step="1"/>
-					<field name="fields" label="COM_DPFIELDS_FIELDS" type="dpfields" multiple="true"/>
+					<field name="fields" label="COM_DPFIELDS_FIELDS" type="dpfields" multiple="true">
+						<option value="-1">JCATEGORY</option>
+					</field>
 					<field name="layout" label="COM_DPFIELDS_LAYOUT" type="filelist" directory="components/com_dpfields/layouts/entity/field"
 					       hide_none="true" stripext="true"/>
 				</form>

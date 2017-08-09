@@ -88,12 +88,17 @@ foreach ($this->entities as $entity) {
 				continue;
 			}
 
-			if (!key_exists($fieldId, $entity->jcfields)) {
+			if (!key_exists($fieldId, $entity->jcfields) && $fieldId != -1) {
 				continue;
 			}
 
 			if ($cell == null) {
 				$cell = $row->addCell(new Table\Cell($index));
+			}
+
+			if ($fieldId == -1) {
+				$cell->addChild(new Container(-1))->setContent($entity->category_title);
+				continue;
 			}
 
 			// Fill the content of the cell with the value of the field
@@ -113,9 +118,9 @@ if ($user->authorise('core.create', 'com_dpfields') || count($user->getAuthorise
 	DPFieldsHelper::renderLayout(
 		'content.button',
 		array(
-			'type'    => Icon::FILE,
-			'root'    => $this->root,
-			'text'    => 'JACTION_CREATE',
+			'type' => Icon::FILE,
+			'root' => $this->root,
+			'text' => 'JACTION_CREATE',
 			'onclick' => "location.href='" . DPFieldsHelperRoute::getEntityFormRoute($this->category->extension, $return) . "'"
 		)
 	);

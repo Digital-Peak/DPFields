@@ -71,5 +71,17 @@ class DPFieldsViewCategory extends \DPFields\View\BaseView
 		}
 
 		$this->fields = $fields;
+
+		// Add a field for the category
+		$categoryField           = new stdClass();
+		$categoryField->id       = -1;
+		$categoryField->name     = 'internal_category';
+		$categoryField->title    = JText::_('JCATEGORY');
+		$categoryField->label    = $categoryField->title;
+		$categoryField->value    = $categoryField->title;
+		$categoryField->rawvalue = -1;
+		$categoryField->params   = new \Joomla\Registry\Registry(['showlabel' => 1]);
+
+		$this->fields[-1] = $categoryField;
 	}
 }

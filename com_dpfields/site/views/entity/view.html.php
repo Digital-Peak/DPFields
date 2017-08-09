@@ -23,12 +23,15 @@ class DPFieldsViewEntity extends \DPFields\View\BaseView
 		$this->entity = $this->get('Item');
 
 		$this->contentType = $this->getModel()->getContentType($this->entity->content_type_id);
-		$context = 'com_dpfields.' . $this->contentType->name;
+		$context           = 'com_dpfields.' . $this->contentType->name;
+
+		// The category of the entity
+		$this->category = JCategories::getInstance('DPFields', array('extension' => $context))->get($this->entity->catid);
 
 		$this->entity->tags = new JHelperTags;
 		$this->entity->tags->getItemTags('com_dpfields.entity', $this->entity->id);
 
-		JEventDispatcher::getInstance()->trigger(
+		$this->app->triggerEvent(
 			'onContentPrepare',
 			array($context, &$this->entity, &$this->entity->params, 0)
 		);
