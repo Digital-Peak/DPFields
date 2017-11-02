@@ -14,7 +14,7 @@ class DPFieldsCategories extends JCategories
 		$options['table'] = '#__dpfields_entities';
 
 		if (empty($options['extension'])) {
-			$options['extension'] = 'com_dpfields%';
+			$options['extension'] = JFactory::getApplication()->input->get('context', 'com_dpfields%');
 		}
 
 		parent::__construct($options);

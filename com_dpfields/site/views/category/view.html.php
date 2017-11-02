@@ -27,6 +27,13 @@ class DPFieldsViewCategory extends \DPFields\View\BaseView
 		// Get the category
 		$category = $model->getCategory($this->input->getInt('id'));
 
+		if (!$category || !$category->id) {
+			throw new Exception(JText::_('JGLOBAL_CATEGORY_NOT_FOUND'), 404);
+		}
+
+		// Set the category id as filter
+		$model->setState('filter.category_id', $category->id);
+
 		// Map the description to the text field for the events
 		$category->text = $category->description;
 
