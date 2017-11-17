@@ -62,6 +62,11 @@ class DPFieldsControllerEntityForm extends DPFieldsControllerEntity
 		return $return;
 	}
 
+	public function reload($key = null, $urlVar = 'e_id')
+	{
+		return parent::reload($key, $urlVar);
+	}
+
 	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'e_id')
 	{
 		$append = parent::getRedirectToItemAppend($recordId, $urlVar);

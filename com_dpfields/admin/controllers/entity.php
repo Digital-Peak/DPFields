@@ -106,6 +106,11 @@ class DPFieldsControllerEntity extends JControllerForm
 		return parent::cancel($key);
 	}
 
+	public function reload($key = null, $urlVar = 'e_id')
+	{
+		return parent::reload($key, $urlVar);
+	}
+
 	public function getModel($name = 'Entity', $prefix = 'DPFieldsModel', $config = array('ignore_request' => true))
 	{
 		$model = parent::getModel($name, $prefix, $config);
